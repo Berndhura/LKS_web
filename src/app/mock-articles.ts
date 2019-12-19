@@ -10,7 +10,7 @@ export const  ARTICLES: Article[] = [
         imageUrl: 'https://picsum.photos/200/300'
     },
     {
-        id: 2
+        id: 2,
         title: '2nd',
         description: 'blalalala',
         date: new Date(),
