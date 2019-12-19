@@ -25,4 +25,4 @@ export const  ARTICLES: Article[] = [
         url: 'https://picsum.photos/200/300',
         imageUrl: 'https://picsum.photos/200/300'
     }
-]
+];
