@@ -5,4 +5,5 @@ export class Article {
     date: Date = new Date();
     description = '';
     imageUrl = '';
+    key = '';
 }

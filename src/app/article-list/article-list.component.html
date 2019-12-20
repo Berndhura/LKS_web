@@ -10,6 +10,7 @@
                 </h3>
                 <div class="meta-info">{{ article.date.toDateString() }}</div>
                 <p [innerHtml]='article.description'></p>
+                <a routerLink="/{{article.key}}" class='continue-reading'>Show more...</a>
             </div>
         </div>
     </div>

@@ -3,6 +3,7 @@ import { Article } from './article';
 export const  ARTICLES: Article[] = [
     {
         id: 1,
+        key: 'a',
         title: 'first',
         description: 'blalalala',
         date: new Date(),
@@ -11,6 +12,7 @@ export const  ARTICLES: Article[] = [
     },
     {
         id: 2,
+        key: 'b',
         title: '2nd',
         description: 'blalalala',
         date: new Date(),
@@ -19,6 +21,7 @@ export const  ARTICLES: Article[] = [
     },
     {
         id: 3,
+        key: 'c',
         title: 'third',
         description: 'blalalala',
         date: new Date(),
