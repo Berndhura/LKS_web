@@ -14,4 +14,8 @@ export class ArticleService {
     const articles: Article[] = ARTICLES;
     return of(articles);
   }
+
+  getArticle(): Observable<Article> {
+    
+  }
 }
