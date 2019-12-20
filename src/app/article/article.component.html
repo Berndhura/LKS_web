@@ -1,3 +1,8 @@
-<p>
-  {{ article.key }}
-</p>
+<div>
+  <div class="article-image"><img [src]="article.imageUrl" /></div>
+  <div class="title>"><h1>{{ article.title }}</h1></div>
+  <div>
+    {{ article.date.toDateString() }}
+  </div>
+  <p [innerHTML]="article.description"></p>
+</div>
