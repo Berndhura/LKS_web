@@ -1,7 +1,7 @@
 .title {
     font-size: 2em;
     text-align: center;
-    border-bottom: 1px solid ;
+    border-bottom: 1px;
     padding: 0.7rem;;
 }
 
@@ -9,6 +9,8 @@
     padding: 10px;
     text-decoration: none;
     color: darkcyan;
+    background-color: rgb(216, 247, 219);
+    position: relative;
 }
 
 .nav-item:visited, .nav-item:active, .nav-item:focus {
