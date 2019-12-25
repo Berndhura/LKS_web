@@ -1,0 +1,17 @@
+<div class="container-fluid">
+  <div class="row" style="text-align: -webkit-center;">
+    <div class="col-md-12">
+        <h2><p>Logins: </p></h2>
+        <button class="btn btn-primary" style="background-color: #385998; border-color: #385998;" (click)="facebookLogin()"><i class="fa fa-facebook"></i>Facebook</button>
+    </div>
+    <div class="col-dm-12" style="text-align: -webkit-center;">
+      <div class="card" style="width: 20rem;margin:20px 0 24px 0; text-align: -webkit-center;" *ngIf="user.photoUrl">
+        <img [src]="user.photoUrl" alt="image" style="width: 200px; border-radius: 50%; margin-top: 10px;">
+        <div class="card-body">
+        <h4 class="card-title">{{ user.name }}</h4>
+        <p class="card-text">{{ user.email }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

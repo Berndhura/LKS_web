@@ -10,6 +10,19 @@ import { AboutComponent } from './about/about.component';
 import { ArticleComponent } from './article/article.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
+import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider} from 'ng4-social-login';
+
+const config = new AuthServiceConfig([
+{
+   id: FacebookLoginProvider.PROVIDER_ID,
+   provider: new FacebookLoginProvider('535532649933816')
+}
+], false);
+
+export function provideConfig() {
+   return config;
+}
 
 @NgModule({
    declarations: [
@@ -19,14 +32,18 @@ import { HttpClientModule } from '@angular/common/http';
       ArticleListComponent,
       AboutComponent,
       ArticleComponent,
-      NotFoundComponent
+      NotFoundComponent,
+      LoginComponent
    ],
    imports: [
       BrowserModule,
       AppRoutingModule,
-      HttpClientModule
+      HttpClientModule,
+      SocialLoginModule
    ],
-   providers: [],
+   providers: [
+      {provide: AuthServiceConfig, useFactory: provideConfig}
+   ],
    bootstrap: [
       AppComponent
    ]
