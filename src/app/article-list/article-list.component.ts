@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Article } from '../article';
-import { ARTICLES } from '../mock-articles';
 import { ArticleService } from '../article.service';
 
 @Component({
@@ -16,12 +15,16 @@ export class ArticleListComponent implements OnInit {
 
   ngOnInit() {
     this.getArticles();
-    console.log(this.articles);
   }
 
   getArticles(): void {
     this.articleService
       .getArticles()
-      .subscribe(articles => (this.articles = articles));
+      .subscribe(articles => {
+        this.articles = articles["ads"];
+        for (let article of this.articles) {
+          article.uri = 'http://52.29.200.187/api/V3/pictures/' + article.pictureIds[0];
+        }
+        });
   }
 }

@@ -2,15 +2,15 @@
     <div class="card">
         <div class="card-body">
             <div>
-                <img [src]='article.imageUrl' />
+                <img src ={{article.uri}} />
             </div>
             <div>
                 <h3>
-                    {{ article.title}}
+                    {{ article.title }}
                 </h3>
-                <div class="meta-info">{{ article.date.toDateString() }}</div>
+                <div class="meta-info">{{ article.date }}</div>
                 <p [innerHtml]='article.description'></p>
-                <a routerLink="/{{article.key}}" class='continue-reading'>Show more...</a>
+                <a routerLink="/{{article.id}}" class='continue-reading'>Show more...</a>
             </div>
         </div>
     </div>
