@@ -12,6 +12,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider} from 'ng4-social-login';
+import { NewArticleComponent } from './new-article/new-article.component';
 
 const config = new AuthServiceConfig([
 {
@@ -33,7 +34,8 @@ export function provideConfig() {
       AboutComponent,
       ArticleComponent,
       NotFoundComponent,
-      LoginComponent
+      LoginComponent,
+      NewArticleComponent
    ],
    imports: [
       BrowserModule,
