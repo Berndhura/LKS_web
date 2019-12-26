@@ -22,8 +22,9 @@ export class ArticleListComponent implements OnInit {
       .getArticles()
       .subscribe(articles => {
         this.articles = articles["ads"];
-        for (let article of this.articles) {
+        for (const article of this.articles) {
           article.uri = 'http://52.29.200.187/api/V3/pictures/' + article.pictureIds[0];
+          article.date = new Date(article.date);
         }
         });
   }

@@ -9,11 +9,24 @@
     padding: 15px;
 }
 
-h3 {
-    font-size: 32px;
+.continue-reading {
     padding: 15px;
+}
+
+.meta-info {
+    padding: 15px;
+}
+
+.description {
+    padding: 15px;
+}
+
+h3 {
+    font-size: 22px;
+    padding-left: 15px;
 }
 
 img {
     max-height: 200px;
+    border-radius: 15px;
 }

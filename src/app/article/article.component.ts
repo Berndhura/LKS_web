@@ -27,6 +27,7 @@ export class ArticleComponent implements OnInit {
           return;
         }
         this.article = article;
+        this.article.uri = 'http://52.29.200.187/api/V3/pictures/' + article.pictureIds[0];
         console.log(this.article);
       }
       );
