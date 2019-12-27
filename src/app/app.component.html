@@ -1,3 +1,29 @@
-<app-nav-bar></app-nav-bar>
-<router-outlet></router-outlet>
-<app-footer></app-footer>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation">
+        <p>Luftkraftsport</p>
+        <p>Sidenav</p>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            <div>
+                <button mat-icon-button (click)="sidenav.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </div>
+            <div><a routerLink="/">LOGO</a></div>
+            <div fxFlex fxLayout fxLayoutAlign="flex-end">
+                <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+                    <li><a routerLink="/articles" class="nav-item">Articles</a></li>
+                    <li><a routerLink="/about" class="nav-item">About LKS</a></li>
+                    <li><a routerLink="/login" class="nav-item">Login</a></li>
+                    <li><a routerLink="/create" class="nav-item">Erstellen</a></li>
+                </ul>
+            </div>
+        </mat-toolbar>
+        <main>
+            <router-outlet></router-outlet>
+            <app-footer></app-footer>
+        </main>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
