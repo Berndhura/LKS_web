@@ -8,7 +8,7 @@ import { AngularFireAuth} from 'angularfire2/auth';
 
 @Injectable()
 export class AuthServiceEmail {
-    private user: User;
+    private isAuthenticated = false;
     authChange = new Subject<boolean>();
 
     constructor(private router: Router, private afAuth: AngularFireAuth) {
@@ -16,7 +16,6 @@ export class AuthServiceEmail {
     }
 
     registerUser(authData: AuthData) {
-        console.log("IN REGISTER USER!");
         this.afAuth.auth.createUserWithEmailAndPassword(authData.email, authData.password)
         .then(result => {
             console.log(result);
@@ -30,25 +29,24 @@ export class AuthServiceEmail {
     login(authData: AuthData) {
         this.afAuth.auth.signInWithEmailAndPassword(authData.email, authData.password)
         .then(result => {
-            console.log(result);
+            console.log(result.user.refreshToken);
             this.authChange.next(true);
+            this.router.navigate(['/articles']);
         })
         .catch(error => {
             console.log(error);
+            alert(error);
         });
     }
 
     logout() {
-        this.user = null;
+        this.afAuth.auth.signOut();
         this.authChange.next(false);
         this.router.navigate(['/login']);
-    }
-
-    getUser() {
-        return { ...this.user };  //new object 
+        this.isAuthenticated = false;
     }
 
     isAuth() {
-        return this.user != null;
+        return this.isAuthenticated;
     }
 }
