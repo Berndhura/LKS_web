@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Article } from './article';
-import { User } from './user';
+import { SellerInfo } from './seller';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class ArticleService {
     return this.http.get<Article>('http://52.29.200.187/api/V3/articles/' + id);
   }
 
-  getUserInfo(userId: string, userToken: string): Observable<User> {
-    return this.http.get<User>('http://52.29.200.187/api/V3/users/' + userId + '/?token' + userToken);
+  getUserInfo(userId: string, userToken: string): Observable<SellerInfo> {
+    return this.http.get<SellerInfo>('http://52.29.200.187/api/V3/users/' + userId + '/?token' + userToken);
   }
 }
