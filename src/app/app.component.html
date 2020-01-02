@@ -26,9 +26,14 @@
             <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
                 <ul fxLayout fxLayoutGap="10px" class="navigation-items">
                     <li><a routerLink="/articles" class="nav-item">Anzeigen</a></li>
-                    <li><a routerLink="/login" class="nav-item">Anmelden</a></li>
-                    <li><a routerLink="/create" class="nav-item">Verkaufen</a></li>
-                    <li><a routerLink="/about" class="nav-item">Über</a></li>
+                    <li *ngIf="!isAuth"><a routerLink="/login" class="nav-item">Anmelden</a></li>
+                    <li *ngIf="isAuth"><a routerLink="/create" class="nav-item">Verkaufen</a></li>
+                    <li><a routerLink="/about" class="nav-item">About</a></li>
+                    <li *ngIf="isAuth">
+                        <button mat-icon-button (click)="logout()">
+                            <mat-icon>logout</mat-icon>
+                        </button>
+                    </li>
                 </ul>
             </div>
         </mat-toolbar>
