@@ -4,7 +4,7 @@ import { ArticleListComponent } from './article-list/article-list.component';
 import { AboutComponent } from './about/about.component';
 import { ArticleComponent } from './article/article.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth/login/login.component';
 import { NewArticleComponent } from './new-article/new-article.component';
 
 

@@ -6,6 +6,7 @@ import { AuthService, FacebookLoginProvider, SocialUser } from 'ng4-social-login
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
 
   public user: any = SocialUser;
@@ -19,5 +20,4 @@ export class LoginComponent implements OnInit {
       this.user = userData;
     });
   }
-
 }

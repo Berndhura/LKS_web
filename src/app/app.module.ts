@@ -12,12 +12,13 @@ import { AboutComponent } from './about/about.component';
 import { ArticleComponent } from './article/article.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth/login/login.component';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider} from 'ng4-social-login';
 import { NewArticleComponent } from './new-article/new-article.component';
 import { MaterialModule } from './material.module';
 import { from } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { SignupComponent } from './auth/signup/signup.component';
 
 const config = new AuthServiceConfig([
 {
@@ -40,7 +41,8 @@ export function provideConfig() {
       ArticleComponent,
       NotFoundComponent,
       LoginComponent,
-      NewArticleComponent
+      NewArticleComponent,
+      SignupComponent
    ],
    imports: [
       BrowserModule,
@@ -53,7 +55,10 @@ export function provideConfig() {
       FormsModule
    ],
    providers: [
-      {provide: AuthServiceConfig, useFactory: provideConfig}
+      {
+         provide: AuthServiceConfig,
+         useFactory: provideConfig
+      }
    ],
    bootstrap: [
       AppComponent
