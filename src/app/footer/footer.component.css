@@ -2,3 +2,7 @@ p {
     text-align: center;
     background-color: cornflowerblue;
 }
+
+.navbar-brand {
+    width: 500px;
+}
