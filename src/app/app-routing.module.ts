@@ -12,7 +12,8 @@ import { SignupComponent } from './auth/signup/signup.component';
 const routes: Routes = [
   { path: 'articles', component: ArticleListComponent},
   { path: 'about', component: AboutComponent},
-  { path: 'login', component: SignupComponent},
+  { path: 'login', component: LoginComponent},
+  { path: 'signup', component: SignupComponent},
   { path: 'create', component: NewArticleComponent},
   { path: '404', component: NotFoundComponent},
   { path: '', component: ArticleListComponent},

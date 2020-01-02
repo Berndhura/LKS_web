@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, FacebookLoginProvider, SocialUser } from 'ng4-social-login';
+import { NgForm } from '@angular/forms';
+import { AuthServiceEmail } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,15 +10,16 @@ import { AuthService, FacebookLoginProvider, SocialUser } from 'ng4-social-login
 
 export class LoginComponent implements OnInit {
 
-  public user: any = SocialUser;
-  constructor(private socialAuthService: AuthService) { }
+  constructor(private authServiceEmail: AuthServiceEmail) { }
 
   ngOnInit() {
   }
 
-  facebookLogin() {
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then( userData => {
-      this.user = userData;
+  onSubmit(form: NgForm) {
+    console.log(form);
+    this.authServiceEmail.login({
+      email: form.value.email,
+      password: form.value.password
     });
   }
 }
