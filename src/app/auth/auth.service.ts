@@ -5,7 +5,7 @@ import { AuthData } from './auth-data.model';
 import { Router } from '@angular/router';
 
 @Injectable()
-export class AuthService {
+export class AuthServiceEmail {
     private user: User;
     authChange = new Subject<boolean>();
 

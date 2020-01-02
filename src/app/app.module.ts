@@ -19,12 +19,16 @@ import { MaterialModule } from './material.module';
 import { from } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './auth/signup/signup.component';
-import { AuthService } from './auth/auth.service';
+import { AuthServiceEmail } from './auth/auth.service';
 
 const config = new AuthServiceConfig([
 {
    id: FacebookLoginProvider.PROVIDER_ID,
    provider: new FacebookLoginProvider('535532649933816')
+},
+{
+   id: GoogleLoginProvider.PROVIDER_ID,
+   provider: new GoogleLoginProvider('225684928245-21lot3bitst9q7te84fq0kcc1bel3pl7.apps.googleusercontent.com')
 }
 ], false);
 
@@ -60,7 +64,7 @@ export function provideConfig() {
          provide: AuthServiceConfig,
          useFactory: provideConfig
       },
-      AuthService
+      AuthServiceEmail
    ],
    bootstrap: [
       AppComponent

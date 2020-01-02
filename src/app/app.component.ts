@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from './auth/auth.service';
+import { AuthServiceEmail } from './auth/auth.service';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -13,7 +13,7 @@ export class AppComponent implements OnInit, OnDestroy{
   openSidenav = false;
   authSubscription: Subscription;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthServiceEmail) {
 
   }
 
