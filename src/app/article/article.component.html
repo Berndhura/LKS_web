@@ -10,6 +10,8 @@
     <img mat-card-image [src]="article.uri">
     <mat-card-content>
       <p> {{ article.description }} </p>
+      <p> Preis: {{ article.price }} € </p>
+      <p> Vom: {{article.date | date: 'medium' }} </p>
     </mat-card-content>
     <mat-card-actions>
       <button mat-button>MERKEN</button>
