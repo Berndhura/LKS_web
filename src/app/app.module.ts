@@ -16,10 +16,13 @@ import { LoginComponent } from './auth/login/login.component';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider} from 'ng4-social-login';
 import { NewArticleComponent } from './new-article/new-article.component';
 import { MaterialModule } from './material.module';
-import { from } from 'rxjs';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthServiceEmail } from './auth/auth.service';
+import { environment } from '../environments/environment';
 
 const config = new AuthServiceConfig([
 {
@@ -57,7 +60,10 @@ export function provideConfig() {
       BrowserAnimationsModule,
       MaterialModule,
       FlexLayoutModule,
-      FormsModule
+      FormsModule,
+      AngularFireModule.initializeApp(environment.firebase),
+      AngularFirestoreModule,
+      AngularFireAuthModule
    ],
    providers: [
       {
