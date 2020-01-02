@@ -6,6 +6,7 @@ export class AuthService {
     private user: User;
 
     registerUser(authData: AuthData) {
+        console.log("IN REGISTER USER!");
         this.user = {
             email: authData.email,
             userId: Math.round(Math.random() * 10000).toString()

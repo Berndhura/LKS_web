@@ -19,6 +19,7 @@ import { MaterialModule } from './material.module';
 import { from } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './auth/signup/signup.component';
+import { AuthService } from './auth/auth.service';
 
 const config = new AuthServiceConfig([
 {
@@ -58,7 +59,8 @@ export function provideConfig() {
       {
          provide: AuthServiceConfig,
          useFactory: provideConfig
-      }
+      },
+      AuthService
    ],
    bootstrap: [
       AppComponent

@@ -12,6 +12,7 @@ export class NewArticleComponent implements OnInit {
 
   ngOnInit() {
   }
+
   onSubmit(from: NgForm) {
     console.log(from);
   }

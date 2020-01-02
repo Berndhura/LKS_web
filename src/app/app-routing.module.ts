@@ -6,12 +6,13 @@ import { ArticleComponent } from './article/article.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LoginComponent } from './auth/login/login.component';
 import { NewArticleComponent } from './new-article/new-article.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 
 const routes: Routes = [
   { path: 'articles', component: ArticleListComponent},
   { path: 'about', component: AboutComponent},
-  { path: 'login', component: LoginComponent},
+  { path: 'login', component: SignupComponent},
   { path: 'create', component: NewArticleComponent},
   { path: '404', component: NotFoundComponent},
   { path: '', component: ArticleListComponent},
