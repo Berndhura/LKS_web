@@ -12,6 +12,8 @@ export class AppComponent implements OnInit, OnDestroy{
   isAuth = false;
   openSidenav = false;
   authSubscription: Subscription;
+  photoURL: any;
+  currentUser: any;
 
   constructor(private authService: AuthServiceEmail) {
 
@@ -20,6 +22,11 @@ export class AppComponent implements OnInit, OnDestroy{
   ngOnInit() {
     this.authSubscription = this.authService.authChange.subscribe(authStatus => {
       this.isAuth = authStatus;
+      if (localStorage.getItem('user')) {
+        const data = localStorage.getItem('user');
+        this.photoURL = JSON.parse(data)['user']['photoURL'];
+        this.currentUser = JSON.parse(data)['user']['displayName']
+      }
     });
   }
 

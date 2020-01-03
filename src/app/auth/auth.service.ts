@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { auth } from 'firebase/app';
 import { AuthData } from './auth-data.model';
@@ -11,7 +11,7 @@ export class AuthServiceEmail {
     private isAuthenticated = false;
     authChange = new Subject<boolean>();
 
-    constructor(private router: Router, private afAuth: AngularFireAuth) {
+    constructor(private router: Router, private afAuth: AngularFireAuth, private ngZone: NgZone) {
 
     }
 
@@ -48,16 +48,20 @@ export class AuthServiceEmail {
     }
 
     AuthLogin(provider) {
-        return this.afAuth.auth.signInWithPopup(provider)
-        .then((result) => {
-            console.log('You have been successfully logged in!');
-            console.log('Token: ' + result.credential.toJSON()['oauthAccessToken']);
-            this.authChange.next(true);
-            this.router.navigate(['/articles']);
-        }).catch((error) => {
-            console.log(error);
-            alert(error);
-        });
+        return this.ngZone.runOutsideAngular(() => {
+            this.afAuth.auth.signInWithPopup(provider)
+                .then((result) => {
+                    this.ngZone.run(() => {
+                        console.log('You have been successfully logged in!');
+                        localStorage.setItem('user', JSON.stringify(result));
+                        this.authChange.next(true);
+                        this.router.navigate(['/articles']);
+                    });
+                }).catch((error) => {
+                    console.log(error);
+                    alert(error);
+                });
+            });
       }
 
     logout() {

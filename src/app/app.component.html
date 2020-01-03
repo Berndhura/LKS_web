@@ -31,6 +31,12 @@
                     <li *ngIf="isAuth"><a routerLink="/create" class="nav-item">Verkaufen</a></li>
                     <li><a routerLink="/about" class="nav-item">About</a></li>
                     <li *ngIf="isAuth">
+                        <div >
+                            <img class="mat-card-avatar" [src]="photoURL">
+                        </div>
+                    </li>
+                    <li *ngIf="isAuth"> {{ currentUser }} </li>
+                    <li *ngIf="isAuth">
                         <button mat-icon-button (click)="logout()">
                             <mat-icon>logout</mat-icon>
                         </button>
