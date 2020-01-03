@@ -26,19 +26,4 @@ export class SignupComponent implements OnInit {
       password: form.value.password
     });
   }
-
-  facebookLogin() {
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then( userData => {
-      this.user = userData;
-    });
-  }
-
-  googleLogin() {
-    console.log('GOOGLE anmeldung')
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then( userData => {
-      this.user = userData;
-      console.log(this.user);
-    });
-  }
-
 }

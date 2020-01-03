@@ -22,4 +22,12 @@ export class LoginComponent implements OnInit {
       password: form.value.password
     });
   }
+
+  onSubmitFacebook() {
+    this.authServiceEmail.loginFacebook();
+  }
+
+  onSubmitGoogle() {
+    this.authServiceEmail.loginGoogle();
+  }
 }

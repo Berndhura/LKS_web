@@ -19,5 +19,10 @@
       minlength="6">
     </mat-form-field>
     <button type="submit" mat-raised-button color="primary">Submit</button>
+    <div class="devider" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="25px">Oder</div>
   </form>
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+    <button class="fbbutton" (click)="onSubmitFacebook()" mat-raised-button color="primary">Facebook</button>
+    <button class="gobutton" (click)="onSubmitGoogle()" mat-raised-button color="primary">Google</button>
+  </div>
 </section>
