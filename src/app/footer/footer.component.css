@@ -1,5 +1,5 @@
 .footer {
-    background-color: lightgrey;
+    
     height: 100px;
     padding-top: 10px;
 }
@@ -16,6 +16,6 @@ a:active {
 
 .navigation-items {
     list-style: none;
-    padding: 15;
+    padding: 0;
     margin: 0;
 }

@@ -1,17 +1,21 @@
 mat-form-field {
-    width: 300px;
+    width: 350px;
   }
 
+.submit {
+  width: 350px;
+}
+
 .fbbutton {
-      width: 140px;
+      width: 350px;
       background-color: #3b5998;
   }
 
 .gobutton {
-    width: 140px;
+    width: 350px;
     background-color: #EA4335;
 }
 
 .devider {
-    padding-bottom: 20px;
+    padding-bottom: 0px;
 }
