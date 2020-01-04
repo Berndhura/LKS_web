@@ -13,6 +13,10 @@ export class NewArticleComponent implements OnInit {
   ngOnInit() {
   }
 
+  onFileSelected(event) {
+    console.log(event);
+  }
+
   onSubmit(from: NgForm) {
     console.log(from);
   }

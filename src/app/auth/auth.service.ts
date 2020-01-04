@@ -66,6 +66,7 @@ export class AuthServiceEmail {
 
     logout() {
         this.afAuth.auth.signOut();
+        localStorage.removeItem('user');
         this.authChange.next(false);
         this.router.navigate(['/login']);
         this.isAuthenticated = false;

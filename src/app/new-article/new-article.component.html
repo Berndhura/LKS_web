@@ -2,21 +2,28 @@
   <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px" #f="ngForm" (ngSubmit)="onSubmit(f)">
     <mat-form-field>
       <input 
-      type="email" 
-      matInput 
-      placeholder="Your email" 
-      ngModel name="email"
-      required>
+        type="text" 
+        matInput 
+        placeholder="Titel" 
+        ngModel name="title"
+        required>
     </mat-form-field>
-    <mat-form-field hintLabel="At least 6 chars!">
+    <mat-form-field>
       <input 
-      type="password" 
-      matInput 
-      placeholder="Your Password" 
-      ngModel 
-      name="password"
-      required
-      minlength="6">
+        type="text" 
+        matInput 
+        placeholder="Beschreibung" 
+        ngModel 
+        name="description"
+        required
+        minlength="6">
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="file"
+        matInput
+        (change)="onFileSelected($event)"
+        #fileInput>
     </mat-form-field>
     <button type="submit" mat-raised-button color="primary">Submit</button>
   </form>

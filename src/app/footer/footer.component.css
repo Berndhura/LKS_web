@@ -1,8 +1,21 @@
-p {
-    text-align: center;
-    background-color: cornflowerblue;
+.footer {
+    background-color: lightgrey;
+    height: 100px;
+    padding-top: 10px;
 }
 
-.navbar-brand {
-    width: 500px;
+a {
+    text-decoration: none;
+    color: cornflowerblue;
+}
+
+a:hover,
+a:active {
+    color: blue;
+}
+
+.navigation-items {
+    list-style: none;
+    padding: 15;
+    margin: 0;
 }
