@@ -1,21 +1,25 @@
 mat-form-field {
-    width: 350px;
+    width: 400px;
   }
 
 .submit {
-  width: 350px;
+  width: 400px;
 }
 
 .fbbutton {
-      width: 350px;
+      width: 400px;
       background-color: #3b5998;
   }
 
 .gobutton {
-    width: 350px;
+    width: 400px;
     background-color: #EA4335;
 }
 
 .devider {
-    padding-bottom: 0px;
+    padding-bottom: 10px;
+}
+
+.signup {
+  color: #EA4335;
 }
