@@ -9,10 +9,15 @@ export class Article {
     distance: number;
     date: Date = new Date();
     views: number;
-    location: any;
+    location: Location;
     bookmarks: number;
     pictureIds: [string];
     uri = '';
+}
+
+export class Location {
+  type: any;
+  coordinates: [number, number];
 }
 
 

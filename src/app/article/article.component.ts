@@ -13,34 +13,13 @@ export class ArticleComponent implements OnInit, AfterViewInit {
 
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
   map: google.maps.Map;
-  lat = 12.086546299999995;
-  lng = 13.935242;
+  lat: any;
+  lng: any;
   article: Article = null;
   seller: SellerInfo = null;
-
-  coordinates = new google.maps.LatLng(this.lat, this.lng);
-
-  mapOptions: google.maps.MapOptions = {
-    center: this.coordinates,
-    zoom: 8
-  };
-
-  marker = new google.maps.Marker({
-    position: this.coordinates,
-    map: this.map,
-  });
-
-  ngAfterViewInit() {
-    this.lat = 54.12;
-    this.lng = 13.12;
-    this.mapInitializer();
-  }
-
-  mapInitializer() {
-    this.map = new google.maps.Map(this.gmap.nativeElement, 
-    this.mapOptions);
-    this.marker.setMap(this.map);
-  }
+  coordinates: any;
+  mapOptions: any;
+  marker: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -66,5 +45,25 @@ export class ArticleComponent implements OnInit, AfterViewInit {
       }
       );
     });
+  }
+
+  ngAfterViewInit() {
+    this.lat = this.article.location.coordinates[0];
+    this.lng = this.article.location.coordinates[1];
+    this.coordinates = new google.maps.LatLng(this.lat, this.lng);
+    this.mapOptions  = {
+      center: this.coordinates,
+      zoom: 8
+    };
+    this.marker = new google.maps.Marker({
+      position: this.coordinates,
+      map: this.map,
+    });
+    this.mapInitializer();
+  }
+
+  mapInitializer() {
+    this.map = new google.maps.Map(this.gmap.nativeElement, this.mapOptions);
+    this.marker.setMap(this.map);
   }
 }

@@ -2,10 +2,10 @@
   <mat-card fxFlex="500px">
     <mat-card-header>
       <div mat-card-avatar class="user-header-image">
-        <img mat-card-avatar [src]="seller.profilePictureUrl">
+        <img *ngIf="seller != null" mat-card-avatar [src]="seller.profilePictureUrl">
       </div>
       <mat-card-title> {{ article.title }} </mat-card-title>
-    <mat-card-subtitle> {{ seller.name }}</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="seller != null"> {{ seller.name }}</mat-card-subtitle>
     </mat-card-header>
     <img mat-card-image [src]="article.uri">
     <mat-card-content>
