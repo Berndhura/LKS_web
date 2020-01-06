@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { Article } from './article';
 import { SellerInfo } from './seller';
 import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,15 @@ export class ArticleService {
 
   getUserInfo(userId: string, userToken: string): Observable<SellerInfo> {
     return this.http.get<SellerInfo>('http://52.29.200.187/api/V3/users/' + userId + '/?token' + userToken);
+  }
+
+  bookmarkArticle(articleId: number, token: string): Observable<any> {
+    console.log(articleId);
+    return this.http.post<any>('http://52.29.200.187/api/V3/articles/' + articleId + '/bookmark' + '?token=' + token, null, {
+      headers: new HttpHeaders({
+          'Content-Type':  'application/xml',
+          'Authorization': 'false'
+        })
+      });
   }
 }
