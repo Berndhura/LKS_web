@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Article } from '../article';
 import { SellerInfo } from '../seller';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,10 +9,38 @@ import { ArticleService } from '../article.service';
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.css']
 })
-export class ArticleComponent implements OnInit {
+export class ArticleComponent implements OnInit, AfterViewInit {
 
+  @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
+  map: google.maps.Map;
+  lat = 12.086546299999995;
+  lng = 13.935242;
   article: Article = null;
   seller: SellerInfo = null;
+
+  coordinates = new google.maps.LatLng(this.lat, this.lng);
+
+  mapOptions: google.maps.MapOptions = {
+    center: this.coordinates,
+    zoom: 8
+  };
+
+  marker = new google.maps.Marker({
+    position: this.coordinates,
+    map: this.map,
+  });
+
+  ngAfterViewInit() {
+    this.lat = 54.12;
+    this.lng = 13.12;
+    this.mapInitializer();
+  }
+
+  mapInitializer() {
+    this.map = new google.maps.Map(this.gmap.nativeElement, 
+    this.mapOptions);
+    this.marker.setMap(this.map);
+  }
 
   constructor(
     private route: ActivatedRoute,
@@ -31,7 +59,7 @@ export class ArticleComponent implements OnInit {
         this.article = article;
         this.article.uri = 'http://52.29.200.187/api/V3/pictures/' + article.pictureIds[0];
         console.log(this.article);
-        this.articleService.getUserInfo(article.userId, 'cYhkRXSC9Xw:APA91bFMfO77q6Dza7PaREhTBUZmQ3lpAhMNySocOROFJId9Uh_hGwfvYc2X-dhliXh_tJ4RceOYNHEx6YKh-eQ4LkSULgDz0nqCgUDff58gGGnz1P2uEH8O-j4sYnxgR86O-rIq1rSP').subscribe(seller => {
+        this.articleService.getUserInfo(article.userId, 'token??').subscribe(seller => {
           this.seller = seller;
           console.log(this.seller);
         });

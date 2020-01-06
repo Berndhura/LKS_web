@@ -12,6 +12,8 @@
       <p> {{ article.description }} </p>
       <p> Preis: {{ article.price }} € </p>
       <p> Vom: {{article.date | date: 'medium' }} </p>
+      <p> {{ article.views }} Aufrufe </p>
+      <div #mapContainer id="map"></div>
     </mat-card-content>
     <mat-card-actions>
       <button mat-button>MERKEN</button>
