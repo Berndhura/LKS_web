@@ -7,6 +7,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { LoginComponent } from './auth/login/login.component';
 import { NewArticleComponent } from './new-article/new-article.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { ImpressumComponent } from './impressum/impressum.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'signup', component: SignupComponent},
   { path: 'create', component: NewArticleComponent},
+  { path: 'impressum', component: ImpressumComponent},
   { path: '404', component: NotFoundComponent},
   { path: '', component: ArticleListComponent},
   { path: ':key', component: ArticleComponent},

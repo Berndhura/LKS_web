@@ -23,6 +23,7 @@ import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthServiceEmail } from './auth/auth.service';
 import { environment } from '../environments/environment';
+import { ImpressumComponent } from './impressum/impressum.component';
 
 const config = new AuthServiceConfig([
 {
@@ -50,7 +51,8 @@ export function provideConfig() {
       NotFoundComponent,
       LoginComponent,
       NewArticleComponent,
-      SignupComponent
+      SignupComponent,
+      ImpressumComponent
    ],
    imports: [
       BrowserModule,
