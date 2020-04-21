@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class AppComponent implements OnInit, OnDestroy{
 
   isAuth = false;
-  openSidenav = false;
+  openSidenav = true;
   authSubscription: Subscription;
   photoURL: any;
   currentUser: any;
@@ -32,6 +32,14 @@ export class AppComponent implements OnInit, OnDestroy{
 
   ngOnDestroy() {
     this.authSubscription.unsubscribe();
+  }
+
+  toggleSideNav() {
+    this.openSidenav = !this.openSidenav;
+  }
+
+  closeSideNav() {
+    this.openSidenav = false;
   }
 
   logout() {

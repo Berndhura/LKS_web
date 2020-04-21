@@ -1,3 +1,4 @@
+import { UserComponent } from './user/user.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ArticleListComponent } from './article-list/article-list.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'signup', component: SignupComponent},
   { path: 'create', component: NewArticleComponent},
+  { path: 'user', component: UserComponent},
   { path: 'impressum', component: ImpressumComponent},
   { path: '404', component: NotFoundComponent},
   { path: '', component: ArticleListComponent},

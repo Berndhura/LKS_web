@@ -1,6 +1,12 @@
+<!-- Header in der app component wegen SideNav, obwohl ich diese momentan rausgenommen habe :D -->
+
 <mat-sidenav-container>
     <mat-sidenav #sidenav role="navigation">
         <mat-nav-list>
+            <div class="nav-header">
+                <h2>Luftkraftsport</h2>
+                <img *ngIf="true" src="../../assets/images/Logo.png" width="70" height="70">
+            </div>
             <a mat-list-item routerLink="/articles" (click)="sidenav.close()">
                 <mat-icon>article</mat-icon>
                 <span class="nav-caption">Übersicht</span>
@@ -16,38 +22,29 @@
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-        <mat-toolbar color="primary">
-            <div>
-                <button mat-icon-button (click)="sidenav.toggle()">
-                    <mat-icon>menu</mat-icon>
+        <div class="header">
+            
+            <div class="header-left">
+                <!-- <mat-icon (click)="sidenav.toggle()">menu</mat-icon> -->
+                <h2 routerLink="/about">Luftkraftsport</h2>
+                <img *ngIf="true" src="../../assets/images/Logo.png" width="70" height="70" routerLink="/about">
+            </div>
+            
+            
+            <div class="header-right">
+                <div class="nav-tabs"><mat-icon>list</mat-icon><h4 routerLink="/articles">Übersicht</h4></div>
+                <div class="nav-tabs" *ngIf="false"><mat-icon>person</mat-icon><h4 routerLink="/login">Anmelden</h4></div>
+                <div class="nav-tabs"><mat-icon>monetization_on</mat-icon><h4 routerLink="/create">Verkaufen</h4></div>
+                
+                <img class="mat-card-avatar profile" src="../../assets/images/profilbild.jpg" width="50" height="50" routerLink="/user">
+                <button mat-icon-button (click)="logout()">
+                    <mat-icon>logout</mat-icon>
                 </button>
             </div>
-            <div><a routerLink="/">Luftkraftsport</a></div>
-            <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
-                <ul fxLayout fxLayoutGap="10px" class="navigation-items">
-                    <li><a routerLink="/articles" class="nav-item">Anzeigen</a></li>
-                    <li *ngIf="!isAuth"><a routerLink="/signup" class="nav-item">Registrieren</a></li>
-                    <li *ngIf="!isAuth"><a routerLink="/login" class="nav-item">Anmelden</a></li>
-                    <li *ngIf="isAuth"><a routerLink="/create" class="nav-item">Verkaufen</a></li>
-                    <li><a routerLink="/about" class="nav-item">About</a></li>
-                    <li *ngIf="isAuth">
-                        <div >
-                            <img class="mat-card-avatar" [src]="photoURL">
-                        </div>
-                    </li>
-                    <li *ngIf="isAuth"> {{ currentUser }} </li>
-                    <li *ngIf="isAuth">
-                        <button mat-icon-button (click)="logout()">
-                            <mat-icon>logout</mat-icon>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-        </mat-toolbar>
+        </div>
         <main>
             <router-outlet></router-outlet>
             <app-footer></app-footer>
         </main>
     </mat-sidenav-content>
 </mat-sidenav-container>
-

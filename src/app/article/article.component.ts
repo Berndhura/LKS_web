@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { Article } from '../article';
-import { SellerInfo } from '../seller';
+import { Article } from '../types/article';
+import { SellerInfo } from '../types/seller';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ArticleService } from '../article.service';
+import { ArticleService } from '../services/article.service';
 
 @Component({
   selector: 'app-article',
