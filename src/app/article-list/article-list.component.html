@@ -2,20 +2,37 @@
 
 <app-product-select></app-product-select>
 
-<div *ngFor="let article of articles">
-    <div class="card">
-        <div class="card-body">
-            <div>
+    <mat-form-field>
+      <mat-label>Suche</mat-label>
+      <input matInput [(ngModel)]="suche">
+    </mat-form-field>
+
+
+    <div class="card" *ngFor="let article of articles">
+        <div class="card-body row">
+            <div class="col-3 col-md-2" class="img-container">
                 <img src ={{article.uri}} />
             </div>
-            <div>
-                <h3>
-                    {{ article.title }}
-                </h3>
-                <div class="meta-info">Erstellt am: {{ article.date | date:'medium' }}</div>
-                <div class="description">{{ article.description }}</div>
-                <a routerLink="/{{article.id}}" class='continue-reading'>Show more..</a>
+            <div class="col-2 col-md-1 product-container">
+                <img  class="mat-card-avatar" [src]="getProduct(article.category).src" [matTooltip]="getProduct(article.category).label">
+                <img  class="mat-card-avatar" [src]="'../../assets/images/questionmark.jpg'" [matTooltip]="'noch offen'">
+            </div>
+            <div class="row col-7 col-md-9">
+                <div class="row col-md-5 title">
+                    <mat-icon *ngIf="article.zustand === 'neu'" class="col-2" matTooltip="Neu">check_circle</mat-icon>
+                    <mat-icon *ngIf="article.zustand === 'gebraucht'" class="col-2" matTooltip="Gebraucht">check_circle_outline</mat-icon>
+                    <mat-icon *ngIf="article.zustand === 'ersatz'" class="col-2" matTooltip="Ersatzteil">remove_circle_outline</mat-icon>
+                    <mat-icon *ngIf="article.zustand === 'defekt'" class="col-2" matTooltip="Defekt">remove_circle</mat-icon>
+                    <mat-icon *ngIf="article.zustand === ''" class="col-2" matTooltip="Reise">flight</mat-icon>
+
+                    <span class="col-10 title-header" routerLink="/{{article.id}}">{{ article.title }}</span>
+
+                </div>
+                <div class="row col-md-7 justify-content-around no-gutters info">
+                    <span class="col-sm-4">{{getPrice(article)}}</span>
+                    <span class="col-sm-4" [matTooltip]="getLocationTooltip(article.locationNames)" [matTooltipDisabled]="article.locationNames.length == 1">{{getLocation(article.locationNames)}}</span>
+                    <span class="col-sm-4">{{ article.date | date:'dd.MM.yyyy' }}</span>
+                </div>
             </div>
         </div>
     </div>
-</div>

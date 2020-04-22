@@ -4,6 +4,7 @@ import { Article } from '../types/article';
 import { SellerInfo } from '../types/seller';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import {articles} from '../../assets/dummyDaten/dummy-articles'
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class ArticleService {
 
   constructor(private http: HttpClient) { }
 
-  getArticles(): Observable<Article[]> {
+  getArticles(): any {
+    return of(articles);
     return this.http.get<Article[]>('http://52.29.200.187/api/V3/articles?lat=54.354576638586884&lng=12.706493139266968&distance=10000000&page=0&size=10');
   }
 

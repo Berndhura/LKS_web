@@ -1,4 +1,4 @@
-<!-- Header in der app component wegen SideNav, obwohl ich diese momentan rausgenommen habe :D -->
+<!-- Header in der app component wegen SideNav, obwohl ich diese momentan rausgenommen habe :D
 
 <mat-sidenav-container>
     <mat-sidenav #sidenav role="navigation">
@@ -25,7 +25,6 @@
         <div class="header">
             
             <div class="header-left">
-                <!-- <mat-icon (click)="sidenav.toggle()">menu</mat-icon> -->
                 <h2 routerLink="/about">Luftkraftsport</h2>
                 <img *ngIf="true" src="../../assets/images/Logo.png" width="70" height="70" routerLink="/about">
             </div>
@@ -47,4 +46,17 @@
             <app-footer></app-footer>
         </main>
     </mat-sidenav-content>
-</mat-sidenav-container>
+</mat-sidenav-container> -->
+
+
+<app-header></app-header>
+
+<main>
+    <div class="content">
+        <router-outlet></router-outlet>
+        <hr>
+        <app-footer></app-footer>
+    </div>
+</main>
+
+

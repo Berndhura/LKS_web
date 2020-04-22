@@ -1,11 +1,15 @@
 export class Article {
     id: number;
+    category = '';
+    subcategory = '';
+    zustand = '';
     title = '';
     description = '';
     urls = '';
     userId = '';
     price: number;
-    locationName = '';
+    priceStatus = '';
+    locationNames: string[];
     distance: number;
     date: Date = new Date();
     views: number;

@@ -26,6 +26,7 @@ import { environment } from '../environments/environment';
 import { ImpressumComponent } from './impressum/impressum.component';
 import { UserComponent } from './user/user.component';
 import { ProductSelectComponent } from './product-select/product-select.component';
+import { HeaderComponent } from './header/header.component';
 
 const config = new AuthServiceConfig([
 {
@@ -56,7 +57,8 @@ export function provideConfig() {
       SignupComponent,
       ImpressumComponent,
       UserComponent,
-      ProductSelectComponent
+      ProductSelectComponent,
+      HeaderComponent
    ],
    imports: [
       BrowserModule,

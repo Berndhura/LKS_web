@@ -1,0 +1,26 @@
+<div class="header">
+            
+    <div class="header-left">
+        <h3>Luftkraftsport</h3>
+        <img *ngIf="true" src="../../assets/images/Logo.png" width="70" height="70" routerLink="/about">
+        <div>
+            <h6 class="about-us" routerLink="/about">Über uns</h6>
+        </div>
+    </div>
+
+    
+    
+    
+    <div class="header-right">
+        <div class="navs"><mat-icon>list</mat-icon><span routerLink="/articles">Übersicht</span></div>
+        <div style="width: 1rem;"></div>
+        <div class="navs" *ngIf="false"><mat-icon>person</mat-icon><span routerLink="/login">Anmelden</span></div>
+        <div style="width: 1rem;" *ngIf="false"></div>
+        <div class="navs"><mat-icon>monetization_on</mat-icon><span routerLink="/create">Verkaufen</span></div>
+        <div style="width: 1rem;"></div>
+        <img class="mat-card-avatar profile" src="../../assets/images/profilbild.jpg" width="50" height="50" routerLink="/user">
+        <button mat-icon-button (click)="logout()">
+            <mat-icon>logout</mat-icon>
+        </button>
+    </div>
+</div>

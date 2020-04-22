@@ -1,32 +1,53 @@
 .card {
     border: 1px solid rgba(0,0,0,.125);
     border-radius: 5px;
-    margin-top: 15px;
+    margin-top: 5px;
 }
 
 .card-body {
+    padding: 5px;
+}
+
+.img-container {
     display: flex;
-    padding: 15px;
+    margin: 0 auto;
+    align-items: center;
 }
 
-.continue-reading {
-    padding: 15px;
+.product-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
-.meta-info {
-    padding: 15px;
+.title {
+    display: flex;
+    align-items: center;
 }
 
-.description {
-    padding: 15px;
+.title-header {
+    font-weight: bold;
+    cursor: pointer;
 }
 
-h3 {
-    font-size: 22px;
-    padding-left: 15px;
+.info {
+    align-items: center;
 }
 
 img {
-    max-height: 200px;
+    max-height: 130px;
+    max-width: 120px;
     border-radius: 15px;
+}
+
+.mat-card-avatar {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    object-fit: cover;
+  }
+
+mat-icon {
+    cursor: default;
 }
