@@ -1,17 +1,19 @@
 <br>
 
-<app-product-select></app-product-select>
+<app-product-select [selectedProduct]="selectedProduct" (selectedProductChange)="productChange($event)"></app-product-select>
 
     <mat-form-field>
       <mat-label>Suche</mat-label>
-      <input matInput [(ngModel)]="suche">
+      <input matInput [(ngModel)]="filterSearch" (ngModelChange)="onSearchChange($event)">
     </mat-form-field>
 
-
-    <div class="card" *ngFor="let article of articles">
+    <div *ngIf="filteredArticles.length == 0">
+        <span class="no-articles">Leider gibt es für deine Auswahl momentan keine Anzeigen!</span>
+    </div>
+    <div class="card" *ngFor="let article of filteredArticles">
         <div class="card-body row">
             <div class="col-3 col-md-2" class="img-container">
-                <img src ={{article.uri}} />
+                <img src ={{getPictureUrl(article.pictureIds[0])}} />
             </div>
             <div class="col-2 col-md-1 product-container">
                 <img  class="mat-card-avatar" [src]="getProduct(article.category).src" [matTooltip]="getProduct(article.category).label">

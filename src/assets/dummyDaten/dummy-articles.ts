@@ -12,7 +12,7 @@ export const articles = {
     priceStatus: 'VB',
     locationNames : ['Greifswald', 'Leipzig'],
     distance : 6207,
-    date : 1581761272146,
+    date : new Date(1581761272146),
     views : 3,
     location : {
       type : 'Point',
@@ -33,7 +33,7 @@ export const articles = {
     priceStatus: 'FP',
     locationNames : ['Leipzig'],
     distance : 82,
-    date : 1577372354466,
+    date : new Date(1577372354466),
     views : 12,
     location : {
       type : 'Point',
@@ -54,7 +54,7 @@ export const articles = {
     priceStatus: 'VB',
     locationNames : ['Hamburg'],
     distance : 82,
-    date : 1569875538809,
+    date : new Date(1569875538809),
     views : 51,
     location : {
       type : 'Point',
@@ -75,7 +75,7 @@ export const articles = {
     priceStatus: 'VB',
     locationNames : ['Greifswald'],
     distance : 315,
-    date : 1569859218652,
+    date : new Date(1569859218652),
     views : 20,
     location : {
       type : 'Point',
@@ -96,7 +96,7 @@ export const articles = {
     priceStatus: 'VB',
     locationNames : ['Greifswald'],
     distance : 82,
-    date : 1569858391055,
+    date : new Date(1569858391055),
     views : 12,
     location : {
       type : 'Point',
@@ -117,7 +117,7 @@ export const articles = {
     priceStatus: 'VB',
     locationNames : ['Dänemark'],
     distance : 42,
-    date : 1569258110031,
+    date : new Date(1569258110031),
     views : 29,
     location : {
       type : 'Point',

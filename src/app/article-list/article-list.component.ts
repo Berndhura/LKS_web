@@ -1,35 +1,54 @@
+import { pictureUrl } from './../configs/config';
+import { Product } from './../types/product';
+import { SelectionService } from './../services/selection.service';
 import { Component, OnInit } from '@angular/core';
 import { Article } from '../types/article';
 import { ArticleService } from '../services/article.service';
-import {products, subcategories} from '../configs/data-config'
-import { Product } from '../types/product';
+import {products, subcategories} from '../configs/data-config';
 
 @Component({
   selector: 'app-article-list',
   templateUrl: './article-list.component.html',
-  styleUrls: ['./article-list.component.css']
+  styleUrls: ['./article-list.component.scss']
 })
 export class ArticleListComponent implements OnInit {
 
   articles: Article[] = [];
-  suche: string;
+  filteredArticles: Article[] = [];
+  filterSearch = '';
+  selectedProduct: Product;
 
-  constructor(private articleService: ArticleService) { }
+  pictureUrl: string = pictureUrl;
+
+  constructor(private articleService: ArticleService, private selectionService: SelectionService) { }
 
   ngOnInit() {
     this.getArticles();
+    this.selectedProduct = this.selectionService.selectedProduct;
   }
 
   getArticles(): void {
-    this.articleService
-      .getArticles()
-      .subscribe(articles => {
-        this.articles = articles["ads"];
-        for (const article of this.articles) {
-          article.uri = 'http://52.29.200.187/api/V3/pictures/' + article.pictureIds[0];
-          article.date = new Date(article.date);
-        }
+    this.articleService.getArticles().subscribe(articles => {
+        this.articles = articles.ads;
+        this.onSearchChange(this.filterSearch);
         });
+  }
+
+  onSearchChange(search: string) {
+    const s = search.toLowerCase();
+    this.filteredArticles = this.articles.filter(article => {
+      const title = article.title.toLowerCase();
+      return title.includes(s);
+    });
+  }
+
+  productChange(product: Product) {
+    this.selectionService.selectedProduct = product;
+    this.getArticles();
+  }
+
+  getPictureUrl(pictureId: string): string {
+    return pictureUrl + pictureId;
   }
 
   getProduct(category: string): Product {

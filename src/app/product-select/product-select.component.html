@@ -1,7 +1,7 @@
     <div class="product-container">
-        <div *ngFor="let product of products" class="product">
-            <img  class="mat-card-avatar" [src]="product.src">
-            <span class="label">{{product.label}}</span>
+        <div *ngFor="let product of products" class="product" (click)="changeProduct(product)">
+            <img  class="mat-card-avatar {{product.product == selectedProduct?.product ? 'active-avatar' : ''}}" [src]="product.src">
+            <span class="label {{product.product == selectedProduct?.product ? 'active-label' : ''}}">{{product.label}}</span>
         </div>
     </div>
 

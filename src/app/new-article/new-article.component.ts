@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-new-article',
   templateUrl: './new-article.component.html',
-  styleUrls: ['./new-article.component.css']
+  styleUrls: ['./new-article.component.scss']
 })
 export class NewArticleComponent implements OnInit {
 
