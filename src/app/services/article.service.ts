@@ -1,3 +1,4 @@
+import { SelectionService } from './selection.service';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Article } from '../types/article';
@@ -11,11 +12,17 @@ import {articles} from '../../assets/dummyDaten/dummy-articles'
 })
 export class ArticleService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private selectionService: SelectionService) { }
 
+
+  // Dieser Endpunkt soll gefilterte Article liefern, die Filterung ist optional
   getArticles(): any {
-    return of(articles);
-    return this.http.get<Article[]>('http://52.29.200.187/api/V3/articles?lat=54.354576638586884&lng=12.706493139266968&distance=10000000&page=0&size=10');
+    const copyArticles = JSON.parse(JSON.stringify(articles));
+    if (this.selectionService.selectedProduct) {
+      copyArticles.ads = articles.ads.filter(article => article.category.includes(this.selectionService.selectedProduct.product));
+    }
+    return of(copyArticles);
+    // return this.http.get<Article[]>('http://52.29.200.187/api/V3/articles?lat=54.354576638586884&lng=12.706493139266968&distance=10000000&page=0&size=10');
   }
 
   getArticle(id: number): Observable<Article> {
