@@ -2,12 +2,12 @@
   <mat-card fxFlex="500px">
     <mat-card-header>
       <div mat-card-avatar class="user-header-image">
-        <img *ngIf="seller != null" mat-card-avatar [src]="seller.profilePictureUrl">
+        <img mat-card-avatar [src]="article.sellerProfilePictureUrl">
       </div>
       <mat-card-title> {{ article.title }} </mat-card-title>
     <mat-card-subtitle *ngIf="seller != null"> {{ seller.name }}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image [src]="article.uri">
+    <img mat-card-image [src]="getPictureUrl(article.pictureIds[0])">
     <mat-card-content>
       <p> {{ article.description }} </p>
       <p> Preis: {{ article.price }} € </p>

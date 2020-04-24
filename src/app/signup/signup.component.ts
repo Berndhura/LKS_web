@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthServiceEmail } from '../auth.service';
+import { AuthServiceEmail } from '../services/auth.service';
 import { AuthService, FacebookLoginProvider, SocialUser, GoogleLoginProvider } from 'ng4-social-login';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthServiceEmail } from '../auth.service';
+import { AuthServiceEmail } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',

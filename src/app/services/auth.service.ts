@@ -1,7 +1,9 @@
+import { user, seller } from './../../assets/dummyDaten/dummy-user';
+import { User, Seller } from './../types/user.model';
 import { Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { auth } from 'firebase/app';
-import { AuthData } from './auth-data.model';
+import { AuthData } from '../types/auth-data.model';
 import { Router } from '@angular/router';
 import { AngularFireAuth} from 'angularfire2/auth';
 
@@ -10,6 +12,9 @@ import { AngularFireAuth} from 'angularfire2/auth';
 export class AuthServiceEmail {
     private isAuthenticated = false;
     authChange = new Subject<boolean>();
+
+    user: User = user;
+    seller: Seller = seller;
 
     constructor(private router: Router, private afAuth: AngularFireAuth, private ngZone: NgZone) {
 

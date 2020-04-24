@@ -1,5 +1,6 @@
-export const articles = {
-  ads : [ {
+import { Article } from './../../app/types/article.model';
+export const articles: Article[] = [
+  {
     id : 6825,
     title : 'Severne 5.0 2018',
     category: 'windsurfing',
@@ -19,7 +20,11 @@ export const articles = {
       coordinates : [ 0.0, 0.0 ]
     },
     bookmarks : 1,
-    pictureIds : [ '6826' ]
+    pictureIds : [ '6826' ],
+    sellerName: 'Philipp',
+    sellerProfilePictureUrl: '../../assets/images/profilbild.jpg',
+    sellerMail: 'philippp.matzel@outlook.com',
+    sellerPhone: '01635687582',
   }, {
     id : 6803,
     title : 'Tabou 3s 80 L',
@@ -40,7 +45,11 @@ export const articles = {
       coordinates : [ 54.08654629999999, 13.3923414 ]
     },
     bookmarks : 1,
-    pictureIds : [ '6805' ]
+    pictureIds : [ '6805' ],
+    sellerName: 'Philipp',
+    sellerProfilePictureUrl: '../../assets/images/profilbild.jpg',
+    sellerMail: 'philippp.matzel@outlook.com',
+    sellerPhone: '01635687582',
   }, {
     id : 6769,
     title : 'North Evo 12 m2',
@@ -61,7 +70,11 @@ export const articles = {
       coordinates : [ 54.086546299999995, 13.3923414 ]
     },
     bookmarks : 1,
-    pictureIds : [ '6770', '6771', '6774' ]
+    pictureIds : [ '6770', '6771', '6774' ],
+    sellerName: 'Bernd',
+    sellerProfilePictureUrl: '../../assets/images/profilbild2.jpg',
+    sellerMail: 'bernd@outlook.com',
+    sellerPhone: '01735648292',
   }, {
     id : 6763,
     title : 'tankstutzen',
@@ -82,7 +95,11 @@ export const articles = {
       coordinates : [ 53.551084599999996, 9.9936819 ]
     },
     bookmarks : 1,
-    pictureIds : [ '6764', '6776' ]
+    pictureIds : [ '6764', '6776' ],
+    sellerName: 'Bernd',
+    sellerProfilePictureUrl: '../../assets/images/profilbild2.jpg',
+    sellerMail: 'bernd@outlook.com',
+    sellerPhone: '01735648292',
   }, {
     id : 6759,
     title : 'Defender nice',
@@ -103,7 +120,11 @@ export const articles = {
       coordinates : [ 54.086546299999995, 13.3923414 ]
     },
     bookmarks : 0,
-    pictureIds : [ '6760', '6761' ]
+    pictureIds : [ '6760', '6761' ],
+    sellerName: 'Bernd',
+    sellerProfilePictureUrl: '../../assets/images/profilbild2.jpg',
+    sellerMail: 'bernd@outlook.com',
+    sellerPhone: '01735648292',
   }, {
     id : 6748,
     title : 'Surfreise nach Dänemark',
@@ -124,10 +145,9 @@ export const articles = {
       coordinates : [ 53.97870483500941, 12.70294189453125 ]
     },
     bookmarks : 2,
-    pictureIds : [ '6749' ]
-  } ],
-  page : 0,
-  size : 10,
-  pages : 1,
-  total : 6
-};
+    pictureIds : [ '6749' ],
+    sellerName: 'Bernd',
+    sellerProfilePictureUrl: '../../assets/images/profilbild2.jpg',
+    sellerMail: 'bernd@outlook.com',
+    sellerPhone: '01735648292',
+  } ];

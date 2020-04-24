@@ -1,55 +1,4 @@
-<!-- Header in der app component wegen SideNav, obwohl ich diese momentan rausgenommen habe :D
-
-<mat-sidenav-container>
-    <mat-sidenav #sidenav role="navigation">
-        <mat-nav-list>
-            <div class="nav-header">
-                <h2>Luftkraftsport</h2>
-                <img *ngIf="true" src="../../assets/images/Logo.png" width="70" height="70">
-            </div>
-            <a mat-list-item routerLink="/articles" (click)="sidenav.close()">
-                <mat-icon>article</mat-icon>
-                <span class="nav-caption">Übersicht</span>
-            </a>
-            <a mat-list-item routerLink="/login" (click)="sidenav.close()">
-                <mat-icon>face</mat-icon>
-                <span class="nav-caption">Signup</span>
-            </a>
-            <a mat-list-item routerLink="/create" (click)="sidenav.close()">
-                <mat-icon>sell</mat-icon>
-                <span class="nav-caption">Verkaufen</span>
-            </a>
-        </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <div class="header">
-            
-            <div class="header-left">
-                <h2 routerLink="/about">Luftkraftsport</h2>
-                <img *ngIf="true" src="../../assets/images/Logo.png" width="70" height="70" routerLink="/about">
-            </div>
-            
-            
-            <div class="header-right">
-                <div class="nav-tabs"><mat-icon>list</mat-icon><h4 routerLink="/articles">Übersicht</h4></div>
-                <div class="nav-tabs" *ngIf="false"><mat-icon>person</mat-icon><h4 routerLink="/login">Anmelden</h4></div>
-                <div class="nav-tabs"><mat-icon>monetization_on</mat-icon><h4 routerLink="/create">Verkaufen</h4></div>
-                
-                <img class="mat-card-avatar profile" src="../../assets/images/profilbild.jpg" width="50" height="50" routerLink="/user">
-                <button mat-icon-button (click)="logout()">
-                    <mat-icon>logout</mat-icon>
-                </button>
-            </div>
-        </div>
-        <main>
-            <router-outlet></router-outlet>
-            <app-footer></app-footer>
-        </main>
-    </mat-sidenav-content>
-</mat-sidenav-container> -->
-
-
-<app-header></app-header>
+<app-header [currentSeller] = "currentSeller"></app-header>
 
 <main>
     <div class="content">
@@ -59,5 +8,3 @@
 
 <hr>
 <app-footer></app-footer>
-
-

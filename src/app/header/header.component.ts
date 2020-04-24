@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Seller } from './../types/user.model';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+
+  @Input() currentSeller: Seller;
 
   constructor() { }
 

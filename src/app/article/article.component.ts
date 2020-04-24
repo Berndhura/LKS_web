@@ -1,8 +1,9 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { Article } from '../types/article';
-import { SellerInfo } from '../types/seller';
+import { Article } from '../types/article.model';
+import { Seller } from '../types/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from '../services/article.service';
+import { pictureUrl } from '../configs/config';
 
 @Component({
   selector: 'app-article',
@@ -16,7 +17,7 @@ export class ArticleComponent implements OnInit, AfterViewInit {
   lat: any;
   lng: any;
   article: Article = null;
-  seller: SellerInfo = null;
+  seller: Seller = null;
   coordinates: any;
   mapOptions: any;
   marker: any;
@@ -36,12 +37,6 @@ export class ArticleComponent implements OnInit, AfterViewInit {
           return;
         }
         this.article = article;
-        this.article.uri = 'http://52.29.200.187/api/V3/pictures/' + article.pictureIds[0];
-        console.log(this.article);
-        this.articleService.getUserInfo(article.userId, 'token??').subscribe(seller => {
-          this.seller = seller;
-          console.log(this.seller);
-        });
       }
       );
     });
@@ -64,6 +59,10 @@ export class ArticleComponent implements OnInit, AfterViewInit {
     });
 
     this.mapInitializer();
+  }
+
+  getPictureUrl(pictureId: string): string {
+    return pictureUrl + pictureId;
   }
 
   mapInitializer() {

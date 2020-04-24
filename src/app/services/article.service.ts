@@ -1,8 +1,8 @@
 import { SelectionService } from './selection.service';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Article } from '../types/article';
-import { SellerInfo } from '../types/seller';
+import { Article } from '../types/article.model';
+import { Seller } from '../types/user.model';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import {articles} from '../../assets/dummyDaten/dummy-articles'
@@ -16,23 +16,24 @@ export class ArticleService {
 
 
   // Dieser Endpunkt soll gefilterte Article liefern, die Filterung ist optional
-  getArticles(): any {
-    const copyArticles = JSON.parse(JSON.stringify(articles));
+  getArticles(): Observable<Article[]> {
+    let copyArticles = JSON.parse(JSON.stringify(articles));
     if (this.selectionService.selectedProduct) {
-      copyArticles.ads = articles.ads.filter(article => article.category.includes(this.selectionService.selectedProduct.product));
+      copyArticles = articles.filter(article => article.category.includes(this.selectionService.selectedProduct.product));
     }
     return of(copyArticles);
     // return this.http.get<Article[]>('http://52.29.200.187/api/V3/articles?lat=54.354576638586884&lng=12.706493139266968&distance=10000000&page=0&size=10');
   }
 
-  getArticle(id: number): Observable<Article> {
-    //const articles: Article[] = ARTICLES.filter(a => a.id === id);
-    //return of(articles[0]);
-    return this.http.get<Article>('http://52.29.200.187/api/V3/articles/' + id);
+  getArticle(id: number): any {
+    const index = articles.findIndex(a => a.id == id);
+    const article = articles[index];
+    return of(article);
+    // return this.http.get<Article>('http://52.29.200.187/api/V3/articles/' + id);
   }
 
-  getUserInfo(userId: string, userToken: string): Observable<SellerInfo> {
-    return this.http.get<SellerInfo>('http://52.29.200.187/api/V3/users/' + userId + '/?token' + userToken);
+  getUserInfo(userId: string, userToken: string): Observable<Seller> {
+    return this.http.get<Seller>('http://52.29.200.187/api/V3/users/' + userId + '/?token' + userToken);
   }
 
   bookmarkArticle(articleId: number, token: string): Observable<any> {

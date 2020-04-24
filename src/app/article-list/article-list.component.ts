@@ -1,8 +1,8 @@
 import { pictureUrl } from './../configs/config';
-import { Product } from './../types/product';
+import { Product } from '../types/product.model';
 import { SelectionService } from './../services/selection.service';
 import { Component, OnInit } from '@angular/core';
-import { Article } from '../types/article';
+import { Article } from '../types/article.model';
 import { ArticleService } from '../services/article.service';
 import {products, subcategories} from '../configs/data-config';
 
@@ -29,7 +29,7 @@ export class ArticleListComponent implements OnInit {
 
   getArticles(): void {
     this.articleService.getArticles().subscribe(articles => {
-        this.articles = articles.ads;
+        this.articles = articles;
         this.onSearchChange(this.filterSearch);
         });
   }
