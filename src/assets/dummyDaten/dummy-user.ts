@@ -6,8 +6,11 @@ export const user: User = {
 };
 
 export const seller: Seller = {
+    id: '1',
     userId: '1',
     name: 'Philipp',
     profilePictureUrl: '../../assets/images/profilbild.jpg',
     product: 'windsurfing',
+    email: 'philipp.matzel@outlook.com',
+    bookmarks: [6769]
 }

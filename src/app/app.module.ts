@@ -21,7 +21,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
-import { AuthServiceEmail } from './services/auth.service';
+import { AuthServiceMail } from './services/auth.service';
 import { environment } from '../environments/environment';
 import { ImpressumComponent } from './impressum/impressum.component';
 import { UserComponent } from './user/user.component';
@@ -78,7 +78,7 @@ export function provideConfig() {
          provide: AuthServiceConfig,
          useFactory: provideConfig
       },
-      AuthServiceEmail
+      AuthServiceMail
    ],
    bootstrap: [
       AppComponent

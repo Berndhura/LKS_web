@@ -3,6 +3,7 @@ export class Article {
     category = '';
     subcategory = '';
     zustand = '';
+    shipping: boolean;
     title = '';
     description = '';
     urls = '';

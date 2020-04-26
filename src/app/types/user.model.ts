@@ -6,8 +6,11 @@ export interface User {
 }
 
 export class Seller {
+    id: string;
     userId: string;
     name: string;
     profilePictureUrl: string;
     product: string;
+    email: string;
+    bookmarks: number[];
 }

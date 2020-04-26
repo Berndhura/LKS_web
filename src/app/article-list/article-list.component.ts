@@ -1,10 +1,10 @@
 import { pictureUrl } from './../configs/config';
-import { Product } from '../types/product.model';
+import { Category } from '../types/category.model';
 import { SelectionService } from './../services/selection.service';
 import { Component, OnInit } from '@angular/core';
 import { Article } from '../types/article.model';
 import { ArticleService } from '../services/article.service';
-import {products, subcategories} from '../configs/data-config';
+import {categories, subcategories} from '../configs/data-config';
 
 @Component({
   selector: 'app-article-list',
@@ -16,7 +16,7 @@ export class ArticleListComponent implements OnInit {
   articles: Article[] = [];
   filteredArticles: Article[] = [];
   filterSearch = '';
-  selectedProduct: Product;
+  selectedCategory: Category;
 
   pictureUrl: string = pictureUrl;
 
@@ -24,7 +24,7 @@ export class ArticleListComponent implements OnInit {
 
   ngOnInit() {
     this.getArticles();
-    this.selectedProduct = this.selectionService.selectedProduct;
+    this.selectedCategory = this.selectionService.selectedCategory;
   }
 
   getArticles(): void {
@@ -42,8 +42,8 @@ export class ArticleListComponent implements OnInit {
     });
   }
 
-  productChange(product: Product) {
-    this.selectionService.selectedProduct = product;
+  categoryChange(category: Category) {
+    this.selectionService.selectedCategory = category;
     this.getArticles();
   }
 
@@ -51,13 +51,13 @@ export class ArticleListComponent implements OnInit {
     return pictureUrl + pictureId;
   }
 
-  getProduct(category: string): Product {
-    const selectedProduct = products.find(product => product.product === category);
+  getProduct(category: string): Category {
+    const selectedProduct = categories.find(c => c.id === category);
     return selectedProduct;
   }
 
   getSubCat(category: string, subcategory: string): any {
-    const selectedSubcategory = subcategories.find(s => (s.product === category && s.subcategory === subcategory));
+    const selectedSubcategory = subcategories.find(s => (s.category === category && s.id === subcategory));
     // if (!selectedSubcategory) {
     //   return '../../assets/images/questionmark.jpg';
     // }
@@ -66,13 +66,7 @@ export class ArticleListComponent implements OnInit {
   }
 
   getPrice(article: Article): string {
-    if (article.priceStatus === 'FP') {
-      return article.price + ' € FP';
-    } else if (article.priceStatus === 'VB' && article.price) {
-      return article.price + ' € VB';
-    } else if (!article.price) {
-      return 'VB';
-    }
+    return this.selectionService.getPrice(article);
   }
 
   getLocation(locations: string[]): string {

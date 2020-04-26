@@ -9,7 +9,7 @@ import { AngularFireAuth} from 'angularfire2/auth';
 
 
 @Injectable()
-export class AuthServiceEmail {
+export class AuthServiceMail {
     private isAuthenticated = false;
     authChange = new Subject<boolean>();
 

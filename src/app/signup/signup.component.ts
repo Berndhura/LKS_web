@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthServiceEmail } from '../services/auth.service';
+import { AuthServiceMail } from '../services/auth.service';
 import { AuthService, FacebookLoginProvider, SocialUser, GoogleLoginProvider } from 'ng4-social-login';
 
 @Component({
@@ -11,7 +11,7 @@ import { AuthService, FacebookLoginProvider, SocialUser, GoogleLoginProvider } f
 export class SignupComponent implements OnInit {
 
   constructor(
-    private authServiceEmail: AuthServiceEmail,
+    private authServiceEmail: AuthServiceMail,
     private socialAuthService: AuthService) {}
 
   public user: any = SocialUser;

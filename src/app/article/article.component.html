@@ -1,4 +1,61 @@
-<section class="open-article" fxLayout fxLayoutAlign="center">
+<div class="row article-container">
+  <div class="col-lg-6 article-left">
+    <div class="article-title">
+      <span>{{article.title}}</span>
+      <mat-icon class="bookmark-toggle" *ngIf="article.userId != user.userId && seller.bookmarks.indexOf(article.id) === -1" (click)="addBookmark(article.id)" matTooltip="Meiner Merkliste hinzufügen" matTooltipPosition="right">star_border</mat-icon>
+      <mat-icon class="bookmark-toggle" *ngIf="article.userId != user.userId && seller.bookmarks.indexOf(article.id) != -1" (click)="deleteBookmark(article.id)" matTooltip="Von Merkliste entfernen" matTooltipPosition="right">star</mat-icon>
+    </div>
+    <span>{{article.date | date:'dd.MM.yyyy'}}</span>
+    <span *ngIf="article.userId == user.userId" class="article-info">Beliebtheit deiner Anzeige: {{article.views}} <mat-icon matTooltip="Aufrufe" matTooltipPosition="right">visibility</mat-icon> {{article.bookmarks}} <mat-icon  matTooltip="Gemerkt" matTooltipPosition="right">star</mat-icon></span>
+    
+    <div class="category-info">
+      <span><img class="mat-card-avatar" mat-card-avatar [src]="category.src"> {{category.label}}</span>
+      <span><img mat-card-avatar [src]="'../../assets/images/products-windsurfing/sail.gif'"> {{'noch offen'}}</span>
+    </div>
+    <p>Zustand: {{article.zustand}}</p>
+    <p>Preis: {{getPrice(article)}}</p>
+    <!-- <p>Beschreibung:</p>
+    <p>{{article.description}}</p> -->
+    <div class="form-group">
+      <label for="comment">Beschreibung:</label>
+      <textarea class="form-control" rows="5" id="comment" disabled>{{article.description}}</textarea>
+    </div>
+    <p>Ort: {{getLocations(article.locationNames)}}</p>
+    <p>Distanz vom Homespot: xxx km</p>
+    <div #mapContainer id="map"></div>
+    <div class="contact">
+      <h5>Kontakt:</h5>
+      <div>
+        <img mat-card-avatar [src]="article.sellerProfilePictureUrl">
+        <span>{{article.sellerName}}</span>
+        <span *ngIf="article.sellerPhone">Tel.: {{article.sellerPhone}}</span>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Schreibe {{article.sellerName}} eine Mail:</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <div class="form-group">
+          <label for="sellerMail">Deine Mail Adresse:</label>
+          <input type="email" class="form-control" id="sellerMail" [value]="seller.email">
+        </div>
+        <button type="button" class="btn btn-primary" [disabled]="article.userId === user.userId"><mat-icon>send</mat-icon> Abschicken</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6 article-right">
+    <div class="selected-image-container">
+      <img class="selected-image" [src]="currentPictureUrl">
+    </div>
+    <div class="small-image-container">
+      <img *ngFor="let pictureId of article.pictureIds; let i = index" class="small-image {{pictureId === currentPictureId ? 'active-small-image' : ''}}" [src]="getPictureUrl(pictureId)" (click)="changeCurrentPicture(i)">
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- <section class="open-article" fxLayout fxLayoutAlign="center">
   <mat-card fxFlex="500px">
     <mat-card-header>
       <div mat-card-avatar class="user-header-image">
@@ -20,4 +77,4 @@
       <button mat-raised-button color="primary">BEARBEITEN</button>
     </mat-card-actions>
   </mat-card>
-</section>
+</section> -->

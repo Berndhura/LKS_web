@@ -1,6 +1,6 @@
-import { Product } from '../types/product.model';
+import { Category } from './../types/category.model';
+import { categories } from './../configs/data-config';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import {products} from '../configs/data-config'
 
 @Component({
   selector: 'app-product-select',
@@ -9,27 +9,27 @@ import {products} from '../configs/data-config'
 })
 export class ProductSelectComponent implements OnInit {
 
-  products: Product[] = products;
-  @Input() selectedProduct: Product;
-  @Output() selectedProductChange = new EventEmitter<Product>();
+  categories: Category[] = categories;
+  @Input() selectedCategory: Category;
+  @Output() selectedCategoryChange = new EventEmitter<Category>();
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  changeProduct(product: Product) {
-    if (this.selectedProduct) {
-      if (this.selectedProduct.product === product.product) {
-        this.selectedProduct = undefined;
+  changeCategory(category: Category) {
+    if (this.selectedCategory) {
+      if (this.selectedCategory.id === category.id) {
+        this.selectedCategory = undefined;
       } else {
-        this.selectedProduct = product;
+        this.selectedCategory = category;
       }
     } else {
-      this.selectedProduct = product;
+      this.selectedCategory = category;
     }
 
-    this.selectedProductChange.emit(this.selectedProduct);
+    this.selectedCategoryChange.emit(this.selectedCategory);
   }
 
 }
