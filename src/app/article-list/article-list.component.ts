@@ -1,10 +1,9 @@
-import { pictureUrl } from './../configs/config';
+import { Article } from './../types/article.model';
+import { Component, OnInit, Input } from '@angular/core';
 import { Category } from '../types/category.model';
-import { SelectionService } from './../services/selection.service';
-import { Component, OnInit } from '@angular/core';
-import { Article } from '../types/article.model';
-import { ArticleService } from '../services/article.service';
-import {categories, subcategories} from '../configs/data-config';
+import { categories, subcategories } from '../configs/data-config';
+import { pictureUrl } from '../configs/config';
+import { SelectionService } from '../services/selection.service';
 
 @Component({
   selector: 'app-article-list',
@@ -13,38 +12,11 @@ import {categories, subcategories} from '../configs/data-config';
 })
 export class ArticleListComponent implements OnInit {
 
-  articles: Article[] = [];
-  filteredArticles: Article[] = [];
-  filterSearch = '';
-  selectedCategory: Category;
+  @Input() filteredArticles: Article[];
 
-  pictureUrl: string = pictureUrl;
-
-  constructor(private articleService: ArticleService, private selectionService: SelectionService) { }
+  constructor(private selectionService: SelectionService) { }
 
   ngOnInit() {
-    this.getArticles();
-    this.selectedCategory = this.selectionService.selectedCategory;
-  }
-
-  getArticles(): void {
-    this.articleService.getArticles().subscribe(articles => {
-        this.articles = articles;
-        this.onSearchChange(this.filterSearch);
-        });
-  }
-
-  onSearchChange(search: string) {
-    const s = search.toLowerCase();
-    this.filteredArticles = this.articles.filter(article => {
-      const title = article.title.toLowerCase();
-      return title.includes(s);
-    });
-  }
-
-  categoryChange(category: Category) {
-    this.selectionService.selectedCategory = category;
-    this.getArticles();
   }
 
   getPictureUrl(pictureId: string): string {
@@ -80,4 +52,5 @@ export class ArticleListComponent implements OnInit {
   getLocationTooltip(locations: string[]): string {
     return locations.toString();
   }
+
 }

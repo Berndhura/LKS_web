@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FooterComponent } from './footer/footer.component';
-import { ArticleListComponent } from './article-list/article-list.component';
+import { ArticleOverviewComponent } from './article-overview/article-overview.component';
 import { AboutComponent } from './about/about.component';
 import { ArticleComponent } from './article/article.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -28,6 +28,7 @@ import { ImpressumComponent } from './impressum/impressum.component';
 import { UserComponent } from './user/user.component';
 import { ProductSelectComponent } from './product-select/product-select.component';
 import { HeaderComponent } from './header/header.component';
+import { ArticleListComponent } from './article-list/article-list.component';
 
 const config = new AuthServiceConfig([
 {
@@ -49,7 +50,7 @@ export function provideConfig() {
       AppComponent,
       NavBarComponent,
       FooterComponent,
-      ArticleListComponent,
+      ArticleOverviewComponent,
       AboutComponent,
       ArticleComponent,
       NotFoundComponent,
@@ -59,7 +60,8 @@ export function provideConfig() {
       ImpressumComponent,
       UserComponent,
       ProductSelectComponent,
-      HeaderComponent
+      HeaderComponent,
+      ArticleListComponent
    ],
    imports: [
       BrowserModule,

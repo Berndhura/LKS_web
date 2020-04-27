@@ -1,7 +1,7 @@
 import { UserComponent } from './user/user.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ArticleListComponent } from './article-list/article-list.component';
+import { ArticleOverviewComponent } from './article-overview/article-overview.component';
 import { AboutComponent } from './about/about.component';
 import { ArticleComponent } from './article/article.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -12,7 +12,7 @@ import { ImpressumComponent } from './impressum/impressum.component';
 
 
 const routes: Routes = [
-  { path: 'articles', component: ArticleListComponent},
+  { path: 'articles', component: ArticleOverviewComponent},
   { path: 'about', component: AboutComponent},
   { path: 'login', component: LoginComponent},
   { path: 'signup', component: SignupComponent},
@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'user', component: UserComponent},
   { path: 'impressum', component: ImpressumComponent},
   { path: '404', component: NotFoundComponent},
-  { path: '', component: ArticleListComponent},
+  { path: '', component: ArticleOverviewComponent},
   { path: ':key', component: ArticleComponent},
   { path: '**', component: NotFoundComponent}
 ];

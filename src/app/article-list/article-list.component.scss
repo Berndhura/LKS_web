@@ -8,10 +8,6 @@
     padding: 5px;
 }
 
-.article-list-container {
-    max-width: 900px;
-    margin:0 auto;
-}
 
 .img-container {
     display: flex;
@@ -55,8 +51,4 @@ img {
 
 mat-icon {
     cursor: default;
-}
-
-.no-articles {
-    font-weight: bold;
 }

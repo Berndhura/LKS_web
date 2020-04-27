@@ -1,3 +1,5 @@
+import { ArticleService } from './../services/article.service';
+import { Article } from './../types/article.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
-  constructor() { }
+  step = 1;
+  bookmarkedArticles: Article[];
+  ownerArticles: Article[];
+
+  constructor(private articleService: ArticleService) { }
 
   ngOnInit() {
+    this.articleService.getBookmarkedArticles().subscribe(articles => {
+      this.bookmarkedArticles = articles;
+    });
+
+    this.articleService.getOwnerArticles().subscribe(articles => {
+      this.ownerArticles = articles;
+    });
   }
 
+  setStep(index: number) {
+    this.step = index;
+  }
 }

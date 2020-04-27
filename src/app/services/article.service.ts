@@ -1,3 +1,4 @@
+import { AuthServiceMail } from './auth.service';
 import { SelectionService } from './selection.service';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
@@ -13,7 +14,7 @@ import {seller} from '../../assets/dummyDaten/dummy-user';
 })
 export class ArticleService {
 
-  constructor(private http: HttpClient, private selectionService: SelectionService) { }
+  constructor(private http: HttpClient, private selectionService: SelectionService, private authServiceMail: AuthServiceMail) { }
 
 
   // Dieser Endpunkt soll gefilterte Article liefern, die Filterung ist optional
@@ -27,6 +28,24 @@ export class ArticleService {
     // return this.http.get<Article[]>('http://52.29.200.187/api/V3/articles?lat=54.354576638586884&lng=12.706493139266968&distance=10000000&page=0&size=10');
   }
 
+  // Dieser Endpunkt liefert die Bookmarked Articles eines Users
+  // Benötigt Token
+  getBookmarkedArticles(): Observable<Article[]> {
+    const bookmarks = this.authServiceMail.seller.bookmarks;
+    let copyArticles = JSON.parse(JSON.stringify(articles));
+    copyArticles = articles.filter(article => bookmarks.indexOf(article.id) !== -1);
+    return of(copyArticles);
+  }
+
+  // Dieser Endpunkt liefert die Artikel eines Users
+  // Benötigt Token
+  getOwnerArticles(): Observable<Article[]> {
+    const user = this.authServiceMail.user.userId;
+    let copyArticles = JSON.parse(JSON.stringify(articles));
+    copyArticles = articles.filter(article => article.userId === user);
+    return of(copyArticles);
+  }
+
   // Dieser Endpunkt liefert einen Artikel
   // Views und Bookmarks nur mit gültigem Token
   getArticle(id: number): any {
@@ -37,6 +56,7 @@ export class ArticleService {
   }
 
   // Dieser Endpunkt fügt einem Artikel +1 Bookmark hinzu und einem seller eine articleID in Bookmarks
+  // Benötigt Token
   addBookmarkArticle(articleId: number, sellerId: string) {
     const index = articles.findIndex(a => a.id == articleId);
     articles[index].bookmarks = articles[index].bookmarks + 1;
@@ -44,6 +64,7 @@ export class ArticleService {
   }
 
   // Dieser Endpunkt fügt einem Artikel -1 Bookmark hinzu und löscht dem Seller die ArticleID in Bookmarks
+  // Benötigt Token
   deleteBookmarkArticle(articleId: number, sellerId: string) {
     const index = articles.findIndex(a => a.id == articleId);
     articles[index].bookmarks = articles[index].bookmarks - 1;
@@ -51,6 +72,7 @@ export class ArticleService {
   }
 
   // Endpunkt soll Mail abschicken
+  // Benötigt Token
   sendMessage(sellerMail: string, senderMail: string, message: string) {
     console.log('Mail: ', sellerMail, senderMail, message);
   }
