@@ -12,20 +12,23 @@
       <span><img class="mat-card-avatar" mat-card-avatar [src]="category.src"> {{category.label}}</span>
       <span><img mat-card-avatar [src]="'../../assets/images/products-windsurfing/sail.gif'"> {{'noch offen'}}</span>
     </div>
-    <p>Zustand: {{article.zustand}}</p>
-    <p>Preis: {{getPrice(article)}}</p>
+    <p><b>Zustand:</b> {{article.zustand}}</p>
+    <p><b>Preis:</b> {{getPrice(article)}}</p>
     <!-- <p>Beschreibung:</p>
     <p>{{article.description}}</p> -->
     <div class="form-group">
-      <label for="comment">Beschreibung:</label>
+      <label for="comment"><b>Beschreibung:</b></label>
       <textarea class="form-control" rows="5" id="comment" disabled>{{article.description}}</textarea>
     </div>
-    <p>Ort: {{getLocations(article.locationNames)}}</p>
-    <p>Distanz vom Homespot: xxx km</p>
-    <div #mapContainer id="map"></div>
+    <p><b>Ort:</b> {{getLocations(article.locationNames)}}</p>
+    <p><b>Distanz vom Homespot:</b> xxx km</p>
+    <div class="map-container">
+      <div #mapContainer id="map"></div>
+    </div>
+    
     <div class="contact">
-      <h5>Kontakt:</h5>
-      <div>
+      <h5><b>Kontakt:</b></h5>
+      <div class="contact-info">
         <img mat-card-avatar [src]="article.sellerProfilePictureUrl">
         <span>{{article.sellerName}}</span>
         <span *ngIf="article.sellerPhone">Tel.: {{article.sellerPhone}}</span>
@@ -33,11 +36,11 @@
       <div class="form-group">
         <label for="exampleFormControlTextarea1">Schreibe {{article.sellerName}} eine Mail:</label>
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        <div class="form-group">
+        <div class="form-group mail-info">
           <label for="sellerMail">Deine Mail Adresse:</label>
           <input type="email" class="form-control" id="sellerMail" [value]="seller.email">
         </div>
-        <button type="button" class="btn btn-primary" [disabled]="article.userId === user.userId"><mat-icon>send</mat-icon> Abschicken</button>
+        <button type="button" class="send-button" [disabled]="article.userId === user.userId"><mat-icon>email</mat-icon>Senden</button>
       </div>
     </div>
   </div>
