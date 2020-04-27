@@ -54,7 +54,7 @@ export const articles: Article[] = [
     sellerPhone: '01635687582',
   }, {
     id : 6769,
-    title : 'North Evo 12 m2',
+    title : 'North Evolution 12 m2 2020 xxxxx',
     category: 'kitesurfing',
     subcategory: 'Kite',
     zustand: 'neu',

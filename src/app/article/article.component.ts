@@ -8,6 +8,7 @@ import { Seller, User } from '../types/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from '../services/article.service';
 import { pictureUrl } from '../configs/config';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-article',
@@ -32,6 +33,11 @@ export class ArticleComponent implements OnInit, AfterViewInit {
   category: Category;
   subcategory: Subcategory;
 
+  mailForm = new FormGroup({
+    message: new FormControl('', Validators.required),
+    sender: new FormControl('', [Validators.required, Validators.email]),
+  });
+
   constructor(
     private route: ActivatedRoute,
     private authServiceMail: AuthServiceMail,
@@ -42,6 +48,10 @@ export class ArticleComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.seller = this.authServiceMail.seller;
+    this.mailForm.setValue({
+      message: '',
+      sender: this.seller.email,
+   });
     this.user = this.authServiceMail.user;
     this.route.params.subscribe(params => {
       const key = params.key;
@@ -76,6 +86,10 @@ export class ArticleComponent implements OnInit, AfterViewInit {
     });
 
     this.mapInitializer();
+  }
+
+  onSubmit() {
+    this.articleService.sendMessage(this.article.sellerMail, this.mailForm.value.sender, this.mailForm.value.message);
   }
 
   getCategory(article: Article) {

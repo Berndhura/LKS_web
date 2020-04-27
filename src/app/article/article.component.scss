@@ -1,7 +1,7 @@
 .article-container {
     max-width: 1600px;
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-left: 5px;
+    margin-right: 5px;
     margin-top: 20px;
 }
 
@@ -53,6 +53,12 @@
                 margin-left: 10px;
             }
         }
+        form {
+            .ng-invalid.ng-touched {
+                border: 1px solid red;
+            }
+        }
+
     }
 
     .mail-info {
@@ -71,6 +77,10 @@
         padding: 10px;
         cursor: pointer;
     }
+    .send-button:disabled {
+        background-color: #AADAFF;
+        cursor: not-allowed;
+    }
 }
 
 .article-right {
@@ -78,15 +88,18 @@
     border-radius: 10px;
     .selected-image-container {
         display: flex;
-        height: 600px;
+        // max-height: 600px;
         align-items: center;
         justify-content: center;
         margin-top: 5px;
 
     }
     .selected-image {
+        height: auto;
+        width: 98%;
         max-height: 600px;
         border-radius: 15px;
+        object-fit: scale-down;
     }
 
     .small-image-container {
@@ -97,17 +110,20 @@
         flex-wrap: wrap
     }
     .small-image {
-        max-height: 120px;
-        max-width: 120px;
-        border-radius: 15px;
+        height: 120px;
+        width: 100px;
         margin: 5px;
         cursor: pointer;
         border: 2px solid;
         border-color: white;
+        object-fit: scale-down;
     }
 
     .active-small-image {
+        border: none;
+        border-bottom: 2px solid;
         border-color: #3F51B5;
+        padding: 5px;
     }
 
 
@@ -133,4 +149,17 @@ p {
 #map {
     height: 200px;
     width: 350px;
+}
+
+
+
+
+  @media only screen and (max-width: 630px)  {
+    
+    .article-title {
+        span {
+            font-size: x-large !important;
+        }
+    }
+
 }

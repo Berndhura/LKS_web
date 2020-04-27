@@ -17,6 +17,7 @@ export class ArticleService {
 
 
   // Dieser Endpunkt soll gefilterte Article liefern, die Filterung ist optional
+  // Views und Bookmarks hier nicht mitschicken
   getArticles(): Observable<Article[]> {
     let copyArticles = JSON.parse(JSON.stringify(articles));
     if (this.selectionService.selectedCategory) {
@@ -27,6 +28,7 @@ export class ArticleService {
   }
 
   // Dieser Endpunkt liefert einen Artikel
+  // Views und Bookmarks nur mit gültigem Token
   getArticle(id: number): any {
     const index = articles.findIndex(a => a.id == id);
     const article = articles[index];
@@ -41,12 +43,17 @@ export class ArticleService {
     seller.bookmarks.push(articleId);
   }
 
-    // Dieser Endpunkt fügt einem Artikel -1 Bookmark hinzu und löscht dem Seller die ArticleID in Bookmarks
-    deleteBookmarkArticle(articleId: number, sellerId: string) {
-      const index = articles.findIndex(a => a.id == articleId);
-      articles[index].bookmarks = articles[index].bookmarks - 1;
-      seller.bookmarks.splice(seller.bookmarks.indexOf(articleId), 1);
-    }
+  // Dieser Endpunkt fügt einem Artikel -1 Bookmark hinzu und löscht dem Seller die ArticleID in Bookmarks
+  deleteBookmarkArticle(articleId: number, sellerId: string) {
+    const index = articles.findIndex(a => a.id == articleId);
+    articles[index].bookmarks = articles[index].bookmarks - 1;
+    seller.bookmarks.splice(seller.bookmarks.indexOf(articleId), 1);
+  }
+
+  // Endpunkt soll Mail abschicken
+  sendMessage(sellerMail: string, senderMail: string, message: string) {
+    console.log('Mail: ', sellerMail, senderMail, message);
+  }
 
 
 
