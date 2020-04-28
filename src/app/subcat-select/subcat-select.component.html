@@ -1,0 +1,10 @@
+<hr>
+<p *ngIf="subcategories.length === 0">Bitte wähle zunächst eine Kategorie oben aus</p>
+
+<div class="subcat-container">
+    <div *ngFor="let subcat of subcategories" class="subcat">
+        <img  class="mat-card-avatar {{subcat.id == selectedSubcategory?.id ? 'active-avatar' : ''}}" [src]="subcat.src" (click)="selectSubcat(subcat)">
+        <span class="{{subcat.id == selectedSubcategory?.id ? 'active-span' : ''}}" (click)="selectSubcat(subcat)">{{subcat.label}}</span>
+    </div>
+</div>
+

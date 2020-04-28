@@ -1,5 +1,5 @@
+import { Subcategory, Category } from './../types/category.model';
 import { pictureUrl } from '../configs/config';
-import { Category } from '../types/category.model';
 import { SelectionService } from '../services/selection.service';
 import { Component, OnInit } from '@angular/core';
 import { Article } from '../types/article.model';
@@ -17,6 +17,9 @@ export class ArticleOverviewComponent implements OnInit {
   filteredArticles: Article[] = [];
   filterSearch = '';
   selectedCategory: Category;
+  selectedSubcategory: Subcategory;
+  subcategories: Subcategory[] = [];
+  subcatVisible = false;
 
   pictureUrl: string = pictureUrl;
 
@@ -25,6 +28,10 @@ export class ArticleOverviewComponent implements OnInit {
   ngOnInit() {
     this.getArticles();
     this.selectedCategory = this.selectionService.selectedCategory;
+    this.selectedSubcategory = this.selectionService.selectedSubcategory;
+    if (this.selectedCategory) {
+      this.subcategories = subcategories.filter(sub => sub.category === this.selectedCategory.id);
+    }
   }
 
   getArticles(): void {
@@ -44,6 +51,24 @@ export class ArticleOverviewComponent implements OnInit {
 
   categoryChange(category: Category) {
     this.selectionService.selectedCategory = category;
+    this.selectedCategory = category;
+    if (!this.selectedCategory) {
+      this.subcategories = [];
+    } else {
+      this.subcategories = subcategories.filter(sub => sub.category === this.selectedCategory.id);
+    }
+    this.selectedSubcategory = null;
+    this.selectionService.selectedSubcategory = null;
     this.getArticles();
+  }
+
+  selectedSubcategoryChange(subcategory: Subcategory) {
+    this.selectedSubcategory = subcategory;
+    this.selectionService.selectedSubcategory = subcategory;
+    this.getArticles();
+  }
+
+  toggleSubcat() {
+    this.subcatVisible = !this.subcatVisible;
   }
 }

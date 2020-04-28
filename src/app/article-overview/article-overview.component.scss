@@ -6,3 +6,21 @@
 .no-articles {
     font-weight: bold;
 }
+
+.overview-input {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.subcat-filter {
+    min-width: 145px;
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 8px;
+    background-color: #3F51B5;
+    border: 2px solid black;
+    border-radius: 5px;
+}

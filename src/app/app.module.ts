@@ -29,6 +29,7 @@ import { UserComponent } from './user/user.component';
 import { ProductSelectComponent } from './product-select/product-select.component';
 import { HeaderComponent } from './header/header.component';
 import { ArticleListComponent } from './article-list/article-list.component';
+import { SubcatSelectComponent } from './subcat-select/subcat-select.component';
 
 const config = new AuthServiceConfig([
 {
@@ -61,7 +62,8 @@ export function provideConfig() {
       UserComponent,
       ProductSelectComponent,
       HeaderComponent,
-      ArticleListComponent
+      ArticleListComponent,
+      SubcatSelectComponent
    ],
    imports: [
       BrowserModule,

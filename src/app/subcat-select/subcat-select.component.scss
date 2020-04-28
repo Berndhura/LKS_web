@@ -1,0 +1,40 @@
+.subcat-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.subcat {
+    height: 80px;
+    width: 100px;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    span {
+        font-weight: bold;
+        cursor: pointer;
+    }
+}
+
+.mat-card-avatar {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid white;
+  }
+
+  .active-avatar {
+      border: 2px solid #3F51B5;
+  }
+
+  .active-span {
+      color: #3F51B5;
+  }
+

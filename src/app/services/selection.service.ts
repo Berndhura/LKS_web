@@ -1,3 +1,4 @@
+import { Subcategory } from './../types/category.model';
 import { Category } from '../types/category.model';
 import { Injectable } from '@angular/core';
 import { Article } from '../types/article.model';
@@ -8,6 +9,7 @@ import { Article } from '../types/article.model';
 export class SelectionService {
 
   selectedCategory: Category;
+  selectedSubcategory: Subcategory;
 
   constructor() { }
 

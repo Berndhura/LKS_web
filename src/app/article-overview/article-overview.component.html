@@ -2,13 +2,24 @@
 
 <app-product-select [selectedCategory]="selectedCategory" (selectedCategoryChange)="categoryChange($event)"></app-product-select>
 
+
+
 <div class="article-list-container">
-    <mat-form-field>
-        <mat-label>Suche</mat-label>
-        <input matInput [(ngModel)]="filterSearch" (ngModelChange)="onSearchChange($event)">
-      </mat-form-field>
-  
+    <hr>
+    <div class="overview-input">
+        <mat-form-field >
+            <mat-label>Suche</mat-label>
+            <input matInput [(ngModel)]="filterSearch" (ngModelChange)="onSearchChange($event)">
+        </mat-form-field>
+        <div >
+            ORDER
+        </div>
+        <button class="subcat-filter" (click)="toggleSubcat()"><mat-icon *ngIf="subcatVisible">keyboard_arrow_down</mat-icon><mat-icon *ngIf="!subcatVisible">keyboard_arrow_right</mat-icon><span *ngIf="selectedSubcategory">{{selectedSubcategory.label}}</span><span *ngIf="!selectedSubcategory">Weiterer Filter</span></button>
+    </div>
+
+    <app-subcat-select *ngIf="subcatVisible" [subcategories]="subcategories" [selectedSubcategory]="selectedSubcategory" (selectedSubcategoryChange)="selectedSubcategoryChange($event)"></app-subcat-select>
       <div *ngIf="filteredArticles.length == 0">
+          <hr>
           <span class="no-articles">Leider gibt es für deine Auswahl momentan keine Anzeigen!</span>
       </div>
       <app-article-list [filteredArticles]="filteredArticles"></app-article-list>

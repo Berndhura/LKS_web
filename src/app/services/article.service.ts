@@ -1,3 +1,4 @@
+import { Subcategory } from './../types/category.model';
 import { AuthServiceMail } from './auth.service';
 import { SelectionService } from './selection.service';
 import { Injectable } from '@angular/core';
@@ -18,11 +19,16 @@ export class ArticleService {
 
 
   // Dieser Endpunkt soll gefilterte Article liefern, die Filterung ist optional
+  // Filter: 1. Category, 2. Subcategory
   // Views und Bookmarks hier nicht mitschicken
+  // Kein Token wird benötigt
   getArticles(): Observable<Article[]> {
     let copyArticles = JSON.parse(JSON.stringify(articles));
     if (this.selectionService.selectedCategory) {
       copyArticles = articles.filter(article => article.category.includes(this.selectionService.selectedCategory.id));
+      if (this.selectionService.selectedSubcategory) {
+        copyArticles = copyArticles.filter(article => article.subcategory.includes(this.selectionService.selectedSubcategory.id));
+      }
     }
     return of(copyArticles);
     // return this.http.get<Article[]>('http://52.29.200.187/api/V3/articles?lat=54.354576638586884&lng=12.706493139266968&distance=10000000&page=0&size=10');
@@ -30,6 +36,7 @@ export class ArticleService {
 
   // Dieser Endpunkt liefert die Bookmarked Articles eines Users
   // Benötigt Token
+  // ORDER BY Date DESC
   getBookmarkedArticles(): Observable<Article[]> {
     const bookmarks = this.authServiceMail.seller.bookmarks;
     let copyArticles = JSON.parse(JSON.stringify(articles));
@@ -39,6 +46,7 @@ export class ArticleService {
 
   // Dieser Endpunkt liefert die Artikel eines Users
   // Benötigt Token
+  // ORDER BY Date DESC
   getOwnerArticles(): Observable<Article[]> {
     const user = this.authServiceMail.user.userId;
     let copyArticles = JSON.parse(JSON.stringify(articles));
@@ -47,7 +55,7 @@ export class ArticleService {
   }
 
   // Dieser Endpunkt liefert einen Artikel
-  // Views und Bookmarks nur mit gültigem Token
+  // Views und Bookmarks nur mit gültigem Token mitliefern
   getArticle(id: number): any {
     const index = articles.findIndex(a => a.id == id);
     const article = articles[index];
