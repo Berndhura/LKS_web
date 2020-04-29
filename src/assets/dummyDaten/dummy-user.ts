@@ -10,7 +10,9 @@ export const seller: Seller = {
     userId: '1',
     name: 'Philipp',
     profilePictureUrl: '../../assets/images/profilbild.jpg',
-    product: 'windsurfing',
+    categoryId: 'windsurfing',
     email: 'philipp.matzel@outlook.com',
-    bookmarks: [6769]
-}
+    homespot: 'Greifswald',
+    phone: '01635687582',
+    bookmarks: [6769],
+};

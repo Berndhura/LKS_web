@@ -15,3 +15,84 @@
     max-width: 1000px;
     margin-top: 20px;
 }
+
+mat-panel-title {
+  font-weight: bold;
+  font-size: large;
+}
+
+p {
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+input {
+  height: 40px;
+  width: 300px;
+  margin-left: 50px;
+  padding: 10px;
+  border: 1px solid #3F51B5;
+  border-radius: 5px;
+}
+
+.person-container {
+  mat-icon {
+    transform: scale(1.7);
+    margin-left: 20px;
+    cursor: pointer;
+  }
+
+  .location {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.personal {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  label {
+    margin-bottom: 0px;
+  }
+
+  .mat-card-avatar {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    object-fit: cover;
+    margin-left: 20px;
+    cursor: pointer;
+  }
+  .image-upload>input {
+    display: none;
+  }
+}
+
+.save-button {
+  margin-top: 30px;
+  max-width: 145px;
+  color: white;
+  padding: 8px;
+  background-color: #3F51B5;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+@media only screen and (max-width: 700px)  {
+  input {
+    width: 205px;
+    margin-left: 5px;
+  }
+
+  .mat-card-avatar {
+    height: 50px !important;
+    width: 50px !important;
+    margin-left: 10px !important;
+  }
+}
+
+
+

@@ -10,7 +10,37 @@
               <mat-icon>account_circle</mat-icon>
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <p>Hello</p>
+          <hr>
+          <div class="person-container">
+            <p>Meine Surfkollegen nennen mich:</p>
+            <div class="personal">
+              <input [(ngModel)]="seller.name" (ngModelChange)="onProfileChange()" placeholder="Name">
+  
+              <div class="image-upload">
+                <label for="file-input">
+                  <img class="mat-card-avatar" [src]="seller.profilePictureUrl"/>
+                </label>
+                <input id="file-input" type="file" (change)="handleFileInput($event.target.files)"/>
+              </div>
+            </div>
+  
+            <p>Ich interessiere mich hauptsächlich für:</p>
+            <app-product-select [selectedCategory]="seller.category" (selectedCategoryChange)="categoryChange($event)"></app-product-select>
+  
+            <p>Mein Homespot liegt bei:</p>
+            <div class="location">
+              <input [(ngModel)]="seller.homespot" (ngModelChange)="onProfileChange()" placeholder="Stadt"><mat-icon  matTooltip="Bestimme meine Position automatisch" matTooltipPosition="right">gps_fixed</mat-icon>
+            </div>
+  
+            <p>Kontak über Mail: <i class="fas fa-info-circle fa-lg" matTooltip="Deine Mail-Adresse wird niemals veröffentlicht!" matTooltipPosition="right"></i></p>
+            <input [(ngModel)]="seller.email" (ngModelChange)="onProfileChange()" placeholder="Mail-Adresse">
+  
+            <p>Kontakt über Handy: <i class="fas fa-info-circle fa-lg" matTooltip="Handynummer Anzeigen kann optional beim Erstellen einer Anzeige gewählt werden" matTooltipPosition="right"></i></p>
+            <input [(ngModel)]="seller.phone" (ngModelChange)="onProfileChange()" placeholder="Handynummer">
+
+            <br>
+            <button (click)="saveSeller()" class="save-button">Speichern</button>
+          </div>
         </mat-expansion-panel>
 
 

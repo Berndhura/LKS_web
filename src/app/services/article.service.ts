@@ -19,8 +19,11 @@ export class ArticleService {
 
 
   // Dieser Endpunkt soll gefilterte Article liefern, die Filterung ist optional
+  // alle benötigten Parameter sind im SelectionService hinterlegt
   // Filter: 1. Category, 2. Subcategory
+  // Order: 1. Desc oder Asc 2. date oder price
   // Views und Bookmarks hier nicht mitschicken
+  // Emails der verkäufer verschlüsseln bzw. eigentlich brauchen wir die hier nicht
   // Kein Token wird benötigt
   getArticles(): Observable<Article[]> {
     let copyArticles = JSON.parse(JSON.stringify(articles));
@@ -35,6 +38,7 @@ export class ArticleService {
   }
 
   // Dieser Endpunkt liefert die Bookmarked Articles eines Users
+  // Auch hier Emails der Verkäufer verschlüsseln oder garnicht erst mitschicken
   // Benötigt Token
   // ORDER BY Date DESC
   getBookmarkedArticles(): Observable<Article[]> {

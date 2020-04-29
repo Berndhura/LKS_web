@@ -1,5 +1,4 @@
-import { Article } from './article.model';
-
+import { Category } from './category.model';
 export interface User {
     email: string;
     userId: string;
@@ -9,8 +8,11 @@ export class Seller {
     id: string;
     userId: string;
     name: string;
-    profilePictureUrl: string;
-    product: string;
+    profilePictureUrl?: string;
+    category?: Category;
+    categoryId?: string;
+    homespot?: string;
     email: string;
-    bookmarks: number[];
+    phone?: string;
+    bookmarks?: number[];
 }

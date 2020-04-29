@@ -1,5 +1,8 @@
 <hr>
-<p *ngIf="subcategories.length === 0">Bitte wähle zunächst eine Kategorie oben aus</p>
+<div class="error-cat">
+    <p *ngIf="subcategories.length === 0"><b>Bitte wähle zunächst eine Kategorie oben aus</b></p>
+</div>
+
 
 <div class="subcat-container">
     <div *ngFor="let subcat of subcategories" class="subcat">

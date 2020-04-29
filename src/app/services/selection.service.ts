@@ -11,6 +11,9 @@ export class SelectionService {
   selectedCategory: Category;
   selectedSubcategory: Subcategory;
 
+  descOrder = true;
+  orderValue = 'date';
+
   constructor() { }
 
 

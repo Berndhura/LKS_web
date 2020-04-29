@@ -21,6 +21,9 @@ export class ArticleOverviewComponent implements OnInit {
   subcategories: Subcategory[] = [];
   subcatVisible = false;
 
+  descOrder: boolean;
+  orderValue: string;
+
   pictureUrl: string = pictureUrl;
 
   constructor(private articleService: ArticleService, private selectionService: SelectionService) { }
@@ -32,6 +35,9 @@ export class ArticleOverviewComponent implements OnInit {
     if (this.selectedCategory) {
       this.subcategories = subcategories.filter(sub => sub.category === this.selectedCategory.id);
     }
+    this.descOrder = this.selectionService.descOrder;
+    this.orderValue = this.selectionService.orderValue;
+
   }
 
   getArticles(): void {
@@ -65,6 +71,23 @@ export class ArticleOverviewComponent implements OnInit {
   selectedSubcategoryChange(subcategory: Subcategory) {
     this.selectedSubcategory = subcategory;
     this.selectionService.selectedSubcategory = subcategory;
+    this.getArticles();
+  }
+
+  setDesc() {
+    this.descOrder = true;
+    this.selectionService.descOrder = true;
+    this.getArticles();
+  }
+
+  setAsc() {
+    this.descOrder = false;
+    this.selectionService.descOrder = false;
+    this.getArticles();
+  }
+
+  orderValueChange(orderValue) {
+    this.selectionService.orderValue = orderValue;
     this.getArticles();
   }
 

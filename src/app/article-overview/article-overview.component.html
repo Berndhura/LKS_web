@@ -7,14 +7,22 @@
 <div class="article-list-container">
     <hr>
     <div class="overview-input">
-        <mat-form-field >
-            <mat-label>Suche</mat-label>
-            <input matInput [(ngModel)]="filterSearch" (ngModelChange)="onSearchChange($event)">
-        </mat-form-field>
-        <div >
-            ORDER
+        <div class="mb">
+            <input class="search" [(ngModel)]="filterSearch" (ngModelChange)="onSearchChange($event)" placeholder="Suche">
         </div>
-        <button class="subcat-filter" (click)="toggleSubcat()"><mat-icon *ngIf="subcatVisible">keyboard_arrow_down</mat-icon><mat-icon *ngIf="!subcatVisible">keyboard_arrow_right</mat-icon><span *ngIf="selectedSubcategory">{{selectedSubcategory.label}}</span><span *ngIf="!selectedSubcategory">Weiterer Filter</span></button>
+        <div class="order-container mb">
+            <div class="{{descOrder ? 'active-order' : ''}}" (click)="setDesc()">
+                <i class="fas fa-sort-amount-down fa-lg"></i>
+            </div>
+            <div class="{{descOrder ? '' : 'active-order'}}" (click)="setAsc()">
+                <i class="fas fa-sort-amount-down-alt fa-lg"></i>
+            </div>
+            <select [(ngModel)]="orderValue" (ngModelChange)="orderValueChange($event)">
+                <option ngValue="date">Datum</option>
+                <option ngValue="price">Preis</option>
+            </select>
+        </div>
+        <button class="subcat-filter mb" (click)="toggleSubcat()"><mat-icon *ngIf="subcatVisible">keyboard_arrow_down</mat-icon><mat-icon *ngIf="!subcatVisible">keyboard_arrow_right</mat-icon><span *ngIf="selectedSubcategory">{{selectedSubcategory.label}}</span><span *ngIf="!selectedSubcategory">Weiterer Filter</span></button>
     </div>
 
     <app-subcat-select *ngIf="subcatVisible" [subcategories]="subcategories" [selectedSubcategory]="selectedSubcategory" (selectedSubcategoryChange)="selectedSubcategoryChange($event)"></app-subcat-select>

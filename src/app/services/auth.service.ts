@@ -1,3 +1,4 @@
+import { categories } from './../configs/data-config';
 import { user, seller } from './../../assets/dummyDaten/dummy-user';
 import { User, Seller } from './../types/user.model';
 import { Injectable, NgZone } from '@angular/core';
@@ -17,8 +18,20 @@ export class AuthServiceMail {
     seller: Seller = seller;
 
     constructor(private router: Router, private afAuth: AngularFireAuth, private ngZone: NgZone) {
-
+        this.setSellerCategory(this.seller);
     }
+
+    setSellerCategory(currentSeller: Seller) {
+        const index = categories.findIndex(c => c.id === currentSeller.categoryId);
+        this.seller.category = categories[index];
+    }
+
+    // Endpunkt der ein Update des Seller durchführt
+    // Token wird benötigt
+    updateSeller() {
+        console.log('Endpunkt Update Seller: ', this.seller);
+    }
+
 
     registerUser(authData: AuthData) {
         this.afAuth.auth.createUserWithEmailAndPassword(authData.email, authData.password)
