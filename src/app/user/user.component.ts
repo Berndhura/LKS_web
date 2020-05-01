@@ -1,9 +1,17 @@
+import { UploadService } from './../services/upload.service';
 import { Category } from './../types/category.model';
 import { AuthServiceMail } from './../services/auth.service';
 import { Seller } from './../types/user.model';
 import { ArticleService } from './../services/article.service';
 import { Article } from './../types/article.model';
 import { Component, OnInit } from '@angular/core';
+import { HttpClient  } from '@angular/common/http';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
+
+declare var require: any;
+const ipLocation = require('../../../node_modules/iplocation');
+
+
 
 @Component({
   selector: 'app-user',
@@ -18,7 +26,16 @@ export class UserComponent implements OnInit {
 
   seller: Seller;
 
-  constructor(private articleService: ArticleService, private authServiceMail: AuthServiceMail) { }
+  sellerForm = new FormGroup({
+    name: new FormControl('', Validators.required),
+    mail: new FormControl('', [Validators.required, Validators.email]),
+  });
+
+  constructor(
+    private articleService: ArticleService,
+    private authServiceMail: AuthServiceMail,
+    private httpClient: HttpClient,
+    private uploadService: UploadService) { }
 
   ngOnInit() {
     this.articleService.getBookmarkedArticles().subscribe(articles => {
@@ -42,6 +59,7 @@ export class UserComponent implements OnInit {
 
   handleFileInput(file) {
     console.log(file);
+    this.uploadService.uploadImage(file);
   }
 
   categoryChange(category: Category) {
@@ -50,7 +68,29 @@ export class UserComponent implements OnInit {
     this.authServiceMail.seller = this.seller;
   }
 
+  getLocation() {
+    this.httpClient.get('http://api.ipify.org/?format=json').subscribe((res: any) => {
+      ipLocation(res.ip).then(location => {
+        this.seller.homespot = location.city;
+      });
+    });
+
+    // const geocoder = new google.maps.Geocoder();
+
+    // navigator.geolocation.getCurrentPosition(position => {
+    //   const latlng = {
+    //     lat: position.coords.latitude,
+    //     lng: position.coords.longitude
+    //   };
+
+    //   geocoder.geocode({location: latlng}, results => {
+    //     console.log(results);
+    //    });
+    // });
+  }
+
   saveSeller() {
+    console.log(this.sellerForm);
     this.authServiceMail.updateSeller();
   }
 }

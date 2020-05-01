@@ -71,6 +71,13 @@ input {
   }
 }
 
+.person-container {
+  .ng-invalid {
+    border: 1px solid red;
+  }
+}
+
+
 .save-button {
   margin-top: 30px;
   max-width: 145px;
@@ -79,6 +86,11 @@ input {
   background-color: #3F51B5;
   border: 2px solid black;
   border-radius: 5px;
+}
+
+.save-button:disabled {
+  cursor: not-allowed;
+  background-color: #AADAFF;
 }
 
 @media only screen and (max-width: 700px)  {

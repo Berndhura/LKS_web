@@ -11,10 +11,11 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <hr>
+          <div [formGroup]="sellerForm">
           <div class="person-container">
             <p>Meine Surfkollegen nennen mich:</p>
             <div class="personal">
-              <input [(ngModel)]="seller.name" (ngModelChange)="onProfileChange()" placeholder="Name">
+              <input class="form-control" [(ngModel)]="seller.name" (ngModelChange)="onProfileChange()" placeholder="Name" formControlName="name">
   
               <div class="image-upload">
                 <label for="file-input">
@@ -29,18 +30,19 @@
   
             <p>Mein Homespot liegt bei:</p>
             <div class="location">
-              <input [(ngModel)]="seller.homespot" (ngModelChange)="onProfileChange()" placeholder="Stadt"><mat-icon  matTooltip="Bestimme meine Position automatisch" matTooltipPosition="right">gps_fixed</mat-icon>
+              <input [(ngModel)]="seller.homespot" [ngModelOptions]="{standalone: true}" (ngModelChange)="onProfileChange()" placeholder="Stadt"><mat-icon  matTooltip="Bestimme meine Position automatisch" matTooltipPosition="right" (click)="getLocation()">gps_fixed</mat-icon>
             </div>
   
             <p>Kontak über Mail: <i class="fas fa-info-circle fa-lg" matTooltip="Deine Mail-Adresse wird niemals veröffentlicht!" matTooltipPosition="right"></i></p>
-            <input [(ngModel)]="seller.email" (ngModelChange)="onProfileChange()" placeholder="Mail-Adresse">
+            <input class="form-control" [(ngModel)]="seller.email"  (ngModelChange)="onProfileChange()" placeholder="Mail-Adresse" formControlName="mail">
   
             <p>Kontakt über Handy: <i class="fas fa-info-circle fa-lg" matTooltip="Handynummer Anzeigen kann optional beim Erstellen einer Anzeige gewählt werden" matTooltipPosition="right"></i></p>
-            <input [(ngModel)]="seller.phone" (ngModelChange)="onProfileChange()" placeholder="Handynummer">
+            <input [(ngModel)]="seller.phone" [ngModelOptions]="{standalone: true}" (ngModelChange)="onProfileChange()" placeholder="Handynummer">
 
             <br>
-            <button (click)="saveSeller()" class="save-button">Speichern</button>
+            <button (click)="saveSeller()" class="save-button" [disabled]="sellerForm.invalid">Speichern</button>
           </div>
+        </div>
         </mat-expansion-panel>
 
 

@@ -1,3 +1,4 @@
+import { AngularFireStorage } from '@angular/fire/storage';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,7 +18,7 @@ import { LoginComponent } from './login/login.component';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider} from 'ng4-social-login';
 import { NewArticleComponent } from './new-article/new-article.component';
 import { MaterialModule } from './material.module';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFirestoreModule, AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { FormsModule } from '@angular/forms';
@@ -30,6 +31,7 @@ import { ProductSelectComponent } from './product-select/product-select.componen
 import { HeaderComponent } from './header/header.component';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { SubcatSelectComponent } from './subcat-select/subcat-select.component';
+
 
 const config = new AuthServiceConfig([
 {
@@ -84,7 +86,9 @@ export function provideConfig() {
          provide: AuthServiceConfig,
          useFactory: provideConfig
       },
-      AuthServiceMail
+      AuthServiceMail,
+      AngularFirestore,
+      AngularFireStorage
    ],
    bootstrap: [
       AppComponent

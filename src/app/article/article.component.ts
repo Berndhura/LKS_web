@@ -117,6 +117,12 @@ export class ArticleComponent implements OnInit, AfterViewInit {
   mapInitializer() {
     this.map = new google.maps.Map(this.gmap.nativeElement, this.mapOptions);
     this.marker.setMap(this.map);
+
+    const geocoder = new google.maps.Geocoder();
+    
+    geocoder.geocode({address: 'Leipzig'}, location => {
+      console.log(location);
+  });
   }
 
   changeCurrentPicture(index: number) {
