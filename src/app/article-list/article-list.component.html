@@ -20,7 +20,7 @@
             </div>
             <div class="row col-md-7 justify-content-around no-gutters info">
                 <span class="col-sm-4">{{getPrice(article)}}</span>
-                <span class="col-sm-4" [matTooltip]="getLocationTooltip(article.locationNames)" [matTooltipDisabled]="article.locationNames.length == 1">{{getLocation(article.locationNames)}}</span>
+                <span class="col-sm-4" [matTooltip]="getLocationTooltip(article.locations)" [matTooltipDisabled]="article.locations.length == 1">{{getLocation(article.locations)}}</span>
                 <span class="col-sm-4">{{ article.date | date:'dd.MM.yyyy' }}</span>
             </div>
         </div>

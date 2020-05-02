@@ -14,23 +14,26 @@
           <div [formGroup]="sellerForm">
           <div class="person-container">
             <p>Meine Surfkollegen nennen mich:</p>
+            <span class="errorPictureMessage">{{errorPictureMessage}}</span>
             <div class="personal">
               <input class="form-control" [(ngModel)]="seller.name" (ngModelChange)="onProfileChange()" placeholder="Name" formControlName="name">
   
               <div class="image-upload">
                 <label for="file-input">
-                  <img class="mat-card-avatar" [src]="seller.profilePictureUrl"/>
+                  <img *ngIf="!imgURL" class="mat-card-avatar" [src]="seller.profilePictureUrl"/>
+                  <img *ngIf="imgURL" class="mat-card-avatar" [src]="imgURL"/>
                 </label>
                 <input id="file-input" type="file" (change)="handleFileInput($event.target.files)"/>
               </div>
             </div>
+            
   
             <p>Ich interessiere mich hauptsächlich für:</p>
             <app-product-select [selectedCategory]="seller.category" (selectedCategoryChange)="categoryChange($event)"></app-product-select>
   
             <p>Mein Homespot liegt bei:</p>
             <div class="location">
-              <input [(ngModel)]="seller.homespot" [ngModelOptions]="{standalone: true}" (ngModelChange)="onProfileChange()" placeholder="Stadt"><mat-icon  matTooltip="Bestimme meine Position automatisch" matTooltipPosition="right" (click)="getLocation()">gps_fixed</mat-icon>
+              <input [(ngModel)]="seller.homespot.name" [ngModelOptions]="{standalone: true}" (ngModelChange)="onProfileChange()" placeholder="Stadt"><mat-icon  matTooltip="Bestimme meine Position automatisch" matTooltipPosition="right" (click)="getLocation()">gps_fixed</mat-icon>
             </div>
   
             <p>Kontak über Mail: <i class="fas fa-info-circle fa-lg" matTooltip="Deine Mail-Adresse wird niemals veröffentlicht!" matTooltipPosition="right"></i></p>

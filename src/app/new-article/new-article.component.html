@@ -1,30 +1,55 @@
-<section class="signup-form">
-  <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px" #f="ngForm" (ngSubmit)="onSubmit(f)">
-    <mat-form-field>
-      <input 
-        type="text" 
-        matInput 
-        placeholder="Titel" 
-        ngModel name="title"
-        required>
-    </mat-form-field>
-    <mat-form-field>
-      <input 
-        type="text" 
-        matInput 
-        placeholder="Beschreibung" 
-        ngModel 
-        name="description"
-        required
-        minlength="6">
-    </mat-form-field>
-    <mat-form-field>
-      <input
-        type="file"
-        matInput
-        (change)="onFileSelected($event)"
-        #fileInput>
-    </mat-form-field>
-    <button type="submit" mat-raised-button color="primary">Submit</button>
-  </form>
-</section>
+<div class="form-container">
+  <p>Wähle eine Kategorie:</p>
+  <app-product-select [selectedCategory]="seller.category"></app-product-select>
+
+  <hr>
+
+  <p>Wähle eine Unterkategorie?</p>
+  <app-subcat-select [subcategories]="subcategories" [selectedSubcategory]="selectedSubcategory"></app-subcat-select>
+
+  <hr>
+
+  <div class="text-container">
+    <p>Titel der Anzeige:</p>
+    <input placeholder="Titel">
+  
+    <p>Beschreibung</p>
+    <textarea rows="3" placeholder="Schreibe hier Einzelheiten zu deinem Artikel"></textarea>
+
+    <p>Wie ist der Zustand?</p>
+    <select>
+      <option *ngFor="let zustand of zustandList">{{zustand}}</option>
+    </select>
+
+    <p>Wieviel soll es kosten?</p>
+    <div class="price">
+      <input placeholder="Preis in Euro">
+      <select>
+        <option>Verhandlungsbasis</option>
+        <option>Festpreis</option>
+      </select>
+    </div>
+
+    <p>Wo ist dein Standort?</p>
+    <input class="location" placeholder="Stadt">
+
+    <app-location-map></app-location-map>
+
+    <p>Ist Versand möglich?</p>
+    <select>
+      <option>Versand und Abholung</option>
+      <option>Nur Abholung</option>
+    </select>
+
+    <div>
+      <p>Fotos</p>
+    </div>
+
+    <p>Kontaktiert wirst du über deine Mail</p>
+    <input placeholder="Mail-Adresse">
+
+    <p>Zusätzlich auch deine Telefonnummer zeigen?</p>
+    <input placeholder="Handynummer">
+
+  </div>
+</div>

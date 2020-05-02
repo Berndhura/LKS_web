@@ -25,6 +25,7 @@
         <button class="subcat-filter mb" (click)="toggleSubcat()"><mat-icon *ngIf="subcatVisible">keyboard_arrow_down</mat-icon><mat-icon *ngIf="!subcatVisible">keyboard_arrow_right</mat-icon><span *ngIf="selectedSubcategory">{{selectedSubcategory.label}}</span><span *ngIf="!selectedSubcategory">Weiterer Filter</span></button>
     </div>
 
+    <hr>
     <app-subcat-select *ngIf="subcatVisible" [subcategories]="subcategories" [selectedSubcategory]="selectedSubcategory" (selectedSubcategoryChange)="selectedSubcategoryChange($event)"></app-subcat-select>
       <div *ngIf="filteredArticles.length == 0">
           <hr>

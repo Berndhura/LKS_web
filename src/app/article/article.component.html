@@ -20,12 +20,11 @@
       <label for="comment"><b>Beschreibung:</b></label>
       <textarea class="form-control" rows="5" id="comment" disabled>{{article.description}}</textarea>
     </div>
-    <p><b>Ort:</b> {{getLocations(article.locationNames)}}</p>
+    <p><b>Ort:</b> {{getLocations(article.locations)}}</p>
     <p><b>Distanz vom Homespot:</b> xxx km</p>
-    <div class="map-container">
-      <div #mapContainer id="map"></div>
-    </div>
-    
+
+    <app-location-map [locations]="article.locations"></app-location-map>
+
     <div class="contact">
       <h5><b>Kontakt:</b></h5>
       <div class="contact-info">

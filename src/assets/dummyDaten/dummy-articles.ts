@@ -12,14 +12,13 @@ export const articles: Article[] = [
     userId : '1',
     price : 22.0,
     priceStatus: 'VB',
-    locationNames : ['Greifswald', 'Leipzig'],
     distance : 6207,
     date : new Date(1581761272146),
     views : 3,
-    location : {
-      type : 'Point',
-      coordinates : [ 0.0, 0.0 ]
-    },
+    locations : [
+      {name: 'Leipzig', lat: 51.337475662965204, lng: 12.389831542968748},
+      {name: 'Greifswald', lat: 54.093630810050485, lng: 13.382720947265625},
+    ],
     bookmarks : 1,
     pictureIds : [ '6826', '6770', '6749', '6774', '6805', '6764' ],
     sellerName: 'Philipp',
@@ -38,14 +37,13 @@ export const articles: Article[] = [
     userId : '1',
     price : 999.0,
     priceStatus: 'FP',
-    locationNames : ['Leipzig'],
     distance : 82,
     date : new Date(1577372354466),
     views : 12,
-    location : {
-      type : 'Point',
-      coordinates : [ 54.08654629999999, 13.3923414 ]
-    },
+    locations : [
+      {name: 'Leipzig', lat: 51.337475662965204, lng: 12.389831542968748},
+      {name: 'Greifswald', lat: 54.093630810050485, lng: 13.382720947265625},
+    ],
     bookmarks : 1,
     pictureIds : [ '6805' ],
     sellerName: 'Philipp',
@@ -64,14 +62,13 @@ export const articles: Article[] = [
     userId : '1532423',
     price : 126.0,
     priceStatus: 'VB',
-    locationNames : ['Hamburg'],
     distance : 82,
     date : new Date(1569875538809),
     views : 51,
-    location : {
-      type : 'Point',
-      coordinates : [ 54.086546299999995, 13.3923414 ]
-    },
+    locations : [
+      {name: 'Leipzig', lat: 51.337475662965204, lng: 12.389831542968748},
+      {name: 'Greifswald', lat: 54.093630810050485, lng: 13.382720947265625},
+    ],
     bookmarks : 1,
     pictureIds : [ '6770', '6771', '6774' ],
     sellerName: 'Bernd',
@@ -90,14 +87,13 @@ export const articles: Article[] = [
     userId : '10208246429418599',
     price : 44.0,
     priceStatus: 'VB',
-    locationNames : ['Greifswald'],
     distance : 315,
     date : new Date(1569859218652),
     views : 20,
-    location : {
-      type : 'Point',
-      coordinates : [ 53.551084599999996, 9.9936819 ]
-    },
+    locations : [
+      {name: 'Leipzig', lat: 51.337475662965204, lng: 12.389831542968748},
+      {name: 'Greifswald', lat: 54.093630810050485, lng: 13.382720947265625},
+    ],
     bookmarks : 1,
     pictureIds : [ '6764', '6776' ],
     sellerName: 'Bernd',
@@ -116,14 +112,13 @@ export const articles: Article[] = [
     userId : '10208246429418599',
     price : 1234.0,
     priceStatus: 'VB',
-    locationNames : ['Greifswald'],
     distance : 82,
     date : new Date(1569858391055),
     views : 12,
-    location : {
-      type : 'Point',
-      coordinates : [ 54.086546299999995, 13.3923414 ]
-    },
+    locations : [
+      {name: 'Leipzig', lat: 51.337475662965204, lng: 12.389831542968748},
+      {name: 'Greifswald', lat: 54.093630810050485, lng: 13.382720947265625},
+    ],
     bookmarks : 0,
     pictureIds : [ '6760', '6761' ],
     sellerName: 'Bernd',
@@ -142,14 +137,13 @@ export const articles: Article[] = [
     userId : '6746',
     price : 12333.0,
     priceStatus: 'VB',
-    locationNames : ['Dänemark'],
     distance : 42,
     date : new Date(1569258110031),
     views : 29,
-    location : {
-      type : 'Point',
-      coordinates : [ 53.97870483500941, 12.70294189453125 ]
-    },
+    locations : [
+      {name: 'Leipzig', lat: 51.337475662965204, lng: 12.389831542968748},
+      {name: 'Greifswald', lat: 54.093630810050485, lng: 13.382720947265625},
+    ],
     bookmarks : 2,
     pictureIds : [ '6749' ],
     sellerName: 'Bernd',

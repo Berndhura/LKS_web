@@ -1,16 +1,12 @@
-import { UploadService } from './../services/upload.service';
+import { LocationService } from './../services/location.service';
+import { SelectionService } from './../services/selection.service';
 import { Category } from './../types/category.model';
 import { AuthServiceMail } from './../services/auth.service';
 import { Seller } from './../types/user.model';
 import { ArticleService } from './../services/article.service';
-import { Article } from './../types/article.model';
-import { Component, OnInit } from '@angular/core';
-import { HttpClient  } from '@angular/common/http';
+import { Article, LocationData } from './../types/article.model';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-
-declare var require: any;
-const ipLocation = require('../../../node_modules/iplocation');
-
 
 
 @Component({
@@ -24,6 +20,10 @@ export class UserComponent implements OnInit {
   bookmarkedArticles: Article[];
   ownerArticles: Article[];
 
+  imgURL: any;
+  imgFile: File;
+  errorPictureMessage: string;
+
   seller: Seller;
 
   sellerForm = new FormGroup({
@@ -34,8 +34,9 @@ export class UserComponent implements OnInit {
   constructor(
     private articleService: ArticleService,
     private authServiceMail: AuthServiceMail,
-    private httpClient: HttpClient,
-    private uploadService: UploadService) { }
+    private selectionService: SelectionService,
+    private locationService: LocationService,
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.articleService.getBookmarkedArticles().subscribe(articles => {
@@ -47,6 +48,8 @@ export class UserComponent implements OnInit {
     });
 
     this.seller = this.authServiceMail.seller;
+
+    this.selectionService.percentageLoading.subscribe(console.log);
   }
 
   setStep(index: number) {
@@ -57,9 +60,25 @@ export class UserComponent implements OnInit {
     this.authServiceMail.seller = this.seller;
   }
 
-  handleFileInput(file) {
-    console.log(file);
-    this.uploadService.uploadImage(file);
+  handleFileInput(files) {
+    this.errorPictureMessage = null;
+    // this.uploadService.uploadImage(file);
+    if (files.length === 0) {
+      return;
+    }
+
+    const mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+        this.errorPictureMessage = 'Bitte wähle ein Bild aus';
+        return;
+      }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = () => {
+        this.imgURL = reader.result;
+      };
+    this.imgFile = files[0];
   }
 
   categoryChange(category: Category) {
@@ -69,28 +88,16 @@ export class UserComponent implements OnInit {
   }
 
   getLocation() {
-    this.httpClient.get('http://api.ipify.org/?format=json').subscribe((res: any) => {
-      ipLocation(res.ip).then(location => {
-        this.seller.homespot = location.city;
-      });
+    const self = this;
+    this.locationService.getLocationByIp((location: LocationData) => {
+      console.log(location);
+      this.seller.homespot = location;
+      self.ref.detectChanges();
     });
-
-    // const geocoder = new google.maps.Geocoder();
-
-    // navigator.geolocation.getCurrentPosition(position => {
-    //   const latlng = {
-    //     lat: position.coords.latitude,
-    //     lng: position.coords.longitude
-    //   };
-
-    //   geocoder.geocode({location: latlng}, results => {
-    //     console.log(results);
-    //    });
-    // });
   }
 
   saveSeller() {
     console.log(this.sellerForm);
-    this.authServiceMail.updateSeller();
+    this.authServiceMail.updateSeller(this.imgFile);
   }
 }

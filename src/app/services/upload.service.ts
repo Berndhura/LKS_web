@@ -1,8 +1,8 @@
+import { SelectionService } from './selection.service';
 import { Injectable } from '@angular/core';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { finalize, tap } from 'rxjs/operators';
+import { last, concatMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,27 +10,25 @@ import { finalize, tap } from 'rxjs/operators';
 export class UploadService {
 
   task: AngularFireUploadTask;
-  percentage: Observable<number>;
-  snapshot: Observable<any>;
-  downloadURL;
+  snapshot$: Observable<any>;
 
-  constructor(private storage: AngularFireStorage, private db: AngularFirestore) { }
+  constructor(private storage: AngularFireStorage, private selectionService: SelectionService) { }
 
-  uploadImage(file) {
-    const path = `test/${Date.now()}_${file.name}`;
+  uploadImage(file: File, userId: string): Observable<any> {
+    const path = 'users/' + userId + '/profilepicture';
+    // const path = `test/${Date.now()}_${file.name}`;
     const ref = this.storage.ref(path);
-    this.task = this.storage.upload(path, file[0]);
+    this.task = this.storage.upload(path, file);
 
-    // this.percentage = this.task.percentageChanges();
+    this.task.percentageChanges().subscribe(loading => {
+      this.selectionService.percentageLoading.next(loading);
+    });
 
-    this.task.snapshotChanges().pipe(
-      // The file's download URL
-      finalize( async () =>  {
-        this.downloadURL = await ref.getDownloadURL().toPromise();
-        console.log(this.downloadURL);
+    this.snapshot$ = this.task.snapshotChanges().pipe(
+      last(),
+      concatMap(() => ref.getDownloadURL())
+    );
 
-        // this.db.collection('files').add( { downloadURL: this.downloadURL, path });
-      }),
-    ).subscribe();
+    return this.snapshot$;
   }
 }

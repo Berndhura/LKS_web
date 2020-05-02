@@ -1,3 +1,4 @@
+import { UploadService } from './upload.service';
 import { categories } from './../configs/data-config';
 import { user, seller } from './../../assets/dummyDaten/dummy-user';
 import { User, Seller } from './../types/user.model';
@@ -17,7 +18,7 @@ export class AuthServiceMail {
     user: User = user;
     seller: Seller = seller;
 
-    constructor(private router: Router, private afAuth: AngularFireAuth, private ngZone: NgZone) {
+    constructor(private router: Router, private afAuth: AngularFireAuth, private ngZone: NgZone, private uploadService: UploadService) {
         this.setSellerCategory(this.seller);
     }
 
@@ -28,8 +29,17 @@ export class AuthServiceMail {
 
     // Endpunkt der ein Update des Seller durchführt
     // Token wird benötigt
-    updateSeller() {
-        console.log('Endpunkt Update Seller: ', this.seller);
+    updateSeller(imgFile: File) {
+        if (imgFile) {
+            this.uploadService.uploadImage(imgFile, this.user.userId).subscribe(imgUrl => {
+                this.seller.profilePictureUrl = imgUrl;
+                console.log('neuesImg:', imgUrl);
+                console.log('Endpunkt Update Seller: ', this.seller);
+            });
+        } else {
+            console.log('altesImg:', this.seller.profilePictureUrl);
+            console.log('Endpunkt Update Seller: ', this.seller);
+        }
     }
 
 

@@ -1,3 +1,4 @@
+import { LocationData } from './../types/article.model';
 import { AuthServiceMail } from './../services/auth.service';
 import { SelectionService } from './../services/selection.service';
 import { Category, Subcategory } from './../types/category.model';
@@ -15,20 +16,14 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.scss']
 })
-export class ArticleComponent implements OnInit, AfterViewInit {
+export class ArticleComponent implements OnInit {
 
-  @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
-  map: google.maps.Map;
-  lat: any;
-  lng: any;
   article: Article = null;
   user: User;
   seller: Seller;
   currentPictureUrl: string;
   currentPictureId: string;
-  coordinates: any;
-  mapOptions: any;
-  marker: any;
+
 
   category: Category;
   subcategory: Subcategory;
@@ -69,24 +64,7 @@ export class ArticleComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
-    this.lat = this.article.location.coordinates[0];
-    this.lng = this.article.location.coordinates[1];
 
-    this.coordinates = new google.maps.LatLng(this.lat, this.lng);
-
-    this.mapOptions  = {
-      center: this.coordinates,
-      zoom: 8
-    };
-
-    this.marker = new google.maps.Marker({
-      position: this.coordinates,
-      map: this.map,
-    });
-
-    this.mapInitializer();
-  }
 
   onSubmit() {
     this.articleService.sendMessage(this.article.sellerMail, this.mailForm.value.sender, this.mailForm.value.message);
@@ -100,9 +78,15 @@ export class ArticleComponent implements OnInit, AfterViewInit {
     this.subcategory = subcategories[index];
   }
 
-  getLocations(locations: string[]): string {
-      let location = locations.toString();
-      location = location.replace(',', ', ');
+  getLocations(locations: LocationData[]): string {
+      let location = '';
+      locations.forEach((loc, index) => {
+        if (index === locations.length - 1) {
+          location = location + loc.name;
+         } else {
+          location = location + loc.name + ', ';
+         }
+      });
       return location;
   }
 
@@ -114,16 +98,7 @@ export class ArticleComponent implements OnInit, AfterViewInit {
     return pictureUrl + pictureId;
   }
 
-  mapInitializer() {
-    this.map = new google.maps.Map(this.gmap.nativeElement, this.mapOptions);
-    this.marker.setMap(this.map);
-
-    const geocoder = new google.maps.Geocoder();
-    
-    geocoder.geocode({address: 'Leipzig'}, location => {
-      console.log(location);
-  });
-  }
+ 
 
   changeCurrentPicture(index: number) {
     this.currentPictureUrl = this.getPictureUrl(this.article.pictureIds[index]);

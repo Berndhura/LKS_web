@@ -31,6 +31,7 @@ import { ProductSelectComponent } from './product-select/product-select.componen
 import { HeaderComponent } from './header/header.component';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { SubcatSelectComponent } from './subcat-select/subcat-select.component';
+import { LocationMapComponent } from './location-map/location-map.component';
 
 
 const config = new AuthServiceConfig([
@@ -65,7 +66,8 @@ export function provideConfig() {
       ProductSelectComponent,
       HeaderComponent,
       ArticleListComponent,
-      SubcatSelectComponent
+      SubcatSelectComponent,
+      LocationMapComponent
    ],
    imports: [
       BrowserModule,
@@ -87,7 +89,6 @@ export function provideConfig() {
          useFactory: provideConfig
       },
       AuthServiceMail,
-      AngularFirestore,
       AngularFireStorage
    ],
    bootstrap: [

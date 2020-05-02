@@ -37,3 +37,5 @@ export const subcategories: Subcategory[] = [
       {category: 'journeys', id: 'wavesurfing', label: 'Wellenreiten', src: '../../assets/images/products-windsurfing/sail.gif'},
       {category: 'journeys', id: 'kitesurfing', label: 'Kitesurfen', src: '../../assets/images/products-windsurfing/sail.gif'},
   ];
+
+export const zustand: string[] = ['Gebraucht', 'Neu', 'Ersatz', 'Defekt'];

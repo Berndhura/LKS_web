@@ -1,5 +1,9 @@
+import { SelectionService } from './../services/selection.service';
+import { AuthServiceMail } from './../services/auth.service';
+import { Seller } from './../types/user.model';
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Subcategory, Category } from '../types/category.model';
+import { subcategories, zustand } from '../configs/data-config';
 
 @Component({
   selector: 'app-new-article',
@@ -8,17 +12,21 @@ import { NgForm } from '@angular/forms';
 })
 export class NewArticleComponent implements OnInit {
 
-  constructor() { }
+  seller: Seller;
+  selectedCategory: Category;
+  selectedSubcategory: Subcategory;
+  subcategories: Subcategory[] = [];
+  zustandList = zustand;
+
+  constructor(private authServiceMail: AuthServiceMail, private selectionService: SelectionService) { }
 
   ngOnInit() {
-  }
-
-  onFileSelected(event) {
-    console.log(event);
-  }
-
-  onSubmit(from: NgForm) {
-    console.log(from);
+    this.seller = this.authServiceMail.seller;
+    this.selectedCategory = this.seller.category;
+    this.selectedSubcategory = this.selectionService.selectedSubcategory;
+    if (this.selectedCategory) {
+      this.subcategories = subcategories.filter(sub => sub.category === this.selectedCategory.id);
+    }
   }
 
 }

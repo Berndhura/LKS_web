@@ -10,11 +10,10 @@ export class Article {
     userId = '';
     price: number;
     priceStatus = '';
-    locationNames: string[];
     distance: number;
     date: Date = new Date();
     views: number;
-    location: Location;
+    locations: LocationData[];
     bookmarks: number;
     pictureIds: string[];
     sellerName?: string;
@@ -23,7 +22,13 @@ export class Article {
     sellerPhone?: string;
 }
 
-export class Location {
-  type: any;
-  coordinates: [number, number];
+export class LocationData {
+  name: string;
+  lat: number;
+  lng: number;
 }
+
+// export class Geodata {
+//   type: string;
+//   coordinates: [number, number];
+// }
