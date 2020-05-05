@@ -90,7 +90,6 @@ export class UserComponent implements OnInit {
   getLocation() {
     const self = this;
     this.locationService.getLocationByIp((location: LocationData) => {
-      console.log(location);
       this.seller.homespot = location;
       self.ref.detectChanges();
     });

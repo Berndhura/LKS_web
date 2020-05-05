@@ -28,7 +28,9 @@ export class LocationData {
   lng: number;
 }
 
-// export class Geodata {
-//   type: string;
-//   coordinates: [number, number];
-// }
+export class ArticlesImages {
+  id: number;
+  label: string;
+  imgUrl: any;
+  imgFile: File;
+}

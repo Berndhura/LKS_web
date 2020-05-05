@@ -1,6 +1,6 @@
-<div class="form-container">
+<div class="form-container" [formGroup]="newArticle">
   <p>Wähle eine Kategorie:</p>
-  <app-product-select [selectedCategory]="seller.category"></app-product-select>
+  <app-product-select [selectedCategory]="seller.category" (selectedCategoryChange)="categoryChange($event)"></app-product-select>
 
   <hr>
 
@@ -11,7 +11,7 @@
 
   <div class="text-container">
     <p>Titel der Anzeige:</p>
-    <input placeholder="Titel">
+    <input formControlName="title" placeholder="Titel">
   
     <p>Beschreibung</p>
     <textarea rows="3" placeholder="Schreibe hier Einzelheiten zu deinem Artikel"></textarea>
@@ -31,9 +31,14 @@
     </div>
 
     <p>Wo ist dein Standort?</p>
-    <input class="location" placeholder="Stadt">
+    <div class="location">
+      <input placeholder="Stadt">
+      <mat-icon  matTooltip="Bestimme meine Position automatisch" matTooltipPosition="right" (click)="getLocation()">gps_fixed</mat-icon>
+      <!-- <mat-icon matTooltip="Aktualisiere die Map" matTooltipPosition="right">room</mat-icon> -->
+    </div>
 
-    <app-location-map></app-location-map>
+
+    <!-- <app-location-map></app-location-map> -->
 
     <p>Ist Versand möglich?</p>
     <select>
@@ -43,6 +48,16 @@
 
     <div>
       <p>Fotos</p>
+      <div class="image-upload-container">
+        <div class="image-upload" *ngFor="let articleImage of articleImages, let i = index">
+          <label for="file-input" (click)="saveIndex(i)">
+            <img *ngIf="!articleImage.imgUrl" [src]="placeholderImage"/>
+            <img *ngIf="articleImage.imgUrl" [src]="articleImage.imgUrl"/>
+          </label>
+          <input id="file-input" type="file" (change)="handleFileInput($event.target.files)"/>
+          <span>{{articleImage.label}}</span>
+        </div>
+      </div>
     </div>
 
     <p>Kontaktiert wirst du über deine Mail</p>
@@ -52,4 +67,6 @@
     <input placeholder="Handynummer">
 
   </div>
+
+  <button (click)="saveArticle()">Speichern</button>
 </div>

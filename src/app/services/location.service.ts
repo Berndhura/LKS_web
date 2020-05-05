@@ -17,20 +17,26 @@ export class LocationService {
   async getLocationByIp(fn) {
     const ip: any = await this.httpClient.get('http://api.ipify.org/?format=json').toPromise();
     const ipLoc = await ipLocation(ip.ip);
-    this.geocoder.geocode({address: ipLoc.city}, l => {
-      const locationFinal: LocationData = {name: ipLoc.city, lat: l[0].geometry.location.lat(), lng: l[0].geometry.location.lng()};
-      fn(locationFinal);
-    });
-  }
+    this.getLocationByCity(ipLoc.city, fn);
 
-      // navigator.geolocation.getCurrentPosition(position => {
+
+    // navigator.geolocation.getCurrentPosition(position => {
     //   const latlng = {
     //     lat: position.coords.latitude,
     //     lng: position.coords.longitude
     //   };
 
-    //   geocoder.geocode({location: latlng}, results => {
+    //   this.geocoder.geocode({location: latlng}, results => {
     //     console.log(results);
     //    });
     // });
+
+  }
+
+  getLocationByCity(city: string, fn) {
+    this.geocoder.geocode({address: city}, l => {
+      const locationFinal: LocationData = {name: city, lat: l[0].geometry.location.lat(), lng: l[0].geometry.location.lng()};
+      fn(locationFinal);
+    });
+  }
 }
