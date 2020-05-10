@@ -5,68 +5,89 @@
   <hr>
 
   <p>Wähle eine Unterkategorie?</p>
-  <app-subcat-select [subcategories]="subcategories" [selectedSubcategory]="selectedSubcategory"></app-subcat-select>
+  <app-subcat-select [subcategories]="subcategories" [selectedSubcategory]="selectedSubcategory" (selectedSubcategoryChange)="selectedSubcategoryChange($event)"></app-subcat-select>
 
   <hr>
 
   <div class="text-container">
-    <p>Titel der Anzeige:</p>
-    <input formControlName="title" placeholder="Titel">
+
+    <div >
+      <p>Titel der Anzeige:</p>
+      <div class="title-container">
+        <input class="input-title" formControlName="title" placeholder="Titel" maxlength="40">
+        <span class="input-length">{{newArticle.value.title.length}}/40(max)</span>
+      </div>
+      
+    
+      <p>Beschreibung</p>
+      <textarea formControlName="description" rows="3" placeholder="Schreibe hier Einzelheiten zu deinem Artikel"></textarea>
   
-    <p>Beschreibung</p>
-    <textarea rows="3" placeholder="Schreibe hier Einzelheiten zu deinem Artikel"></textarea>
-
-    <p>Wie ist der Zustand?</p>
-    <select>
-      <option *ngFor="let zustand of zustandList">{{zustand}}</option>
-    </select>
-
-    <p>Wieviel soll es kosten?</p>
-    <div class="price">
-      <input placeholder="Preis in Euro">
-      <select>
-        <option>Verhandlungsbasis</option>
-        <option>Festpreis</option>
+      <p>Wie ist der Zustand?</p>
+      <select formControlName="condition">
+        <option *ngFor="let condition of conditionList" [value]="condition">{{condition}}</option>
       </select>
-    </div>
-
-    <p>Wo ist dein Standort?</p>
-    <div class="location">
-      <input placeholder="Stadt">
-      <mat-icon  matTooltip="Bestimme meine Position automatisch" matTooltipPosition="right" (click)="getLocation()">gps_fixed</mat-icon>
-      <!-- <mat-icon matTooltip="Aktualisiere die Map" matTooltipPosition="right">room</mat-icon> -->
-    </div>
-
-
-    <!-- <app-location-map></app-location-map> -->
-
-    <p>Ist Versand möglich?</p>
-    <select>
-      <option>Versand und Abholung</option>
-      <option>Nur Abholung</option>
-    </select>
-
-    <div>
-      <p>Fotos</p>
-      <div class="image-upload-container">
-        <div class="image-upload" *ngFor="let articleImage of articleImages, let i = index">
-          <label for="file-input" (click)="saveIndex(i)">
-            <img *ngIf="!articleImage.imgUrl" [src]="placeholderImage"/>
-            <img *ngIf="articleImage.imgUrl" [src]="articleImage.imgUrl"/>
-          </label>
-          <input id="file-input" type="file" (change)="handleFileInput($event.target.files)"/>
-          <span>{{articleImage.label}}</span>
+  
+      <p>Wieviel soll es kosten?</p>
+      <div class="price">
+        <input formControlName="price" placeholder="Preis in Euro (optional bei VB)" maxlength="5">
+        <select formControlName="priceStatus">
+          <option *ngFor="let priceStatus of priceStatusList" [value]="priceStatus.long">{{priceStatus.long}}</option>
+        </select>
+      </div>
+  
+      <p>Wo ist dein Standort?</p>
+      <div  formArrayName="locations">
+        <div class="location" *ngFor="let item of newArticle.get('locations')['controls']; let i = index">
+          <input class="inputLocation" placeholder="Stadt" formControlName="{{i}}">
+          <mat-icon *ngIf="i === 0" class="iconLocation"  matTooltip="Bestimme meine Position automatisch" matTooltipPosition="right" (click)="getLocation()">gps_fixed</mat-icon>
+          <mat-icon *ngIf="i > 0" class="iconLocation" matTooltip="Lösche diesen Standort" matTooltipPosition="right" (click)="onDeleteLocation(i)">delete</mat-icon>
+        </div>
+        <div *ngIf="newArticle.get('locations')['controls'].length < 4" class="location-add">
+          <mat-icon class="iconLocation iconAddLocation" (click)="onAddLocation()">add_circle</mat-icon>
+          <span class="spanAddLocation">Weiterer Standort</span>
         </div>
       </div>
+  
+  
+      <!-- <app-location-map></app-location-map> -->
+  
+      <p>Ist Versand möglich?</p>
+      <select formControlName="shipping">
+        <option *ngFor="let shipping of shippingList" [value]="shipping.label">{{shipping.label}}</option>
+      </select>
     </div>
+    
+    <div>
+      <div>
+        <p>Fotos</p>
+        <div class="image-upload-container">
+          <div class="image-upload" *ngFor="let articleImage of articleImages, let i = index">
+            <label for="file-input" (click)="saveIndex(i)">
+              <img class="{{i === 0 ? 'img-title' : ''}}" *ngIf="!articleImage.imgUrl" [src]="placeholderImage"/>
+              <img *ngIf="articleImage.imgUrl" [src]="articleImage.imgUrl"/>
+            </label>
+            <input id="file-input" type="file" (change)="handleFileInput($event.target.files)"/>
+            <div class="sublabel-image">
+              <span>{{articleImage.label}}</span>
+              <mat-icon *ngIf="articleImage.imgUrl" (click)="onDeleteImage(i)">delete</mat-icon>
+            </div>
 
-    <p>Kontaktiert wirst du über deine Mail</p>
-    <input placeholder="Mail-Adresse">
-
-    <p>Zusätzlich auch deine Telefonnummer zeigen?</p>
-    <input placeholder="Handynummer">
-
+          </div>
+        </div>
+      </div>
+  
+      <p>Kontaktiert wirst du über deine Mail</p>
+      <input placeholder="Mail-Adresse" formControlName="mail">
+  
+      <p>Zusätzlich auch deine Telefonnummer zeigen?</p>
+      <input placeholder="Handynummer" formControlName="phone">
+  
+      <div class="form-button-container">
+        <button (click)="saveArticle()" class="form-button">Verwerfen</button>
+        <button (click)="saveArticle()" class="form-button" [disabled]="newArticle.invalid || !articleImages[0].imgUrl">Speichern</button>
+        <span *ngIf="newArticle.invalid || !articleImages[0].imgUrl" class="form_button_span">Bitte fülle alle Pflichtfelder aus!</span>
+      </div>
+      
+    </div>
   </div>
-
-  <button (click)="saveArticle()">Speichern</button>
 </div>

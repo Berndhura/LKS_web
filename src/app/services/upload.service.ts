@@ -14,8 +14,16 @@ export class UploadService {
 
   constructor(private storage: AngularFireStorage, private selectionService: SelectionService) { }
 
-  uploadImage(file: File, userId: string): Observable<any> {
-    const path = 'users/' + userId + '/profilepicture';
+  uploadImage(file: File, userId?: string, articleId?: string, imageId?: number): Observable<any> {
+    let path;
+    if (userId) {
+      path = 'users/' + userId + '/profilepicture';
+    } else if (articleId) {
+      path = 'articles/' + articleId + '/' + imageId;
+    } else {
+      return;
+    }
+
     // const path = `test/${Date.now()}_${file.name}`;
     const ref = this.storage.ref(path);
     this.task = this.storage.upload(path, file);

@@ -34,3 +34,13 @@ export class ArticlesImages {
   imgUrl: any;
   imgFile: File;
 }
+
+export class PriceStatus {
+  short: string;
+  long: string;
+}
+
+export class Shipping {
+  shipping: boolean;
+  label: string;
+}

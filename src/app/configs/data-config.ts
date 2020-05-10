@@ -1,4 +1,5 @@
 import { Category, Subcategory } from '../types/category.model';
+import { PriceStatus, Shipping } from '../types/article.model';
 
 
 export const categories: Category[] = [
@@ -38,4 +39,8 @@ export const subcategories: Subcategory[] = [
       {category: 'journeys', id: 'kitesurfing', label: 'Kitesurfen', src: '../../assets/images/products-windsurfing/sail.gif'},
   ];
 
-export const zustandList: string[] = ['Gebraucht', 'Neu', 'Ersatz', 'Defekt'];
+export const conditionList: string[] = ['Gebraucht', 'Neu', 'Ersatz', 'Defekt'];
+
+export const priceStatusList: PriceStatus[] = [{short: 'VB', long: 'Verhandlungsbasis'}, {short: 'FP', long: 'Festpreis'}];
+
+export const shippingList: Shipping[] = [{shipping: true, label: 'Versand und Abholung'}, {shipping: false, label: 'Nur Abholung'}];
