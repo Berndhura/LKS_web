@@ -18,7 +18,7 @@
         <div style="width: 1rem;" *ngIf="false"></div>
         <div class="navs"><mat-icon>monetization_on</mat-icon><span routerLink="/create">Verkaufen</span></div>
         <div style="width: 1rem;"></div>
-        <img class="mat-card-avatar profile" [src]="currentSeller.profilePictureUrl" width="50" height="50" routerLink="/user">
+        <img class="mat-card-avatar profile" [src]="firebaseImageUrl + currentSeller.profilePictureUrl" width="50" height="50" routerLink="/user">
         <button mat-icon-button (click)="logout()">
             <mat-icon>logout</mat-icon>
         </button>

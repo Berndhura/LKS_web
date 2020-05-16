@@ -1,7 +1,7 @@
 import { Subcategory, Category } from './../types/category.model';
 import { pictureUrl } from '../configs/config';
 import { SelectionService } from '../services/selection.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Article } from '../types/article.model';
 import { ArticleService } from '../services/article.service';
 import {categories, subcategories} from '../configs/data-config';
@@ -11,7 +11,7 @@ import {categories, subcategories} from '../configs/data-config';
   templateUrl: './article-overview.component.html',
   styleUrls: ['./article-overview.component.scss']
 })
-export class ArticleOverviewComponent implements OnInit {
+export class ArticleOverviewComponent implements OnInit, OnDestroy {
 
   articles: Article[] = [];
   filteredArticles: Article[] = [];
@@ -29,6 +29,7 @@ export class ArticleOverviewComponent implements OnInit {
   constructor(private articleService: ArticleService, private selectionService: SelectionService) { }
 
   ngOnInit() {
+    this.filterSearch = this.selectionService.filterSearch;
     this.getArticles();
     this.selectedCategory = this.selectionService.selectedCategory;
     this.selectedSubcategory = this.selectionService.selectedSubcategory;
@@ -37,7 +38,10 @@ export class ArticleOverviewComponent implements OnInit {
     }
     this.descOrder = this.selectionService.descOrder;
     this.orderValue = this.selectionService.orderValue;
+  }
 
+  ngOnDestroy() {
+    this.selectionService.filterSearch = this.filterSearch;
   }
 
   getArticles(): void {

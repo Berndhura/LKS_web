@@ -28,7 +28,6 @@
 
 .title-header {
     font-weight: bold;
-    cursor: pointer;
 }
 
 .info {
@@ -49,6 +48,30 @@ img {
     object-fit: cover;
   }
 
-mat-icon {
-    cursor: default;
+
+.bookmark {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bookmark-icon {
+    cursor: pointer;
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.detail-icon {
+    transform: scale(1.3);
+    cursor: pointer;
 }

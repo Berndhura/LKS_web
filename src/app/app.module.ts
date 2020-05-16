@@ -32,6 +32,7 @@ import { HeaderComponent } from './header/header.component';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { SubcatSelectComponent } from './subcat-select/subcat-select.component';
 import { LocationMapComponent } from './location-map/location-map.component';
+import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component';
 
 
 const config = new AuthServiceConfig([
@@ -67,7 +68,11 @@ export function provideConfig() {
       HeaderComponent,
       ArticleListComponent,
       SubcatSelectComponent,
-      LocationMapComponent
+      LocationMapComponent,
+      DialogConfirmComponent
+   ],
+   entryComponents: [
+      DialogConfirmComponent
    ],
    imports: [
       BrowserModule,

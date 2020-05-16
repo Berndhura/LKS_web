@@ -1,9 +1,13 @@
+import { ArticleService } from './../services/article.service';
+import { User, Seller } from './../types/user.model';
+import { AuthServiceMail } from './../services/auth.service';
 import { Article, LocationData } from './../types/article.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { Category } from '../types/category.model';
 import { categories, subcategories } from '../configs/data-config';
 import { pictureUrl } from '../configs/config';
 import { SelectionService } from '../services/selection.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-article-list',
@@ -14,9 +18,18 @@ export class ArticleListComponent implements OnInit {
 
   @Input() filteredArticles: Article[];
 
-  constructor(private selectionService: SelectionService) { }
+  user: User;
+  seller: Seller;
+
+  constructor(
+    private selectionService: SelectionService,
+    private authServiceMail: AuthServiceMail,
+    private articleService: ArticleService,
+    private router: Router) { }
 
   ngOnInit() {
+    this.user = this.authServiceMail.user;
+    this.seller = this.authServiceMail.seller;
   }
 
   getPictureUrl(pictureId: string): string {
@@ -43,18 +56,31 @@ export class ArticleListComponent implements OnInit {
 
   getLocation(locations: LocationData[]): string {
     if (locations.length > 1) {
-      return locations[0].name + ' ++';
+      return locations[0].name + ',...';
     } else {
       return locations[0].name;
     }
   }
 
-  getLocationTooltip(locations: LocationData[]): string {
-    let location = '';
-    locations.forEach(l => {
-      location = location + l.name + ', ';
-    });
-    return location;
+  // getLocationTooltip(locations: LocationData[]): string {
+  //   let location = '';
+  //   locations.forEach(l => {
+  //     location = location + l.name + ', ';
+  //   });
+  //   return location;
+  // }
+
+  addBookmark(articleId: number) {
+    this.articleService.addBookmarkArticle(articleId, this.seller.id);
+  }
+
+  deleteBookmark(articleId: number) {
+    this.articleService.deleteBookmarkArticle(articleId, this.seller.id);
+  }
+
+  editArticle(article: Article) {
+    this.selectionService.currentArticle = article;
+    this.router.navigate(['/create']);
   }
 
 }

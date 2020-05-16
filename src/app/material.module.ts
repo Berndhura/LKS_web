@@ -13,6 +13,7 @@ import {
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         MatListModule,
         MatCardModule,
         MatTooltipModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        MatDialogModule
     ],
     exports: [
         MatButtonModule,
@@ -40,7 +42,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         MatCardModule,
         MatTooltipModule,
         MatExpansionModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        MatDialogModule
     ]
 })
 

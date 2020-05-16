@@ -1,13 +1,18 @@
 <div class="card" *ngFor="let article of filteredArticles">
     <div class="card-body row">
-        <div class="col-3 col-md-2" class="img-container">
+        <div class="col-1 bookmark">
+            <mat-icon style="cursor: default;" *ngIf="article.userId == user.userId" matTooltip="Meine Anzeige" matTooltipPosition="below">person</mat-icon>
+            <mat-icon class="bookmark-icon"  *ngIf="article.userId != user.userId && seller.bookmarks.indexOf(article.id) === -1" (click)="addBookmark(article.id)" matTooltip="Meiner Merkliste hinzufügen" matTooltipPosition="below">star_border</mat-icon>
+            <mat-icon class="bookmark-icon"  *ngIf="article.userId != user.userId && seller.bookmarks.indexOf(article.id) != -1" (click)="deleteBookmark(article.id)" matTooltip="Von Merkliste entfernen" matTooltipPosition="below">star</mat-icon>
+        </div>
+        <div class="col-2" class="img-container">
             <img src ={{getPictureUrl(article.pictureIds[0])}} />
         </div>
-        <div class="col-2 col-md-1 product-container">
+        <div class="col-2 product-container">
             <img  class="mat-card-avatar" [src]="getProduct(article.category).src" [matTooltip]="getProduct(article.category).label">
             <img  class="mat-card-avatar" [src]="'../../assets/images/questionmark.jpg'" [matTooltip]="'noch offen'">
         </div>
-        <div class="row col-7 col-md-9">
+        <!-- <div class="row col-7">
             <div class="row col-md-5 title">
                 <mat-icon *ngIf="article.zustand === 'neu'" class="col-2" matTooltip="Neu">check_circle</mat-icon>
                 <mat-icon *ngIf="article.zustand === 'gebraucht'" class="col-2" matTooltip="Gebraucht">check_circle_outline</mat-icon>
@@ -23,6 +28,21 @@
                 <span class="col-sm-4" [matTooltip]="getLocationTooltip(article.locations)" [matTooltipDisabled]="article.locations.length == 1">{{getLocation(article.locations)}}</span>
                 <span class="col-sm-4">{{ article.date | date:'dd.MM.yyyy' }}</span>
             </div>
+        </div> -->
+
+
+        <div class="col-6 info-container">
+            <span class="title-header">{{ article.title }}</span>
+            <span>{{article.zustand}}</span>
+            <span >{{getPrice(article)}}</span>
+            <span >{{getLocation(article.locations)}}</span>
+            <span >{{ article.date | date:'dd.MM.yyyy' }}</span>
         </div>
+
+        <div class="col-1 actions">
+            <mat-icon class="detail-icon" routerLink="/{{article.id}}" matTooltip="Details" matTooltipPosition="left">find_in_page</mat-icon>
+            <mat-icon *ngIf="article.userId == user.userId" class="detail-icon" matTooltip="Bearbeiten" matTooltipPosition="left" (click)="editArticle(article)">create</mat-icon>
+        </div>
+
     </div>
 </div>

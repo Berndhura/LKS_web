@@ -1,5 +1,6 @@
 import { Category, Subcategory } from '../types/category.model';
 import { PriceStatus, Shipping } from '../types/article.model';
+import { AboutUs } from '../types/about.model';
 
 
 export const categories: Category[] = [
@@ -44,3 +45,12 @@ export const conditionList: string[] = ['Gebraucht', 'Neu', 'Ersatz', 'Defekt'];
 export const priceStatusList: PriceStatus[] = [{short: 'VB', long: 'Verhandlungsbasis'}, {short: 'FP', long: 'Festpreis'}];
 
 export const shippingList: Shipping[] = [{shipping: true, label: 'Versand und Abholung'}, {shipping: false, label: 'Nur Abholung'}];
+
+export const placeholderImage = 'o/app%2Fplaceholder%2Fimage-placeholder.jpg?alt=media&token=ef57b3e5-8c92-40e8-94f0-6a022ae6ef1d';
+
+
+export const aboutUs: AboutUs[] = [
+  {portraitUrl: 'o/app%2Fplaceholder%2Fportrait-placeholder.png?alt=media&token=d29ae9be-1337-4d15-a56d-ca38c0d53263', name: 'Philipp', role: 'Entwickler', watersport: 'Windsurfen, Kitesurfen', favSpot: 'Loissin', mobil: 'Bulli T5 Custom', extra: 'baltic-Factory (weitere Projekte)'},
+  {portraitUrl: 'o/app%2Fplaceholder%2Fportrait-placeholder.png?alt=media&token=d29ae9be-1337-4d15-a56d-ca38c0d53263', name: 'Holger', role: 'Cloud', watersport: 'Windsurfen', favSpot: 'Loissin', mobil: 'zu Fuß'},
+  {portraitUrl: 'o/app%2Fplaceholder%2Fportrait-placeholder.png?alt=media&token=d29ae9be-1337-4d15-a56d-ca38c0d53263', name: 'Bernd', role: 'Gründer', watersport: 'Windsurfen', favSpot: 'Loissin', mobil: 'Defender Custom'}
+];

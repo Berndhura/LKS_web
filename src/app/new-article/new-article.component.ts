@@ -1,24 +1,29 @@
+
+import { categories } from './../configs/data-config';
 import { UploadService } from './../services/upload.service';
 import { LocationService } from './../services/location.service';
 import { FormControl, FormGroup, FormArray, Validators, FormBuilder } from '@angular/forms';
-import { placeholderImage } from './../configs/config';
+import { placeholderImage } from './../configs/data-config';
+import {firebaseImageUrl} from './../configs/config';
 import { SelectionService } from './../services/selection.service';
 import { AuthServiceMail } from './../services/auth.service';
 import { Seller } from './../types/user.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subcategory, Category } from '../types/category.model';
 import { subcategories, conditionList, priceStatusList, shippingList } from '../configs/data-config';
-import { ArticlesImages, PriceStatus, Shipping, LocationData } from '../types/article.model';
+import { ArticlesImages, PriceStatus, Shipping, LocationData, Article } from '../types/article.model';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import * as uuid from 'uuid';
+import {MatDialog} from '@angular/material/dialog';
+import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
 
 @Component({
   selector: 'app-new-article',
   templateUrl: './new-article.component.html',
   styleUrls: ['./new-article.component.scss']
 })
-export class NewArticleComponent implements OnInit {
+export class NewArticleComponent implements OnInit, OnDestroy {
 
   seller: Seller;
 
@@ -30,6 +35,7 @@ export class NewArticleComponent implements OnInit {
   priceStatusList: PriceStatus[] = priceStatusList;
   shippingList: Shipping[] = shippingList;
 
+  firebaseImageUrl: string = firebaseImageUrl;
   placeholderImage: string = placeholderImage;
   errorPictureMessage: string;
   currentIndex: number;
@@ -50,22 +56,30 @@ export class NewArticleComponent implements OnInit {
   constructor(
     private authServiceMail: AuthServiceMail,
     private selectionService: SelectionService,
-    private formBuilder: FormBuilder,
+    public dialog: MatDialog,
     private locationService: LocationService,
     private uploadService: UploadService) { }
 
   ngOnInit() {
     this.seller = this.authServiceMail.seller;
-    this.selectedCategory = this.seller.category;
-    this.selectedSubcategory = this.selectionService.selectedSubcategory;
-    if (this.selectedCategory) {
-      this.subcategories = subcategories.filter(sub => sub.category === this.selectedCategory.id);
-    }
 
     this.initForm();
+    if (this.selectionService.currentArticle) {
+      this.updateForm(this.selectionService.currentArticle);
+    }
+  }
+
+  ngOnDestroy() {
+    this.selectionService.currentArticle = null;
   }
 
   initForm() {
+    this.selectedCategory = this.seller.category;
+    if (this.selectedCategory) {
+      this.subcategories = subcategories.filter(sub => sub.category === this.selectedCategory.id);
+    }
+    this.selectedSubcategory = null;
+
     this.newArticle = new FormGroup({
       category: new FormControl(this.seller.categoryId, Validators.required),
       subcategory: new FormControl('', Validators.required),
@@ -78,8 +92,30 @@ export class NewArticleComponent implements OnInit {
         new FormControl(this.getSellerHomespot(), [Validators.required])
       ]),
       shipping: new FormControl(this.shippingList[0].label, Validators.required),
-      mail: new FormControl(this.seller.email, Validators.required),
-      phone: new FormControl(this.seller.phone, Validators.required),
+      mail: new FormControl(this.seller.email, [Validators.required, Validators.email]),
+      phone: new FormControl(this.seller.phone),
+    });
+  }
+
+  updateForm(article: Article) {
+
+    this.selectedCategory = categories.find(category => category.id === article.category);
+    if (this.selectedCategory) {
+      this.subcategories = subcategories.filter(sub => sub.category === this.selectedCategory.id);
+    }
+    this.selectedSubcategory = subcategories.find(subcat => subcat.id === article.subcategory);
+
+    this.newArticle.patchValue({
+      category: article.category,
+      subcategory: article.subcategory,
+      title: article.title,
+      description: article.description,
+      condition: article.zustand,
+      price: article.price,
+      priceStatus: article.priceStatus,
+      shipping: article.shipping,
+      mail: article.sellerMail,
+      phone: article.sellerPhone,
     });
   }
 
@@ -92,6 +128,7 @@ export class NewArticleComponent implements OnInit {
 
   categoryChange(category: Category) {
     this.newArticle.controls.category.setValue(category.id);
+    this.selectedCategory = category;
     this.selectedSubcategory = null;
     this.subcategories = subcategories.filter(sub => sub.category === category.id);
   }
@@ -182,6 +219,20 @@ export class NewArticleComponent implements OnInit {
           console.log(this.newArticle.value);
         }
       });
+    });
+  }
+
+  resetArticle(): void {
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      width: '400px',
+      height: '200px',
+      data: {text: 'Hiermit wird dieser Artikel zurückgesetzt.', action: 'Reset'}
+    });
+
+    dialogRef.afterClosed().subscribe(resetCall => {
+      if (resetCall) {
+        this.initForm();
+      }
     });
   }
 

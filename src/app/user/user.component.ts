@@ -1,3 +1,4 @@
+import { firebaseImageUrl } from './../configs/config';
 import { LocationService } from './../services/location.service';
 import { SelectionService } from './../services/selection.service';
 import { Category } from './../types/category.model';
@@ -20,6 +21,7 @@ export class UserComponent implements OnInit {
   bookmarkedArticles: Article[];
   ownerArticles: Article[];
 
+  firebaseImageUrl: string = firebaseImageUrl;
   imgURL: any;
   imgFile: File;
   errorPictureMessage: string;
@@ -48,8 +50,6 @@ export class UserComponent implements OnInit {
     });
 
     this.seller = this.authServiceMail.seller;
-
-    this.selectionService.percentageLoading.subscribe(console.log);
   }
 
   setStep(index: number) {

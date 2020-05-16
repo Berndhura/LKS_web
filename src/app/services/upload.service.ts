@@ -24,13 +24,12 @@ export class UploadService {
       return;
     }
 
-    // const path = `test/${Date.now()}_${file.name}`;
     const ref = this.storage.ref(path);
     this.task = this.storage.upload(path, file);
 
-    this.task.percentageChanges().subscribe(loading => {
-      this.selectionService.percentageLoading.next(loading);
-    });
+    // this.task.percentageChanges().subscribe(loading => {
+    //   this.selectionService.percentageLoading.next(loading);
+    // });
 
     this.snapshot$ = this.task.snapshotChanges().pipe(
       last(),

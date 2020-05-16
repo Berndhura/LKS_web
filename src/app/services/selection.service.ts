@@ -13,18 +13,20 @@ export class SelectionService {
   selectedCategory: Category;
   selectedSubcategory: Subcategory;
 
-  percentageLoading = new BehaviorSubject(0);
-
   descOrder = true;
   orderValue = 'date';
+
+  currentArticle: Article;
+
+  filterSearch = '';
 
   constructor() { }
 
 
   getPrice(article: Article): string {
-    if (article.priceStatus === 'FP') {
+    if (article.priceStatus === 'Festpreis') {
       return article.price + ' € FP';
-    } else if (article.priceStatus === 'VB' && article.price) {
+    } else if (article.priceStatus === 'Verhandlungsbasis' && article.price) {
       return article.price + ' € VB';
     } else if (!article.price) {
       return 'VB';

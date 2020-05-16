@@ -1,1 +1,43 @@
-<p>Luftkraftsport Web, Bitch!</p>
+
+<div class="welcome-container">
+    <span class="welcome">Willkommen bei Luftkrafsport!</span>
+    <span class="team">Unser kleines Team:</span>
+</div>
+
+
+<div class="about-container">
+    <div class="about" *ngFor="let about of aboutUs">
+        <div class="about-header">
+            <img class="portrait" [src]="firebaseImageUrl + about.portraitUrl">
+            <p class="name">{{about.name}}</p>
+        </div>
+        <div class="card about-info-container">
+            <div class="row about-info">
+                <span class="col-4 title">Rolle:</span>
+                <span class="col-8 info">{{about.role}}</span>
+            </div>
+            <div class="row about-info">
+                <span class="col-4 title">Wassersport:</span>
+                <span class="col-8 info">{{about.watersport}}</span>
+            </div>
+            <div class="row about-info">
+                <span class="col-4 title">Lieblingsspot:</span>
+                <span class="col-8 info">{{about.favSpot}}</span>
+            </div>
+            <div class="row about-info">
+                <span class="col-4 title">Unterwegs mit:</span>
+                <span class="col-8 info">{{about.mobil}}</span>
+            </div>
+            <div class="row about-info">
+                <span class="col-4 title">Sonstiges:</span>
+                <span class="col-8 info">{{about.extra}}</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="iframe-container">
+    <span class="iframe-header">Unterstützt von:</span>
+    <iframe src="https://www.odokiteboarding.com/"></iframe>
+</div>
+
