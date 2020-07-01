@@ -54,11 +54,11 @@ export class ArticleListComponent implements OnInit {
     return this.selectionService.getPrice(article);
   }
 
-  getLocation(locations: LocationData[]): string {
+  getLocation(locations: string[]): string {
     if (locations.length > 1) {
-      return locations[0].name + ',...';
+      return locations[0] + ',...';
     } else {
-      return locations[0].name;
+      return locations[0];
     }
   }
 

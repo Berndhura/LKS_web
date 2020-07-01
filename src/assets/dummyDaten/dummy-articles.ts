@@ -10,7 +10,7 @@ export const articles: Article[] = [
     description : 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore ',
     urls : '6826',
     userId : '1',
-    price : 22.0,
+    price : 22,
     priceStatus: 'Verhandlungsbasis',
     distance : 6207,
     date : new Date(1581761272146),

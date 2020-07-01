@@ -11,10 +11,10 @@
             <input class="search" [(ngModel)]="filterSearch" (ngModelChange)="onSearchChange($event)" placeholder="Suche">
         </div>
         <div class="order-container mb">
-            <div class="{{descOrder ? 'active-order' : ''}}" (click)="setDesc()">
+            <div class="{{descOrder == 'desc' ? 'active-order' : ''}}" (click)="setDesc()">
                 <i class="fas fa-sort-amount-down fa-lg"></i>
             </div>
-            <div class="{{descOrder ? '' : 'active-order'}}" (click)="setAsc()">
+            <div class="{{descOrder == 'desc' ? '' : 'active-order'}}" (click)="setAsc()">
                 <i class="fas fa-sort-amount-down-alt fa-lg"></i>
             </div>
             <select [(ngModel)]="orderValue" (ngModelChange)="orderValueChange($event)">

@@ -33,6 +33,7 @@ import { ArticleListComponent } from './article-list/article-list.component';
 import { SubcatSelectComponent } from './subcat-select/subcat-select.component';
 import { LocationMapComponent } from './location-map/location-map.component';
 import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component';
+import { AlertComponent } from './alert/alert.component';
 
 
 const config = new AuthServiceConfig([
@@ -69,10 +70,12 @@ export function provideConfig() {
       ArticleListComponent,
       SubcatSelectComponent,
       LocationMapComponent,
-      DialogConfirmComponent
+      DialogConfirmComponent,
+      AlertComponent
    ],
    entryComponents: [
-      DialogConfirmComponent
+      DialogConfirmComponent,
+      AlertComponent
    ],
    imports: [
       BrowserModule,

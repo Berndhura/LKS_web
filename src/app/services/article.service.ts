@@ -1,3 +1,4 @@
+import { AlertService } from './alert.service';
 import { Subcategory } from './../types/category.model';
 import { AuthServiceMail } from './auth.service';
 import { SelectionService } from './selection.service';
@@ -9,13 +10,15 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import {articles} from '../../assets/dummyDaten/dummy-articles';
 import {seller} from '../../assets/dummyDaten/dummy-user';
+import {baseUrl} from '../../environments/environment';
+import { tap, map, catchError, retry } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticleService {
 
-  constructor(private http: HttpClient, private selectionService: SelectionService, private authServiceMail: AuthServiceMail) { }
+  constructor(private http: HttpClient, private selectionService: SelectionService, private authServiceMail: AuthServiceMail, private alertService: AlertService) { }
 
 
   // Dieser Endpunkt soll gefilterte Article liefern, die Filterung ist optional
@@ -26,15 +29,27 @@ export class ArticleService {
   // Emails der verkäufer verschlüsseln bzw. eigentlich brauchen wir die hier nicht
   // Kein Token wird benötigt
   getArticles(): Observable<Article[]> {
-    let copyArticles = JSON.parse(JSON.stringify(articles));
+
+    let selectedCategory = '';
+    let selectedSubategory = '';
+
     if (this.selectionService.selectedCategory) {
-      copyArticles = articles.filter(article => article.category.includes(this.selectionService.selectedCategory.id));
-      if (this.selectionService.selectedSubcategory) {
-        copyArticles = copyArticles.filter(article => article.subcategory.includes(this.selectionService.selectedSubcategory.id));
-      }
+      selectedCategory = this.selectionService.selectedCategory.id;
     }
-    return of(copyArticles);
-    // return this.http.get<Article[]>('http://52.29.200.187/api/V3/articles?lat=54.354576638586884&lng=12.706493139266968&distance=10000000&page=0&size=10');
+    if (this.selectionService.selectedSubcategory) {
+      selectedSubategory = this.selectionService.selectedSubcategory.id;
+    }
+
+    return this.http.get<Article[]>(baseUrl + '/articles', {params: {
+      category: selectedCategory,
+      subcategory: selectedSubategory,
+      ordervalue: this.selectionService.orderValue,
+      orderdirection: this.selectionService.descOrder}}).pipe(
+      catchError(err => {
+        this.alertService.openAlert('Fehler');
+        return of([]);
+      })
+    );
   }
 
   // Dieser Endpunkt liefert die Bookmarked Articles eines Users

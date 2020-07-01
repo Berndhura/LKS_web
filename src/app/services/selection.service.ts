@@ -13,7 +13,7 @@ export class SelectionService {
   selectedCategory: Category;
   selectedSubcategory: Subcategory;
 
-  descOrder = true;
+  descOrder = 'desc';
   orderValue = 'date';
 
   currentArticle: Article;

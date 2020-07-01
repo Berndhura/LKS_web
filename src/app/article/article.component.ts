@@ -49,7 +49,8 @@ export class ArticleComponent implements OnInit {
    });
     this.user = this.authServiceMail.user;
     this.route.params.subscribe(params => {
-      const key = params.key;
+      // const key = params.key;
+      const key = 6803;
       this.articleService.getArticle(key).subscribe(article => {
         if (article === undefined) {
           this.router.navigateByUrl('404');

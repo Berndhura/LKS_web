@@ -21,7 +21,7 @@ export class ArticleOverviewComponent implements OnInit, OnDestroy {
   subcategories: Subcategory[] = [];
   subcatVisible = false;
 
-  descOrder: boolean;
+  descOrder: string;
   orderValue: string;
 
   pictureUrl: string = pictureUrl;
@@ -79,14 +79,14 @@ export class ArticleOverviewComponent implements OnInit, OnDestroy {
   }
 
   setDesc() {
-    this.descOrder = true;
-    this.selectionService.descOrder = true;
+    this.descOrder = 'desc';
+    this.selectionService.descOrder = 'desc';
     this.getArticles();
   }
 
   setAsc() {
-    this.descOrder = false;
-    this.selectionService.descOrder = false;
+    this.descOrder = 'asc';
+    this.selectionService.descOrder = 'asc';
     this.getArticles();
   }
 
