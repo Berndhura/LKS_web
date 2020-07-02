@@ -1,5 +1,5 @@
 import { Article } from './../../app/types/article.model';
-export const articles: Article[] = [
+export const articles: any[] = [
   {
     id : 6825,
     title : 'Severne 5.0 2018',

@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { LocationData } from './../types/article.model';
 import { AuthServiceMail } from './../services/auth.service';
 import { SelectionService } from './../services/selection.service';
@@ -10,6 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from '../services/article.service';
 import { pictureUrl } from '../configs/config';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {firebaseImageUrl} from '../configs/config';
+
 
 @Component({
   selector: 'app-article',
@@ -19,10 +22,13 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class ArticleComponent implements OnInit {
 
   article: Article = null;
+  article$: Observable<Article>;
   user: User;
   seller: Seller;
   currentPictureUrl: string;
   currentPictureId: string;
+
+  firebaseImageUrl = firebaseImageUrl;
 
 
   category: Category;
@@ -49,8 +55,7 @@ export class ArticleComponent implements OnInit {
    });
     this.user = this.authServiceMail.user;
     this.route.params.subscribe(params => {
-      // const key = params.key;
-      const key = 6803;
+      const key = params.key;
       this.articleService.getArticle(key).subscribe(article => {
         if (article === undefined) {
           this.router.navigateByUrl('404');
@@ -59,7 +64,6 @@ export class ArticleComponent implements OnInit {
         this.article = article;
         this.currentPictureUrl = this.getPictureUrl(article.pictureIds[0]);
         this.currentPictureId = article.pictureIds[0];
-        this.getCategory(article);
       }
       );
     });
@@ -69,14 +73,6 @@ export class ArticleComponent implements OnInit {
 
   onSubmit() {
     this.articleService.sendMessage(this.article.sellerMail, this.mailForm.value.sender, this.mailForm.value.message);
-  }
-
-  getCategory(article: Article) {
-    let index = categories.findIndex(c => c.id === article.category);
-    this.category = categories[index];
-
-    index = subcategories.findIndex(s => (s.category === article.category && s.id === article.subcategory));
-    this.subcategory = subcategories[index];
   }
 
   getLocations(locations: LocationData[]): string {

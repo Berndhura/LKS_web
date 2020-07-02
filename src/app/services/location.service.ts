@@ -33,6 +33,16 @@ export class LocationService {
 
   }
 
+  getGeodata(locations: string[]): LocationData[] {
+    const locationsGeodata: LocationData[] = [];
+    locations.forEach(location => {
+      this.getLocationByCity(location, locationData => {
+        locationsGeodata.push(locationData);
+      });
+    });
+    return locationsGeodata;
+  }
+
   getLocationByCity(city: string, fn) {
     this.geocoder.geocode({address: city}, l => {
       const locationFinal: LocationData = {name: city, lat: l[0].geometry.location.lat(), lng: l[0].geometry.location.lng()};

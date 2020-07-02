@@ -1,9 +1,9 @@
 import { Subject } from 'rxjs/Subject';
-import { Subcategory } from './../types/category.model';
-import { Category } from '../types/category.model';
+import { Subcategory, Category } from './../types/category.model';
 import { Injectable } from '@angular/core';
 import { Article } from '../types/article.model';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { categories, subcategories } from './../configs/data-config';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +31,15 @@ export class SelectionService {
     } else if (!article.price) {
       return 'VB';
     }
+  }
+
+  getCategory(article: Article): Category {
+    const index = categories.findIndex(c => c.id === article.category);
+    return categories[index];
+  }
+
+  getSubCategory(article: Article): Subcategory {
+    const index = subcategories.findIndex(s => (s.category === article.category && s.id === article.subcategory));
+    return subcategories[index];
   }
 }

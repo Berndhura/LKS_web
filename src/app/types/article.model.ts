@@ -1,7 +1,10 @@
+import { Category, Subcategory } from './category.model';
 export class Article {
     id: number;
-    category = '';
-    subcategory = '';
+    category: string;
+    categoryInfo: Category;
+    subcategory: string;
+    subcategoryInfo: Subcategory;
     zustand = '';
     shipping: string;
     title = '';
@@ -13,7 +16,8 @@ export class Article {
     distance: number;
     date: Date = new Date();
     views: number;
-    locations: LocationData[];
+    locations: string[];
+    locationsGeodata: LocationData[];
     bookmarks: number;
     pictureIds: string[];
     sellerName?: string;

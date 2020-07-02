@@ -1,3 +1,4 @@
+import { LocationService } from './location.service';
 import { AlertService } from './alert.service';
 import { Subcategory } from './../types/category.model';
 import { AuthServiceMail } from './auth.service';
@@ -18,7 +19,12 @@ import { tap, map, catchError, retry } from 'rxjs/operators';
 })
 export class ArticleService {
 
-  constructor(private http: HttpClient, private selectionService: SelectionService, private authServiceMail: AuthServiceMail, private alertService: AlertService) { }
+  constructor(
+    private http: HttpClient,
+    private selectionService: SelectionService,
+    private authServiceMail: AuthServiceMail,
+    private alertService: AlertService,
+    private locationService: LocationService) { }
 
 
   // Dieser Endpunkt soll gefilterte Article liefern, die Filterung ist optional
@@ -75,11 +81,20 @@ export class ArticleService {
 
   // Dieser Endpunkt liefert einen Artikel
   // Views und Bookmarks nur mit gültigem Token mitliefern
-  getArticle(id: number): any {
-    const index = articles.findIndex(a => a.id == id);
-    const article = articles[index];
-    return of(article);
-    // return this.http.get<Article>('http://52.29.200.187/api/V3/articles/' + id);
+  getArticle(articleId: number): Observable<Article> {
+    return this.http.get<Article>(baseUrl + '/article', {params: {id: articleId.toString()}}).pipe(
+      map(article => {
+        article.categoryInfo = this.selectionService.getCategory(article);
+        article.subcategoryInfo = this.selectionService.getSubCategory(article);
+        // article.locationsGeodata = this.locationService.getGeodata(article.locations);
+
+        return article;
+      }),
+      catchError(err => {
+        this.alertService.openAlert('Fehler');
+        return of(null);
+      })
+    );
   }
 
   // Dieser Endpunkt fügt einem Artikel +1 Bookmark hinzu und einem seller eine articleID in Bookmarks
