@@ -20,7 +20,7 @@
   
               <div class="image-upload">
                 <label for="file-input">
-                  <img *ngIf="!imgURL" class="mat-card-avatar" [src]="firebaseImageUrl + seller.profilePictureUrl"/>
+                  <img *ngIf="!imgURL" class="mat-card-avatar" [src]="firebaseImageUrl + seller.profilePicture"/>
                   <img *ngIf="imgURL" class="mat-card-avatar" [src]="imgURL"/>
                 </label>
                 <input id="file-input" type="file" (change)="handleFileInput($event.target.files)"/>
@@ -33,7 +33,7 @@
   
             <p>Mein Homespot liegt bei:</p>
             <div class="location">
-              <input [(ngModel)]="seller.homespot.name" [ngModelOptions]="{standalone: true}" (ngModelChange)="onProfileChange()" placeholder="Stadt"><mat-icon  matTooltip="Bestimme meine Position automatisch" matTooltipPosition="right" (click)="getLocation()">gps_fixed</mat-icon>
+              <input [(ngModel)]="seller.homespot" [ngModelOptions]="{standalone: true}" (ngModelChange)="onProfileChange()" placeholder="Stadt"><mat-icon  matTooltip="Bestimme meine Position automatisch" matTooltipPosition="right" (click)="getLocation()">gps_fixed</mat-icon>
             </div>
   
             <p>Kontak über Mail: <i class="fas fa-info-circle fa-lg" matTooltip="Deine Mail-Adresse wird niemals veröffentlicht!" matTooltipPosition="right"></i></p>

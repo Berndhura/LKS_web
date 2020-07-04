@@ -1,9 +1,9 @@
 <div class="card" *ngFor="let article of filteredArticles">
     <div class="card-body row">
         <div class="col-1 bookmark">
-            <mat-icon style="cursor: default;" *ngIf="article.userId == user.userId" matTooltip="Meine Anzeige" matTooltipPosition="below">person</mat-icon>
-            <mat-icon class="bookmark-icon"  *ngIf="article.userId != user.userId && seller.bookmarks.indexOf(article.id) === -1" (click)="addBookmark(article.id)" matTooltip="Meiner Merkliste hinzufügen" matTooltipPosition="below">star_border</mat-icon>
-            <mat-icon class="bookmark-icon"  *ngIf="article.userId != user.userId && seller.bookmarks.indexOf(article.id) != -1" (click)="deleteBookmark(article.id)" matTooltip="Von Merkliste entfernen" matTooltipPosition="below">star</mat-icon>
+            <mat-icon style="cursor: default;" *ngIf="user && article.userId == user.id" matTooltip="Meine Anzeige" matTooltipPosition="below">person</mat-icon>
+            <mat-icon class="bookmark-icon"  *ngIf="user && article.userId != user.id && seller.bookmarks.indexOf(article.id) === -1" (click)="addBookmark(article.id)" matTooltip="Meiner Merkliste hinzufügen" matTooltipPosition="below">star_border</mat-icon>
+            <mat-icon class="bookmark-icon"  *ngIf="user && article.userId != user.id && seller.bookmarks.indexOf(article.id) != -1" (click)="deleteBookmark(article.id)" matTooltip="Von Merkliste entfernen" matTooltipPosition="below">star</mat-icon>
         </div>
         <div class="col-2" class="img-container">
             <img src ={{getPictureUrl(article.pictureIds[0])}} />
@@ -41,7 +41,7 @@
 
         <div class="col-1 actions">
             <mat-icon class="detail-icon" routerLink="/{{article.id}}" matTooltip="Details" matTooltipPosition="left">find_in_page</mat-icon>
-            <mat-icon *ngIf="article.userId == user.userId" class="detail-icon" matTooltip="Bearbeiten" matTooltipPosition="left" (click)="editArticle(article)">create</mat-icon>
+            <mat-icon *ngIf="user && article.userId == user.id" class="detail-icon" matTooltip="Bearbeiten" matTooltipPosition="left" (click)="editArticle(article)">create</mat-icon>
         </div>
 
     </div>

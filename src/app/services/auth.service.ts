@@ -1,3 +1,5 @@
+import { AlertService } from './alert.service';
+import { baseUrl } from './../../environments/environment';
 import { UploadService } from './upload.service';
 import { categories } from './../configs/data-config';
 import { user, seller } from './../../assets/dummyDaten/dummy-user';
@@ -8,18 +10,26 @@ import { auth } from 'firebase/app';
 import { AuthData } from '../types/auth-data.model';
 import { Router } from '@angular/router';
 import { AngularFireAuth} from 'angularfire2/auth';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 
 @Injectable()
 export class AuthServiceMail {
-    private isAuthenticated = false;
+    public isAuthenticated = false;
     authChange = new Subject<boolean>();
 
-    user: User = user;
-    seller: Seller = seller;
+    user: User;
+    seller: Seller;
 
-    constructor(private router: Router, private afAuth: AngularFireAuth, private ngZone: NgZone, private uploadService: UploadService) {
-        this.setSellerCategory(this.seller);
+    constructor(
+        private router: Router,
+        private afAuth: AngularFireAuth,
+        private ngZone: NgZone,
+        private uploadService: UploadService,
+        private alertService: AlertService,
+        private http: HttpClient) {
     }
 
     setSellerCategory(currentSeller: Seller) {
@@ -31,13 +41,13 @@ export class AuthServiceMail {
     // Token wird benötigt
     updateSeller(imgFile: File) {
         if (imgFile) {
-            this.uploadService.uploadImage(imgFile, this.user.userId).subscribe(imgUrl => {
-                this.seller.profilePictureUrl = imgUrl;
+            this.uploadService.uploadImage(imgFile, this.user.id).subscribe(imgUrl => {
+                this.seller.profilePicture = imgUrl;
                 console.log('neuesImg:', imgUrl);
                 console.log('Endpunkt Update Seller: ', this.seller);
             });
         } else {
-            console.log('altesImg:', this.seller.profilePictureUrl);
+            console.log('altesImg:', this.seller.profilePicture);
             console.log('Endpunkt Update Seller: ', this.seller);
         }
     }
@@ -54,12 +64,41 @@ export class AuthServiceMail {
         });
     }
 
+    getFirebaseUser(firebaseUser: any) {
+        this.http.get<User>(baseUrl + '/firebaseuser', {params: {firebasetoken: firebaseUser.xa}}).pipe(
+            catchError(err => {
+                this.alertService.openAlert('Fehler Anmeldung');
+                return of(null);
+              })
+        ).subscribe(signedUser => {
+            this.user = signedUser;
+            if (signedUser) {
+                this.getSeller(signedUser.id);
+            }
+        });
+    }
+
+    getSeller(userId: string) {
+        this.http.get<Seller>(baseUrl + '/seller', {params: {userid: userId}}).pipe(
+            catchError(err => {
+                this.alertService.openAlert('Fehler Anmeldung');
+                return of(null);
+              })
+        ).subscribe(signedSeller => {
+            this.seller = signedSeller;
+            if (this.user && this.seller) {
+                this.authChange.next(true);
+                this.isAuthenticated = true;
+                this.router.navigate(['/articles']);
+            }
+        });
+    }
+
     login(authData: AuthData) {
         this.afAuth.auth.signInWithEmailAndPassword(authData.email, authData.password)
         .then(result => {
-            console.log(result.user.refreshToken);
-            this.authChange.next(true);
-            this.router.navigate(['/articles']);
+            const firebaseUser: any = result.user;
+            this.getFirebaseUser(firebaseUser);
         })
         .catch(error => {
             console.log(error);
@@ -94,10 +133,11 @@ export class AuthServiceMail {
 
     logout() {
         this.afAuth.auth.signOut();
-        localStorage.removeItem('user');
         this.authChange.next(false);
         this.router.navigate(['/login']);
         this.isAuthenticated = false;
+        this.user = null;
+        this.seller = null;
     }
 
     isAuth() {

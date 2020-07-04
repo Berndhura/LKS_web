@@ -1,15 +1,15 @@
 import { LocationData } from './article.model';
 import { Category } from './category.model';
 export interface User {
+    id: string;
     email: string;
-    userId: string;
 }
 
 export class Seller {
     id: string;
     userId: string;
     name: string;
-    profilePictureUrl?: string;
+    profilePicture?: string;
     category?: Category;
     categoryId?: string;
     homespot?: LocationData;

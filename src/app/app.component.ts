@@ -17,7 +17,7 @@ export class AppComponent implements OnInit, OnDestroy{
   currentUser: User = user;
   currentSeller: Seller = seller;
 
-  constructor(private authService: AuthServiceMail) {
+  constructor(public authService: AuthServiceMail) {
 
   }
 

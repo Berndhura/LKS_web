@@ -63,6 +63,7 @@ export class ArticleService {
   // Benötigt Token
   // ORDER BY Date DESC
   getBookmarkedArticles(): Observable<Article[]> {
+    return of([]);
     const bookmarks = this.authServiceMail.seller.bookmarks;
     let copyArticles = JSON.parse(JSON.stringify(articles));
     copyArticles = articles.filter(article => bookmarks.indexOf(article.id) !== -1);
@@ -73,7 +74,8 @@ export class ArticleService {
   // Benötigt Token
   // ORDER BY Date DESC
   getOwnerArticles(): Observable<Article[]> {
-    const user = this.authServiceMail.user.userId;
+    return of([]);
+    const user = this.authServiceMail.user.id;
     let copyArticles = JSON.parse(JSON.stringify(articles));
     copyArticles = articles.filter(article => article.userId === user);
     return of(copyArticles);
