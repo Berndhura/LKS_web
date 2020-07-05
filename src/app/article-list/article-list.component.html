@@ -40,9 +40,8 @@
         </div>
 
         <div class="col-1 actions">
-            <mat-icon class="detail-icon" routerLink="/{{article.id}}" matTooltip="Details" matTooltipPosition="left">find_in_page</mat-icon>
+            <mat-icon class="detail-icon" routerLink="/article/{{article.id}}" matTooltip="Details" matTooltipPosition="left">find_in_page</mat-icon>
             <mat-icon *ngIf="user && article.userId == user.id" class="detail-icon" matTooltip="Bearbeiten" matTooltipPosition="left" (click)="editArticle(article)">create</mat-icon>
         </div>
-
     </div>
 </div>

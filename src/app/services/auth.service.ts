@@ -19,6 +19,7 @@ import { of } from 'rxjs';
 export class AuthServiceMail {
     public isAuthenticated = false;
     authChange = new Subject<boolean>();
+    sessionToken: string;
 
     user: User;
     seller: Seller;
@@ -71,15 +72,38 @@ export class AuthServiceMail {
                 return of(null);
               })
         ).subscribe(signedUser => {
-            this.user = signedUser;
-            if (signedUser) {
-                this.getSeller(signedUser.id);
-            }
+            this.handleUser(signedUser);
         });
     }
 
+    checkLocalSessionToken() {
+        const sessionToken = localStorage.getItem('sessionToken');
+        if (sessionToken) {
+            this.http.get<User>(baseUrl + '/sessionuser', {params: {sessiontoken: sessionToken}}).pipe(
+                catchError(err => {
+                    this.alertService.openAlert('Fehler Anmeldung');
+                    return of(null);
+                  })
+            ).subscribe(signedUser => {
+                if (signedUser) {
+                    this.handleUser(signedUser);
+                }
+            });
+        }
+    }
+
+    handleUser(signedUser) {
+        this.sessionToken = signedUser.token;
+        localStorage.setItem('sessionToken', this.sessionToken);
+        delete signedUser.token;
+        this.user = signedUser;
+        if (signedUser) {
+            this.getSeller(signedUser.id);
+        }
+    }
+
     getSeller(userId: string) {
-        this.http.get<Seller>(baseUrl + '/seller', {params: {userid: userId}}).pipe(
+        this.http.get<Seller>(baseUrl + '/seller').pipe(
             catchError(err => {
                 this.alertService.openAlert('Fehler Anmeldung');
                 return of(null);
@@ -93,6 +117,7 @@ export class AuthServiceMail {
             }
         });
     }
+
 
     login(authData: AuthData) {
         this.afAuth.auth.signInWithEmailAndPassword(authData.email, authData.password)
@@ -135,7 +160,9 @@ export class AuthServiceMail {
         this.afAuth.auth.signOut();
         this.authChange.next(false);
         this.router.navigate(['/login']);
+        localStorage.removeItem('sessionToken');
         this.isAuthenticated = false;
+        this.sessionToken = null;
         this.user = null;
         this.seller = null;
     }

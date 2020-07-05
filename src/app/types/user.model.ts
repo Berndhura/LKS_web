@@ -12,7 +12,7 @@ export class Seller {
     profilePicture?: string;
     category?: Category;
     categoryId?: string;
-    homespot?: LocationData;
+    location?: string;
     email: string;
     phone?: string;
     bookmarks?: number[];

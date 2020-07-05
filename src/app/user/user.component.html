@@ -33,7 +33,7 @@
   
             <p>Mein Homespot liegt bei:</p>
             <div class="location">
-              <input [(ngModel)]="seller.homespot" [ngModelOptions]="{standalone: true}" (ngModelChange)="onProfileChange()" placeholder="Stadt"><mat-icon  matTooltip="Bestimme meine Position automatisch" matTooltipPosition="right" (click)="getLocation()">gps_fixed</mat-icon>
+              <input [(ngModel)]="seller.location" [ngModelOptions]="{standalone: true}" (ngModelChange)="onProfileChange()" placeholder="Stadt">
             </div>
   
             <p>Kontak über Mail: <i class="fas fa-info-circle fa-lg" matTooltip="Deine Mail-Adresse wird niemals veröffentlicht!" matTooltipPosition="right"></i></p>

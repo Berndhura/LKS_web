@@ -12,7 +12,7 @@ export const seller: Seller = {
     profilePicture: 'o/users%2F1%2Fprofilepicture?alt=media',
     categoryId: 'windsurfing',
     email: 'philipp.matzel@outlook.com',
-    homespot: {name: 'Greifswald', lat: 54.093630810050485, lng: 13.382720947265625},
+    location: 'Greifswald',
     phone: '01635687582',
     bookmarks: [6769],
 };

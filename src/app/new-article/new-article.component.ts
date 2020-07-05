@@ -89,7 +89,7 @@ export class NewArticleComponent implements OnInit, OnDestroy {
       price: new FormControl('',  Validators.pattern('^[0-9]*$')),
       priceStatus: new FormControl(this.priceStatusList[0].long, Validators.required),
       locations: new FormArray([
-        new FormControl(this.getSellerHomespot(), [Validators.required])
+        new FormControl(this.seller.location, [Validators.required])
       ]),
       shipping: new FormControl(this.shippingList[0].label, Validators.required),
       mail: new FormControl(this.seller.email, [Validators.required, Validators.email]),
@@ -117,13 +117,6 @@ export class NewArticleComponent implements OnInit, OnDestroy {
       mail: article.sellerMail,
       phone: article.sellerPhone,
     });
-  }
-
-  getSellerHomespot(): string {
-    if (this.seller.homespot) {
-      return this.seller.homespot.name;
-    }
-    return;
   }
 
   categoryChange(category: Category) {

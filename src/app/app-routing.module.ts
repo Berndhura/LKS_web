@@ -1,6 +1,6 @@
 import { UserComponent } from './user/user.component';
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule, Injectable } from '@angular/core';
+import { Routes, RouterModule, CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { ArticleOverviewComponent } from './article-overview/article-overview.component';
 import { AboutComponent } from './about/about.component';
 import { ArticleComponent } from './article/article.component';
@@ -9,19 +9,33 @@ import { LoginComponent } from './login/login.component';
 import { NewArticleComponent } from './new-article/new-article.component';
 import { SignupComponent } from './signup/signup.component';
 import { ImpressumComponent } from './impressum/impressum.component';
+import { AuthServiceMail } from './services/auth.service';
+import { Observable } from 'rxjs';
+
+@Injectable({providedIn: 'root'})
+export class LoginActivate implements CanActivate {
+  constructor(private authService: AuthServiceMail, private router: Router) {}
+
+  canActivate(): boolean {
+    if (!this.authService.isAuthenticated) {
+      this.router.navigate(['login']);
+    }
+    return true;
+  }
+}
 
 
 const routes: Routes = [
+  { path: '', redirectTo: '/articles', pathMatch: 'full'},
   { path: 'articles', component: ArticleOverviewComponent},
   { path: 'about', component: AboutComponent},
   { path: 'login', component: LoginComponent},
   { path: 'signup', component: SignupComponent},
-  { path: 'create', component: NewArticleComponent},
-  { path: 'user', component: UserComponent},
+  { path: 'create', component: NewArticleComponent, canActivate: [LoginActivate]},
+  { path: 'user', component: UserComponent, canActivate: [LoginActivate]},
   { path: 'impressum', component: ImpressumComponent},
   { path: '404', component: NotFoundComponent},
-  { path: '', component: ArticleOverviewComponent},
-  { path: ':key', component: ArticleComponent},
+  { path: 'article/:key', component: ArticleComponent},
   { path: '**', component: NotFoundComponent}
 ];
 
@@ -30,3 +44,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
+

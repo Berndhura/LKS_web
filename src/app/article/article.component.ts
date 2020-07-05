@@ -49,10 +49,12 @@ export class ArticleComponent implements OnInit {
 
   ngOnInit() {
     this.seller = this.authServiceMail.seller;
-    this.mailForm.setValue({
-      message: '',
-      sender: this.seller.email,
-   });
+    if (this.seller) {
+      this.mailForm.setValue({
+        message: '',
+        sender: this.seller.email,
+     });
+    }
     this.user = this.authServiceMail.user;
     this.route.params.subscribe(params => {
       const key = params.key;

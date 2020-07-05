@@ -87,14 +87,6 @@ export class UserComponent implements OnInit {
     this.authServiceMail.seller = this.seller;
   }
 
-  getLocation() {
-    const self = this;
-    this.locationService.getLocationByIp((location: LocationData) => {
-      this.seller.homespot = location;
-      self.ref.detectChanges();
-    });
-  }
-
   saveSeller() {
     console.log(this.sellerForm);
     this.authServiceMail.updateSeller(this.imgFile);

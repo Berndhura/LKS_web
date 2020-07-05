@@ -13,7 +13,7 @@ import { ArticleOverviewComponent } from './article-overview/article-overview.co
 import { AboutComponent } from './about/about.component';
 import { ArticleComponent } from './article/article.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider} from 'ng4-social-login';
 import { NewArticleComponent } from './new-article/new-article.component';
@@ -34,6 +34,7 @@ import { SubcatSelectComponent } from './subcat-select/subcat-select.component';
 import { LocationMapComponent } from './location-map/location-map.component';
 import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component';
 import { AlertComponent } from './alert/alert.component';
+import { TokenInterceptor } from './util/token.interceptor';
 
 
 const config = new AuthServiceConfig([
@@ -97,7 +98,12 @@ export function provideConfig() {
          useFactory: provideConfig
       },
       AuthServiceMail,
-      AngularFireStorage
+      AngularFireStorage,
+      {
+         provide: HTTP_INTERCEPTORS,
+         useClass: TokenInterceptor,
+         multi: true
+      }
    ],
    bootstrap: [
       AppComponent

@@ -25,6 +25,8 @@ export class AppComponent implements OnInit, OnDestroy{
     this.authSubscription = this.authService.authChange.subscribe(authStatus => {
       this.isAuth = authStatus;
     });
+
+    this.authService.checkLocalSessionToken();
   }
 
   ngOnDestroy() {
