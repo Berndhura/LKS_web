@@ -60,7 +60,8 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
 
-          <app-article-list [filteredArticles] = "bookmarkedArticles"></app-article-list>
+          <app-article-list *ngIf="bookmarkedArticles?.length > 0" [filteredArticles] = "bookmarkedArticles" [user]="authService.user" [seller]="authService.seller"></app-article-list>
+          <h5 *ngIf="bookmarkedArticles?.length == 0">Du hast momentan keine Favoriten</h5>
           
         </mat-expansion-panel>
 
@@ -76,7 +77,8 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
 
-          <app-article-list [filteredArticles] = "ownerArticles"></app-article-list>
+          <app-article-list *ngIf="ownerArticles?.length > 0" [filteredArticles] = "ownerArticles" [user]="authService.user" [seller]="authService.seller"></app-article-list>
+          <h5 *ngIf="ownerArticles?.length == 0">Keine Anzeigen von dir online</h5>
 
         </mat-expansion-panel>
       

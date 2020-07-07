@@ -17,7 +17,7 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 })
 export class UserComponent implements OnInit {
 
-  step = 0;
+  step: number;
   bookmarkedArticles: Article[];
   ownerArticles: Article[];
 
@@ -35,21 +35,32 @@ export class UserComponent implements OnInit {
 
   constructor(
     private articleService: ArticleService,
-    private authServiceMail: AuthServiceMail,
+    public authService: AuthServiceMail,
     private selectionService: SelectionService,
     private locationService: LocationService,
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.articleService.getBookmarkedArticles().subscribe(articles => {
-      this.bookmarkedArticles = articles;
+    this.articleService.getBookmarkedArticles().subscribe(bookmarkedArticles => {
+      this.bookmarkedArticles = bookmarkedArticles;
+
+      this.articleService.getOwnerArticles().subscribe(ownerArticles => {
+        this.ownerArticles = ownerArticles;
+        this.setInitStep();
+      });
     });
 
-    this.articleService.getOwnerArticles().subscribe(articles => {
-      this.ownerArticles = articles;
-    });
+    this.seller = this.authService.seller;
+  }
 
-    this.seller = this.authServiceMail.seller;
+  setInitStep() {
+    if (this.ownerArticles.length > 0) {
+      this.step = 2;
+    } else if (this.bookmarkedArticles.length > 0) {
+      this.step = 1;
+    } else {
+      this.step = 0;
+    }
   }
 
   setStep(index: number) {
@@ -57,7 +68,7 @@ export class UserComponent implements OnInit {
   }
 
   onProfileChange() {
-    this.authServiceMail.seller = this.seller;
+    this.authService.seller = this.seller;
   }
 
   handleFileInput(files) {
@@ -84,11 +95,11 @@ export class UserComponent implements OnInit {
   categoryChange(category: Category) {
     this.seller.category = category;
     this.seller.categoryId = category.id;
-    this.authServiceMail.seller = this.seller;
+    this.authService.seller = this.seller;
   }
 
   saveSeller() {
     console.log(this.sellerForm);
-    this.authServiceMail.updateSeller(this.imgFile);
+    this.authService.updateSeller(this.imgFile);
   }
 }

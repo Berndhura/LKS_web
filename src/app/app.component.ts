@@ -1,4 +1,3 @@
-import { user, seller } from './../assets/dummyDaten/dummy-user';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthServiceMail } from './services/auth.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -13,9 +12,6 @@ export class AppComponent implements OnInit, OnDestroy{
 
   isAuth = false;
   authSubscription: Subscription;
-
-  currentUser: User = user;
-  currentSeller: Seller = seller;
 
   constructor(public authService: AuthServiceMail) {
 

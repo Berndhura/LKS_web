@@ -1,3 +1,4 @@
+import { AuthServiceMail } from './../services/auth.service';
 import { Subcategory, Category } from './../types/category.model';
 import { pictureUrl } from '../configs/config';
 import { SelectionService } from '../services/selection.service';
@@ -5,6 +6,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Article } from '../types/article.model';
 import { ArticleService } from '../services/article.service';
 import {categories, subcategories} from '../configs/data-config';
+import { User } from '../types/user.model';
 
 @Component({
   selector: 'app-article-overview',
@@ -26,7 +28,7 @@ export class ArticleOverviewComponent implements OnInit, OnDestroy {
 
   pictureUrl: string = pictureUrl;
 
-  constructor(private articleService: ArticleService, private selectionService: SelectionService) { }
+  constructor(private articleService: ArticleService, private selectionService: SelectionService, public authService: AuthServiceMail) { }
 
   ngOnInit() {
     this.filterSearch = this.selectionService.filterSearch;

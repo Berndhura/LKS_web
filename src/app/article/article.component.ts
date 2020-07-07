@@ -111,10 +111,10 @@ export class ArticleComponent implements OnInit {
   // }
 
   addBookmark(articleId: number) {
-    this.articleService.addBookmarkArticle(articleId, this.seller.id);
+    this.articleService.addBookmarkArticle(articleId);
   }
 
   deleteBookmark(articleId: number) {
-    this.articleService.deleteBookmarkArticle(articleId, this.seller.id);
+    this.articleService.deleteBookmarkArticle(articleId);
   }
 }

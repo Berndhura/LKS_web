@@ -3,8 +3,8 @@
   <div class="col-lg-6 article-left">
     <div class="article-title">
       <span>{{article.title}}</span>
-      <!-- <mat-icon class="bookmark-toggle" *ngIf="article.userId != user.userId && seller.bookmarks.indexOf(article.id) === -1" (click)="addBookmark(article.id)" matTooltip="Meiner Merkliste hinzufügen" matTooltipPosition="right">star_border</mat-icon>
-      <mat-icon class="bookmark-toggle" *ngIf="article.userId != user.userId && seller.bookmarks.indexOf(article.id) != -1" (click)="deleteBookmark(article.id)" matTooltip="Von Merkliste entfernen" matTooltipPosition="right">star</mat-icon> -->
+      <mat-icon class="bookmark-toggle" *ngIf="article.userId != user?.id && seller?.bookmarks.indexOf(article.id) === -1" (click)="addBookmark(article.id)" matTooltip="Meiner Merkliste hinzufügen" matTooltipPosition="right">star_border</mat-icon>
+      <mat-icon class="bookmark-toggle" *ngIf="article.userId != user?.id && seller?.bookmarks.indexOf(article.id) != -1" (click)="deleteBookmark(article.id)" matTooltip="Von Merkliste entfernen" matTooltipPosition="right">star</mat-icon>
     </div>
     <span>{{article.date | date:'dd.MM.yyyy'}}</span>
     <span *ngIf="user && article.userId == user.id && article.views && article.bookmarks" class="article-info">Beliebtheit deiner Anzeige: {{article.views}} <mat-icon matTooltip="Aufrufe" matTooltipPosition="right">visibility</mat-icon> {{article.bookmarks}} <mat-icon  matTooltip="Gemerkt" matTooltipPosition="right">star</mat-icon></span>
@@ -15,8 +15,7 @@
     </div>
     <p><b>Zustand:</b> {{article.zustand}}</p>
     <p><b>Preis:</b> {{getPrice(article)}}</p>
-    <!-- <p>Beschreibung:</p>
-    <p>{{article.description}}</p> -->
+
     <div class="form-group">
       <label for="comment"><b>Beschreibung:</b></label>
       <textarea class="form-control" rows="5" id="comment" disabled>{{article.description}}</textarea>

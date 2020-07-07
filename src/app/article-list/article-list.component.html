@@ -2,8 +2,8 @@
     <div class="card-body row">
         <div class="col-1 bookmark">
             <mat-icon style="cursor: default;" *ngIf="user && article.userId == user.id" matTooltip="Meine Anzeige" matTooltipPosition="below">person</mat-icon>
-            <mat-icon class="bookmark-icon"  *ngIf="user && article.userId != user.id && seller.bookmarks.indexOf(article.id) === -1" (click)="addBookmark(article.id)" matTooltip="Meiner Merkliste hinzufügen" matTooltipPosition="below">star_border</mat-icon>
-            <mat-icon class="bookmark-icon"  *ngIf="user && article.userId != user.id && seller.bookmarks.indexOf(article.id) != -1" (click)="deleteBookmark(article.id)" matTooltip="Von Merkliste entfernen" matTooltipPosition="below">star</mat-icon>
+            <mat-icon class="bookmark-icon"  *ngIf="user && article.userId != user.id && seller?.bookmarks.indexOf(article.id) === -1" (click)="addBookmark(article.id)" matTooltip="Meiner Merkliste hinzufügen" matTooltipPosition="below">star_border</mat-icon>
+            <mat-icon class="bookmark-icon"  *ngIf="user && article.userId != user.id && seller?.bookmarks.indexOf(article.id) != -1" (click)="deleteBookmark(article.id)" matTooltip="Von Merkliste entfernen" matTooltipPosition="below">star</mat-icon>
         </div>
         <div class="col-2" class="img-container">
             <img src ={{getPictureUrl(article.pictureIds[0])}} />

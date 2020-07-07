@@ -2,7 +2,6 @@ import { AlertService } from './alert.service';
 import { baseUrl } from './../../environments/environment';
 import { UploadService } from './upload.service';
 import { categories } from './../configs/data-config';
-import { user, seller } from './../../assets/dummyDaten/dummy-user';
 import { User, Seller } from './../types/user.model';
 import { Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
@@ -98,11 +97,11 @@ export class AuthServiceMail {
         delete signedUser.token;
         this.user = signedUser;
         if (signedUser) {
-            this.getSeller(signedUser.id);
+            this.getSeller();
         }
     }
 
-    getSeller(userId: string) {
+    getSeller() {
         this.http.get<Seller>(baseUrl + '/seller').pipe(
             catchError(err => {
                 this.alertService.openAlert('Fehler Anmeldung');

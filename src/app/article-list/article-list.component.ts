@@ -17,19 +17,16 @@ import { Router } from '@angular/router';
 export class ArticleListComponent implements OnInit {
 
   @Input() filteredArticles: Article[];
-
-  user: User;
-  seller: Seller;
+  @Input() user: User;
+  @Input() seller: Seller;
 
   constructor(
     private selectionService: SelectionService,
-    private authServiceMail: AuthServiceMail,
+    public authServiceMail: AuthServiceMail,
     private articleService: ArticleService,
     private router: Router) { }
 
   ngOnInit() {
-    this.user = this.authServiceMail.user;
-    this.seller = this.authServiceMail.seller;
   }
 
   getPictureUrl(pictureId: string): string {
@@ -71,11 +68,11 @@ export class ArticleListComponent implements OnInit {
   // }
 
   addBookmark(articleId: number) {
-    this.articleService.addBookmarkArticle(articleId, this.seller.id);
+    this.articleService.addBookmarkArticle(articleId);
   }
 
   deleteBookmark(articleId: number) {
-    this.articleService.deleteBookmarkArticle(articleId, this.seller.id);
+    this.articleService.deleteBookmarkArticle(articleId);
   }
 
   editArticle(article: Article) {
