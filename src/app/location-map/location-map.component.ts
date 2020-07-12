@@ -1,6 +1,7 @@
 import { LocationService } from './../services/location.service';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input } from '@angular/core';
 import { LocationData } from './../types/article.model';
+import {firebaseImageUrl} from './../configs/config';
 
 @Component({
   selector: 'app-location-map',
@@ -21,6 +22,8 @@ export class LocationMapComponent implements OnInit, AfterViewInit {
   lng: any;
   coordinates: any;
 
+  firebaseImageUrl = firebaseImageUrl;
+
   constructor(private locationService: LocationService) { }
 
   ngOnInit() {
@@ -38,7 +41,7 @@ export class LocationMapComponent implements OnInit, AfterViewInit {
 
     if (this.locations) {
       const customicon = {
-        url: '../../assets/images/Logo.png', // url
+        url: firebaseImageUrl + 'o/app%2Flogo%2FLogo.png?alt=media&token=d76b35a5-f3c5-4d45-9554-28c0909ce5e7', // url
         scaledSize: new google.maps.Size(40, 40), // scaled size
         // origin: new google.maps.Point(0,0), // origin
         // anchor: new google.maps.Point(0, 0) // anchor

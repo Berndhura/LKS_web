@@ -20,7 +20,7 @@
   
               <div class="image-upload">
                 <label for="file-input">
-                  <img *ngIf="!imgURL" class="mat-card-avatar" [src]="firebaseImageUrl + seller.profilePicture"/>
+                  <img *ngIf="!imgURL && seller?.profilePicture" class="mat-card-avatar" [src]="seller.profilePicture"/>
                   <img *ngIf="imgURL" class="mat-card-avatar" [src]="imgURL"/>
                 </label>
                 <input id="file-input" type="file" (change)="handleFileInput($event.target.files)"/>

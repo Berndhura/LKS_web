@@ -3,13 +3,12 @@ import { LocationData } from './../types/article.model';
 import { AuthServiceMail } from './../services/auth.service';
 import { SelectionService } from './../services/selection.service';
 import { Category, Subcategory } from './../types/category.model';
-import { categories, subcategories } from './../configs/data-config';
+import { categories, subcategories, placeholderImage } from './../configs/data-config';
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Article } from '../types/article.model';
 import { Seller, User } from '../types/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from '../services/article.service';
-import { pictureUrl } from '../configs/config';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {firebaseImageUrl} from '../configs/config';
 
@@ -29,6 +28,7 @@ export class ArticleComponent implements OnInit {
   currentPictureId: string;
 
   firebaseImageUrl = firebaseImageUrl;
+  placeholderImage = placeholderImage;
 
 
   category: Category;
@@ -64,8 +64,9 @@ export class ArticleComponent implements OnInit {
           return;
         }
         this.article = article;
-        this.currentPictureUrl = this.getPictureUrl(article.pictureIds[0]);
-        this.currentPictureId = article.pictureIds[0];
+        if (article.pictureUrls) {
+          this.currentPictureUrl = article.pictureUrls[0];
+        }
       }
       );
     });
@@ -74,7 +75,7 @@ export class ArticleComponent implements OnInit {
 
 
   onSubmit() {
-    this.articleService.sendMessage(this.article.sellerMail, this.mailForm.value.sender, this.mailForm.value.message);
+    this.articleService.sendMessage(this.article.sellerEmail, this.mailForm.value.sender, this.mailForm.value.message);
   }
 
   getLocations(locations: LocationData[]): string {
@@ -93,15 +94,8 @@ export class ArticleComponent implements OnInit {
     return this.selectionService.getPrice(article);
   }
 
-  getPictureUrl(pictureId: string): string {
-    return pictureUrl + pictureId;
-  }
-
- 
-
-  changeCurrentPicture(index: number) {
-    this.currentPictureUrl = this.getPictureUrl(this.article.pictureIds[index]);
-    this.currentPictureId = this.article.pictureIds[index];
+  changeCurrentPicture(pictureUrl: string) {
+    this.currentPictureUrl = pictureUrl;
   }
 
   // onBookmark() {

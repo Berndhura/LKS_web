@@ -5,7 +5,7 @@ export class Article {
     categoryInfo: Category;
     subcategory: string;
     subcategoryInfo: Subcategory;
-    zustand = '';
+    condition: string;
     shipping: string;
     title = '';
     description = '';
@@ -17,13 +17,15 @@ export class Article {
     date: Date = new Date();
     views: number;
     locations: string[];
+    mapLocation: boolean;
     locationsGeodata: LocationData[];
     bookmarks: number;
-    pictureIds: string[];
+    pictureUrls: string[];
     sellerName?: string;
     sellerProfilePictureUrl?: string;
-    sellerMail?: string;
+    sellerEmail?: string;
     sellerPhone?: string;
+    showPhone: boolean;
 }
 
 export class LocationData {

@@ -1,3 +1,4 @@
+import { placeholderImage } from './../configs/data-config';
 import { ArticleService } from './../services/article.service';
 import { User, Seller } from './../types/user.model';
 import { AuthServiceMail } from './../services/auth.service';
@@ -8,6 +9,7 @@ import { categories, subcategories } from '../configs/data-config';
 import { pictureUrl } from '../configs/config';
 import { SelectionService } from '../services/selection.service';
 import { Router } from '@angular/router';
+import {firebaseImageUrl} from './../configs/config';
 
 @Component({
   selector: 'app-article-list',
@@ -19,6 +21,10 @@ export class ArticleListComponent implements OnInit {
   @Input() filteredArticles: Article[];
   @Input() user: User;
   @Input() seller: Seller;
+
+  placeholderImage = placeholderImage;
+
+  firebaseImageUrl = firebaseImageUrl;
 
   constructor(
     private selectionService: SelectionService,
@@ -52,10 +58,12 @@ export class ArticleListComponent implements OnInit {
   }
 
   getLocation(locations: string[]): string {
-    if (locations.length > 1) {
-      return locations[0] + ',...';
-    } else {
-      return locations[0];
+    if (locations) {
+      if (locations.length > 1) {
+        return locations[0] + ',...';
+      } else {
+        return locations[0];
+      }
     }
   }
 
@@ -75,9 +83,11 @@ export class ArticleListComponent implements OnInit {
     this.articleService.deleteBookmarkArticle(articleId);
   }
 
-  editArticle(article: Article) {
-    this.selectionService.currentArticle = article;
-    this.router.navigate(['/create']);
+  editArticle(articleId: number) {
+    this.articleService.getArticle(articleId).subscribe(article => {
+      this.selectionService.currentArticle = article;
+      this.router.navigate(['/create']);
+    });
   }
 
 }

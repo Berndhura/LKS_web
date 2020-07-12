@@ -12,6 +12,7 @@ import { AngularFireAuth} from 'angularfire2/auth';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { firebaseImageUrl, staticImages } from './../configs/config';
 
 
 @Injectable()
@@ -57,7 +58,7 @@ export class AuthServiceMail {
         this.afAuth.auth.createUserWithEmailAndPassword(authData.email, authData.password)
         .then(result => {
             console.log(result);
-            this.authChange.next(true);
+            this.http.post<void>(baseUrl + '/user', {id: result.user.uid, email: result.user.email}).subscribe();
         })
         .catch(error => {
             console.log(error);
@@ -108,9 +109,13 @@ export class AuthServiceMail {
                 return of(null);
               })
         ).subscribe(signedSeller => {
+            if (signedSeller.profilePicture) {
+                signedSeller.profilePicture = firebaseImageUrl + signedSeller.profilePicture;
+            } else {
+                signedSeller.profilePicture = firebaseImageUrl + staticImages.placeholderPortrait;
+            }
             this.seller = signedSeller;
             if (this.user && this.seller) {
-                this.authChange.next(true);
                 this.isAuthenticated = true;
                 this.router.navigate(['/articles']);
             }

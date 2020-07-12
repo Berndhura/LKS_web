@@ -1,6 +1,6 @@
     <div class="product-container">
         <div *ngFor="let category of categories" class="product" (click)="changeCategory(category)">
-            <img  class="mat-card-avatar {{category.id == selectedCategory?.id ? 'active-avatar' : ''}}" [src]="category.src">
+            <img  class="mat-card-avatar {{category.id == selectedCategory?.id ? 'active-avatar' : ''}}" [src]="firebaseImageUrl + category.src">
             <span class="label {{category.id == selectedCategory?.id ? 'active-label' : ''}}">{{category.label}}</span>
         </div>
     </div>

@@ -1,5 +1,6 @@
 import { Category } from './../types/category.model';
 import { categories } from './../configs/data-config';
+import {firebaseImageUrl} from './../configs/config';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -12,6 +13,7 @@ export class ProductSelectComponent implements OnInit {
   categories: Category[] = categories;
   @Input() selectedCategory: Category;
   @Output() selectedCategoryChange = new EventEmitter<Category>();
+  firebaseImageUrl = firebaseImageUrl;
 
   constructor() { }
 

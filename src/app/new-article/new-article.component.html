@@ -63,7 +63,7 @@
         <div class="image-upload-container">
           <div class="image-upload" *ngFor="let articleImage of articleImages, let i = index">
             <label for="file-input" (click)="saveIndex(i)">
-              <img class="{{i === 0 ? 'img-title' : ''}}" *ngIf="!articleImage.imgUrl" [src]="firebaseImageUrl + placeholderImage"/>
+              <img class="{{i === 0 ? 'img-title' : ''}}" *ngIf="!articleImage.imgUrl" [src]="placeholderImage"/>
               <img *ngIf="articleImage.imgUrl" [src]="articleImage.imgUrl"/>
             </label>
             <input id="file-input" type="file" (change)="handleFileInput($event.target.files)"/>
@@ -77,14 +77,15 @@
       </div>
   
       <p>Kontaktiert wirst du über deine Mail</p>
-      <input placeholder="Mail-Adresse" formControlName="mail" type="email">
+      <input placeholder="Mail-Adresse" formControlName="sellerEmail" type="email">
   
       <p>Zusätzlich auch deine Telefonnummer zeigen?</p>
-      <input placeholder="Handynummer" formControlName="phone">
+      <input placeholder="Handynummer" formControlName="sellerPhone">
   
       <div class="form-button-container">
         <button (click)="resetArticle()" class="form-button">Verwerfen</button>
-        <button (click)="saveArticle()" class="form-button" [disabled]="newArticle.invalid || !articleImages[0].imgUrl">Speichern</button>
+        <button (click)="saveArticle()" class="form-button">Speichern</button>
+        <!-- <button (click)="saveArticle()" class="form-button" [disabled]="newArticle.invalid || !articleImages[0].imgUrl">Speichern</button> -->
         <span *ngIf="newArticle.invalid || !articleImages[0].imgUrl" class="form_button_span">Bitte fülle alle Pflichtfelder aus!</span>
       </div>
       

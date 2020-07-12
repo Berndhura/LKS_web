@@ -100,6 +100,16 @@ export class ArticleService {
     );
   }
 
+  upsertArticle(article: Article) {
+    console.log(article);
+    this.http.post<Article>(baseUrl + '/article', article).pipe(
+      catchError(err => {
+        this.alertService.openAlert('Fehler');
+        return of(null);
+      })
+    ).subscribe();
+  }
+
   // Dieser Endpunkt fügt einem Artikel +1 Bookmark hinzu und einem seller eine articleID in Bookmarks
   // Benötigt Token
   addBookmarkArticle(articleid: number): void {

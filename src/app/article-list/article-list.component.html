@@ -6,11 +6,12 @@
             <mat-icon class="bookmark-icon"  *ngIf="user && article.userId != user.id && seller?.bookmarks.indexOf(article.id) != -1" (click)="deleteBookmark(article.id)" matTooltip="Von Merkliste entfernen" matTooltipPosition="below">star</mat-icon>
         </div>
         <div class="col-2" class="img-container">
-            <img src ={{getPictureUrl(article.pictureIds[0])}} />
+            <img *ngIf="article.pictureUrls" [src]="article.pictureUrls[0]" />
+            <img *ngIf="!article.pictureUrls" [src]="placeholderImage"/>
         </div>
         <div class="col-2 product-container">
-            <img  class="mat-card-avatar" [src]="getProduct(article.category).src" [matTooltip]="getProduct(article.category).label">
-            <img  class="mat-card-avatar" [src]="'../../assets/images/questionmark.jpg'" [matTooltip]="'noch offen'">
+            <img  class="mat-card-avatar" [src]="firebaseImageUrl + getProduct(article.category).src" [matTooltip]="getProduct(article.category).label">
+            <img  class="mat-card-avatar" [src]="firebaseImageUrl + 'o/app%2Fplaceholder%2Fquestionmark.jpg?alt=media&token=6cd3f231-a085-4f67-a216-21b6886533cd'" [matTooltip]="'noch offen'">
         </div>
         <!-- <div class="row col-7">
             <div class="row col-md-5 title">
@@ -33,7 +34,7 @@
 
         <div class="col-6 info-container">
             <span class="title-header">{{ article.title }}</span>
-            <span>{{article.zustand}}</span>
+            <span>{{article.condition}}</span>
             <span >{{getPrice(article)}}</span>
             <span >{{getLocation(article.locations)}}</span>
             <span >{{ article.date | date:'dd.MM.yyyy' }}</span>
@@ -41,7 +42,7 @@
 
         <div class="col-1 actions">
             <mat-icon class="detail-icon" routerLink="/article/{{article.id}}" matTooltip="Details" matTooltipPosition="left">find_in_page</mat-icon>
-            <mat-icon *ngIf="user && article.userId == user.id" class="detail-icon" matTooltip="Bearbeiten" matTooltipPosition="left" (click)="editArticle(article)">create</mat-icon>
+            <mat-icon *ngIf="user && article.userId == user.id" class="detail-icon" matTooltip="Bearbeiten" matTooltipPosition="left" (click)="editArticle(article.id)">create</mat-icon>
         </div>
     </div>
 </div>

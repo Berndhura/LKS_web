@@ -2,7 +2,7 @@
             
     <div class="header-left">
         <h3>Luftkraftsport</h3>
-        <img *ngIf="true" src="../../assets/images/Logo.png" width="70" height="70" routerLink="/about">
+        <img *ngIf="true" [src]="firebaseImageUrl + 'o/app%2Flogo%2FLogo.png?alt=media&token=d76b35a5-f3c5-4d45-9554-28c0909ce5e7'" width="70" height="70" routerLink="/about">
         <div>
             <h6 class="about-us" routerLink="/about">Über uns</h6>
         </div>
@@ -18,7 +18,7 @@
         <div style="width: 1rem;" *ngIf="!authService.isAuthenticated"></div>
         <div class="navs" *ngIf="authService.isAuthenticated"><mat-icon>monetization_on</mat-icon><span routerLink="/create">Verkaufen</span></div>
         <div style="width: 1rem;" *ngIf="authService.isAuthenticated"></div>
-        <img *ngIf="authService.isAuthenticated" class="mat-card-avatar profile" [src]="firebaseImageUrl + currentSeller.profilePicture" width="50" height="50" routerLink="/user">
+        <img *ngIf="authService.isAuthenticated" class="mat-card-avatar profile" [src]="currentSeller.profilePicture" width="50" height="50" routerLink="/user">
         <button *ngIf="authService.isAuthenticated" mat-icon-button (click)="logout()">
             <mat-icon>logout</mat-icon>
         </button>

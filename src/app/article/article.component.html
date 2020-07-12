@@ -10,17 +10,17 @@
     <span *ngIf="user && article.userId == user.id && article.views && article.bookmarks" class="article-info">Beliebtheit deiner Anzeige: {{article.views}} <mat-icon matTooltip="Aufrufe" matTooltipPosition="right">visibility</mat-icon> {{article.bookmarks}} <mat-icon  matTooltip="Gemerkt" matTooltipPosition="right">star</mat-icon></span>
     
     <div class="category-info">
-      <span><img class="mat-card-avatar" mat-card-avatar [src]="article.categoryInfo.src"> {{article.categoryInfo.label}}</span>
-      <span><img mat-card-avatar [src]="'../../assets/images/products-windsurfing/sail.gif'"> {{'noch offen'}}</span>
+      <span><img class="mat-card-avatar" mat-card-avatar [src]="firebaseImageUrl + article.categoryInfo.src"> {{article.categoryInfo.label}}</span>
+      <span><img mat-card-avatar [src]="firebaseImageUrl + 'o/app%2Fplaceholder%2Fquestionmark.jpg?alt=media&token=6cd3f231-a085-4f67-a216-21b6886533cd'"> {{'noch offen'}}</span>
     </div>
-    <p><b>Zustand:</b> {{article.zustand}}</p>
+    <p><b>Zustand:</b> {{article.condition}}</p>
     <p><b>Preis:</b> {{getPrice(article)}}</p>
 
     <div class="form-group">
       <label for="comment"><b>Beschreibung:</b></label>
       <textarea class="form-control" rows="5" id="comment" disabled>{{article.description}}</textarea>
     </div>
-    <p><b>Ort:</b>{{article.locations.toString()}}</p>
+    <p><b>Ort:</b>{{article.locations?.toString()}}</p>
     <p><b>Distanz vom Homespot:</b> xxx km</p>
 
     <app-location-map [locations]="article.locations"></app-location-map>
@@ -46,10 +46,14 @@
 
   <div class="col-lg-6 article-right">
     <div class="selected-image-container">
-      <img class="selected-image" [src]="currentPictureUrl">
+      <img *ngIf="currentPictureUrl" class="selected-image" [src]="currentPictureUrl">
+      <img *ngIf="!currentPictureUrl" class="selected-image" [src]="placeholderImage">
     </div>
     <div class="small-image-container">
-      <img *ngFor="let pictureId of article.pictureIds; let i = index" class="small-image {{pictureId === currentPictureId ? 'active-small-image' : ''}}" [src]="getPictureUrl(pictureId)" (click)="changeCurrentPicture(i)">
+      <ng-container *ngFor="let pictureUrl of article.pictureUrls; let i = index">
+        <img  *ngIf="pictureUrl || i == 0" class="small-image {{pictureUrl === currentPictureUrl ? 'active-small-image' : ''}}" [src]="pictureUrl != null ? pictureUrl : placeholderImage" (click)="changeCurrentPicture(pictureUrl)">
+      </ng-container>
+      
     </div>
   </div>
 </div>
