@@ -14,7 +14,7 @@ export class Article {
     price: number;
     priceStatus = '';
     distance: number;
-    date: Date = new Date();
+    createdAt: Date = new Date();
     views: number;
     locations: string[];
     mapLocation: boolean;

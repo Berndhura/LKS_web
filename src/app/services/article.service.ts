@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import {baseUrl} from '../../environments/environment';
 import { tap, map, catchError, retry } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class ArticleService {
 
   constructor(
     private http: HttpClient,
+    private router: Router,
     private selectionService: SelectionService,
     private authServiceMail: AuthServiceMail,
     private alertService: AlertService,
@@ -107,7 +109,10 @@ export class ArticleService {
         this.alertService.openAlert('Fehler');
         return of(null);
       })
-    ).subscribe();
+    ).subscribe(() => {
+      this.alertService.openAlert('Erfolg Upsert Article');
+      this.router.navigate(['user']);
+    });
   }
 
   // Dieser Endpunkt fügt einem Artikel +1 Bookmark hinzu und einem seller eine articleID in Bookmarks

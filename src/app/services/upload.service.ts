@@ -14,7 +14,7 @@ export class UploadService {
 
   constructor(private storage: AngularFireStorage, private selectionService: SelectionService) { }
 
-  uploadImage(file: File, userId?: string, articleId?: string, imageId?: number): Observable<any> {
+  uploadImage(file: File, userId?: string, articleId?: string, imageId?: number): Observable<string> {
     let path;
     if (userId) {
       path = 'users/' + userId + '/profilepicture';
@@ -37,5 +37,9 @@ export class UploadService {
     );
 
     return this.snapshot$;
+  }
+
+  deleteImage(imageUrl: string): Promise<any> {
+    return this.storage.storage.refFromURL(imageUrl).delete();
   }
 }

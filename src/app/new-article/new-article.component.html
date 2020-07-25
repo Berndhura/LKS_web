@@ -11,7 +11,7 @@
 
   <div class="text-container">
 
-    <div >
+    <div>
       <p>Titel der Anzeige:</p>
       <div class="title-container">
         <input class="input-title" formControlName="title" placeholder="Titel" maxlength="40">
@@ -84,8 +84,7 @@
   
       <div class="form-button-container">
         <button (click)="resetArticle()" class="form-button">Verwerfen</button>
-        <button (click)="saveArticle()" class="form-button">Speichern</button>
-        <!-- <button (click)="saveArticle()" class="form-button" [disabled]="newArticle.invalid || !articleImages[0].imgUrl">Speichern</button> -->
+        <button (click)="saveArticle()" class="form-button" [disabled]="newArticle.invalid || !articleImages[0].imgUrl">Speichern</button>
         <span *ngIf="newArticle.invalid || !articleImages[0].imgUrl" class="form_button_span">Bitte fülle alle Pflichtfelder aus!</span>
       </div>
       

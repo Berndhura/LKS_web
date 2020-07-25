@@ -3,10 +3,10 @@
   <div class="col-lg-6 article-left">
     <div class="article-title">
       <span>{{article.title}}</span>
-      <mat-icon class="bookmark-toggle" *ngIf="article.userId != user?.id && seller?.bookmarks.indexOf(article.id) === -1" (click)="addBookmark(article.id)" matTooltip="Meiner Merkliste hinzufügen" matTooltipPosition="right">star_border</mat-icon>
-      <mat-icon class="bookmark-toggle" *ngIf="article.userId != user?.id && seller?.bookmarks.indexOf(article.id) != -1" (click)="deleteBookmark(article.id)" matTooltip="Von Merkliste entfernen" matTooltipPosition="right">star</mat-icon>
+      <mat-icon class="bookmark-toggle" *ngIf="user && article.userId != user?.id && seller?.bookmarks.indexOf(article.id) === -1" (click)="addBookmark(article.id)" matTooltip="Meiner Merkliste hinzufügen" matTooltipPosition="right">star_border</mat-icon>
+      <mat-icon class="bookmark-toggle" *ngIf="user && article.userId != user?.id && seller?.bookmarks.indexOf(article.id) != -1" (click)="deleteBookmark(article.id)" matTooltip="Von Merkliste entfernen" matTooltipPosition="right">star</mat-icon>
     </div>
-    <span>{{article.date | date:'dd.MM.yyyy'}}</span>
+    <span>{{article.createdAt | date:'dd.MM.yyyy'}}</span>
     <span *ngIf="user && article.userId == user.id && article.views && article.bookmarks" class="article-info">Beliebtheit deiner Anzeige: {{article.views}} <mat-icon matTooltip="Aufrufe" matTooltipPosition="right">visibility</mat-icon> {{article.bookmarks}} <mat-icon  matTooltip="Gemerkt" matTooltipPosition="right">star</mat-icon></span>
     
     <div class="category-info">
@@ -32,14 +32,14 @@
         <span>{{article.sellerName}}</span>
         <span *ngIf="article.sellerPhone">Tel.: {{article.sellerPhone}}</span>
       </div>
-      <form class="form-group" [formGroup]="mailForm" *ngIf="user && article.userId != user.id">
+      <form class="form-group" [formGroup]="mailForm">
         <label for="exampleFormControlTextarea1">Schreibe {{article.sellerName}} eine Mail:</label>
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"  formControlName="message"></textarea>
         <div class="form-group mail-info">
           <label for="sellerMail">Deine Mail Adresse:</label>
           <input type="email" class="form-control" id="sellerMail" formControlName="sender">
         </div>
-        <button type="button" class="send-button invalid" [disabled]="article.userId === user.id || mailForm.invalid" (click)="onSubmit()"><mat-icon>email</mat-icon>Senden</button>
+        <button type="button" class="send-button invalid" [disabled]="mailForm.invalid" (click)="onSubmit()"><mat-icon>email</mat-icon>Senden</button>
       </form>
     </div>
   </div>
@@ -57,30 +57,3 @@
     </div>
   </div>
 </div>
-
-
-
-
-<!-- <section class="open-article" fxLayout fxLayoutAlign="center">
-  <mat-card fxFlex="500px">
-    <mat-card-header>
-      <div mat-card-avatar class="user-header-image">
-        <img mat-card-avatar [src]="article.sellerProfilePictureUrl">
-      </div>
-      <mat-card-title> {{ article.title }} </mat-card-title>
-    <mat-card-subtitle *ngIf="seller != null"> {{ seller.name }}</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image [src]="getPictureUrl(article.pictureIds[0])">
-    <mat-card-content>
-      <p> {{ article.description }} </p>
-      <p> Preis: {{ article.price }} € </p>
-      <p> Vom: {{article.date | date: 'medium' }} </p>
-      <p> {{ article.views }} Aufrufe </p>
-      <div #mapContainer id="map"></div>
-    </mat-card-content>
-    <mat-card-actions fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
-      <button mat-raised-button color="primary" (click)="onBookmark()">MERKEN</button>
-      <button mat-raised-button color="primary">BEARBEITEN</button>
-    </mat-card-actions>
-  </mat-card>
-</section> -->

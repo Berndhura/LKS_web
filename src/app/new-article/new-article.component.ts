@@ -41,6 +41,7 @@ export class NewArticleComponent implements OnInit, OnDestroy {
   errorPictureMessage: string;
   currentIndex: number;
   articleImages: ArticlesImages[] = [];
+  deletedArticleImages: string[] = [];
 
 
   newArticle: FormGroup;
@@ -99,12 +100,12 @@ export class NewArticleComponent implements OnInit, OnDestroy {
 
   initPictures() {
     this.articleImages = [
-      {id: 0, label: 'Titelbild*', imgUrl: null, imgFile: null},
-      {id: 1, label: 'Bild 2', imgUrl: null, imgFile: null},
-      {id: 2, label: 'Bild 3', imgUrl: null, imgFile: null},
-      {id: 3, label: 'Bild 4', imgUrl: null, imgFile: null},
-      {id: 4, label: 'Bild 5', imgUrl: null, imgFile: null},
-      {id: 5, label: 'Bild 6', imgUrl: null, imgFile: null},
+      {id: 1, label: 'Titelbild*', imgUrl: null, imgFile: null},
+      {id: 2, label: 'Bild 2', imgUrl: null, imgFile: null},
+      {id: 3, label: 'Bild 3', imgUrl: null, imgFile: null},
+      {id: 4, label: 'Bild 4', imgUrl: null, imgFile: null},
+      {id: 5, label: 'Bild 5', imgUrl: null, imgFile: null},
+      {id: 6, label: 'Bild 6', imgUrl: null, imgFile: null},
     ];
   }
 
@@ -115,8 +116,6 @@ export class NewArticleComponent implements OnInit, OnDestroy {
       this.subcategories = subcategories.filter(sub => sub.category === this.selectedCategory.id);
     }
     this.selectedSubcategory = subcategories.find(subcat => subcat.id === article.subcategory);
-
-    console.log(article);
 
     this.newArticle.patchValue({
       id: article.id,
@@ -213,38 +212,64 @@ export class NewArticleComponent implements OnInit, OnDestroy {
   }
 
   onDeleteImage(index: number) {
-    const articleImage = this.articleImages.find(image => image.id === index);
+    const articleImage = this.articleImages.find(image => image.id === (index + 1));
     if (articleImage.imgFile) {
       articleImage.imgFile = null;
       articleImage.imgUrl = null;
     } else {
+      this.deletedArticleImages.push(articleImage.imgUrl);
       articleImage.imgUrl = null;
-      console.log('image muss gelöscht werden');
+    }
+  }
+
+  uploadArticle(articleId: string) {
+    const newImages: ArticlesImages[] = this.articleImages.filter(image => image.imgFile != null);
+    const currentImages: ArticlesImages[] = this.articleImages.filter(image => image.imgFile == null && image.imgUrl != null);
+    const uploadedImages = [];
+    let imageCount = 0;
+
+    currentImages.forEach(image => {
+      const newImage = {order: image.id, url: image.imgUrl};
+      uploadedImages.push(newImage);
+    });
+
+    if (newImages.length === 0) {
+      this.newArticle.value.pictures = uploadedImages;
+      this.articleService.upsertArticle(this.newArticle.value);
+    } else {
+      newImages.forEach(image => {
+        this.uploadService.uploadImage(image.imgFile, null, articleId, image.id).subscribe(imageUrl => {
+          imageCount++;
+          const newImage = {order: image.id, url: imageUrl};
+          uploadedImages.push(newImage);
+          if (imageCount === newImages.length) {
+            this.newArticle.value.pictures = uploadedImages;
+            this.articleService.upsertArticle(this.newArticle.value);
+          }
+        });
+      });
     }
   }
 
   saveArticle() {
+    if (this.newArticle.value.id) {
+      this.updateArticle();
+    } else {
+      this.insertArticle();
+    }
+  }
+
+  insertArticle() {
     const articleId: string = uuid.v4();
-    this.newArticle.value.id = '1';
-    const images: ArticlesImages[] = [];
-    const uploadedImages = [];
-    let imageCount = 0;
-    this.articleImages.find(image => {
-      if (image.imgFile != null) {
-        images.push(image);
-      }
-    });
-    images.forEach(image => {
-      this.uploadService.uploadImage(image.imgFile, null, articleId, image.id).subscribe(imageUrl => {
-        imageCount++;
-        const newImage = {order: image.id, url: imageUrl};
-        uploadedImages.push(newImage);
-        if (imageCount === images.length) {
-          this.newArticle.value.pictures = uploadedImages;
-        }
-        this.articleService.upsertArticle(this.newArticle.value);
+    this.newArticle.value.id = articleId;
+    this.uploadArticle(articleId);
+  }
+
+  updateArticle() {
+      this.deletedArticleImages.forEach(imageUrl => {
+        this.uploadService.deleteImage(imageUrl);
       });
-    });
+      this.uploadArticle(this.newArticle.value.id);
   }
 
   resetArticle(): void {
