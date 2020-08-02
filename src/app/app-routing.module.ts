@@ -18,7 +18,7 @@ export class LoginActivate implements CanActivate {
 
   canActivate(): boolean {
     if (!this.authService.isAuthenticated) {
-      this.router.navigate(['login']);
+      this.router.navigate(['articles']);
     }
     return true;
   }
@@ -27,6 +27,7 @@ export class LoginActivate implements CanActivate {
 
 const routes: Routes = [
   { path: '', redirectTo: '/articles', pathMatch: 'full'},
+  { path: 'article/:key', component: ArticleComponent},
   { path: 'articles', component: ArticleOverviewComponent},
   { path: 'about', component: AboutComponent},
   { path: 'login', component: LoginComponent},
@@ -35,7 +36,6 @@ const routes: Routes = [
   { path: 'user', component: UserComponent, canActivate: [LoginActivate]},
   { path: 'impressum', component: ImpressumComponent},
   { path: '404', component: NotFoundComponent},
-  { path: 'article/:key', component: ArticleComponent},
   { path: '**', component: NotFoundComponent}
 ];
 

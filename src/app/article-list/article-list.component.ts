@@ -10,6 +10,9 @@ import { pictureUrl } from '../configs/config';
 import { SelectionService } from '../services/selection.service';
 import { Router } from '@angular/router';
 import {firebaseImageUrl} from './../configs/config';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-article-list',
@@ -21,6 +24,7 @@ export class ArticleListComponent implements OnInit {
   @Input() filteredArticles: Article[];
   @Input() user: User;
   @Input() seller: Seller;
+  @Input() overview: boolean;
 
   placeholderImage = placeholderImage;
 
@@ -30,7 +34,9 @@ export class ArticleListComponent implements OnInit {
     private selectionService: SelectionService,
     public authServiceMail: AuthServiceMail,
     private articleService: ArticleService,
-    private router: Router) { }
+    private alertService: AlertService,
+    private router: Router,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -87,6 +93,25 @@ export class ArticleListComponent implements OnInit {
     this.articleService.getArticle(articleId).subscribe(article => {
       this.selectionService.currentArticle = article;
       this.router.navigate(['/create']);
+    });
+  }
+
+  deleteArticle(articleId: string) {
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      width: '500px',
+      height: '200px',
+      data: {text: 'Dieser Artikel wird hiermit vollständig gelöscht.', action: 'Löschen'}
+    });
+
+    dialogRef.afterClosed().subscribe(resetCall => {
+      if (resetCall) {
+        this.articleService.deleteArticle(articleId).subscribe(result => {
+          if (result !== 'error') {
+            this.alertService.openAlert('Artikel erfolgreich gelöscht');
+            this.filteredArticles = this.filteredArticles.filter(article => article.id !== articleId);
+          }
+        });
+      }
     });
   }
 

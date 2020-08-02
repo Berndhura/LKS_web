@@ -11,6 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from '../services/article.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {firebaseImageUrl} from '../configs/config';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
 
 
 @Component({
@@ -44,10 +46,21 @@ export class ArticleComponent implements OnInit {
     private authServiceMail: AuthServiceMail,
     private articleService: ArticleService,
     private selectionService: SelectionService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
     ) { }
 
   ngOnInit() {
+    if (this.authServiceMail.triggerLocalStorageLogin) {
+      this.authServiceMail.getAuthStatus().subscribe(() => {
+        this.initArticle();
+      });
+    } else {
+      this.initArticle();
+    }
+  }
+
+  initArticle() {
     this.seller = this.authServiceMail.seller;
     if (this.seller) {
       this.mailForm.setValue({
@@ -98,17 +111,25 @@ export class ArticleComponent implements OnInit {
     this.currentPictureUrl = pictureUrl;
   }
 
-  // onBookmark() {
-  //   this.articleService.bookmarkArticle(this.article.id, "eyJhbGciOiJSUzI1NiIsImtpZCI6ImNkMjM0OTg4ZTNhYWU2N2FmYmMwMmNiMWM0MTQwYjNjZjk2ODJjYWEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMjI1Njg0OTI4MjQ1LXQ3aGU2aHVxM2hiczlmdGQ0NWFyZDVwY2E0NmplZ3NmLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMjI1Njg0OTI4MjQ1LXQ3aGU2aHVxM2hiczlmdGQ0NWFyZDVwY2E0NmplZ3NmLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTA5MTU2NzcwNTc1NzgxNjIwNzY3IiwiZW1haWwiOiJzbmFja2Vyc2F1QGZyZWVuZXQuZGUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6Il9mT0FOWGNOUzlSUGdfdnFNWWNhSmciLCJpYXQiOjE1NzgzMzE1MzEsImV4cCI6MTU3ODMzNTEzMX0.o_LbEb6LqpTqFYRYL7I6EZkMIiiJicXxFKijOecEbtxiVPtFMiFxn4VooayeIAdGB3zMXMpSfeEdxv6p2G9pbPZB9htFLE7c9sn_C-oIIsSnukgNoOImcsPxOQtHYRKO-qOtpB3I25gjPfBzgGbqcc9lqkaoZow2Bo24r63FSHyT0RSnmz-hSn9ZHQ12gWE9AKf4jNjvmVoUBCnr2c8Cu0zjf7Flo8U6mVHecfN_GX4awC4g46IDXcbsk4sl4jVswLJefrq5kyQ5958fhvLMdlwiJfxrm6c7rOo62jA6--8imZAa8WI9L9W1Jdyou__Dry1s23DmDSfrpMcAoHslbw").subscribe(result => {
-  //     console.log(result);
-  //   });
-  // }
-
   addBookmark(articleId: number) {
     this.articleService.addBookmarkArticle(articleId);
   }
 
   deleteBookmark(articleId: number) {
     this.articleService.deleteBookmarkArticle(articleId);
+  }
+
+  deleteArticle() {
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      width: '500px',
+      height: '200px',
+      data: {text: 'Dieser Artikel wird hiermit vollständig gelöscht.', action: 'Löschen'}
+    });
+
+    dialogRef.afterClosed().subscribe(resetCall => {
+      if (resetCall) {
+        this.articleService.deleteArticle(this.article.id);
+      }
+    });
   }
 }

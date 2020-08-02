@@ -89,10 +89,10 @@ export class ArticleService {
   getArticle(articleId: number): Observable<Article> {
     return this.http.get<Article>(baseUrl + '/article', {params: {id: articleId.toString()}}).pipe(
       map(article => {
-        article.categoryInfo = this.selectionService.getCategory(article);
+        article.categoryInfo = this.selectionService.getCategory(article.category);
         article.subcategoryInfo = this.selectionService.getSubCategory(article);
         // article.locationsGeodata = this.locationService.getGeodata(article.locations);
-
+        console.log(article)
         return article;
       }),
       catchError(err => {
@@ -103,7 +103,6 @@ export class ArticleService {
   }
 
   upsertArticle(article: Article) {
-    console.log(article);
     this.http.post<Article>(baseUrl + '/article', article).pipe(
       catchError(err => {
         this.alertService.openAlert('Fehler');
@@ -113,6 +112,26 @@ export class ArticleService {
       this.alertService.openAlert('Erfolg Upsert Article');
       this.router.navigate(['user']);
     });
+  }
+
+  // Dieser Endpunkt lösche einen bestimmten Artikel
+  // Benötigt Token
+  deleteArticle(articleid: string) {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      body: {
+        articleId: articleid,
+      }
+    };
+
+    return this.http.delete<void>(baseUrl + '/article', options).pipe(
+      catchError(err => {
+        this.alertService.openAlert('Fehler');
+        return of('error');
+      })
+    );
   }
 
   // Dieser Endpunkt fügt einem Artikel +1 Bookmark hinzu und einem seller eine articleID in Bookmarks

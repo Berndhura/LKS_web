@@ -1,20 +1,21 @@
 import { Category, Subcategory } from './category.model';
 export class Article {
-    id: number;
+    id: string;
+    inactive: boolean;
+    validTo: Date;
     category: string;
     categoryInfo: Category;
     subcategory: string;
     subcategoryInfo: Subcategory;
     condition: string;
     shipping: string;
-    title = '';
-    description = '';
-    urls = '';
-    userId = '';
+    title: string;
+    description: string;
+    userId: string;
     price: number;
-    priceStatus = '';
+    priceStatus: string;
     distance: number;
-    createdAt: Date = new Date();
+    createdAt: Date;
     views: number;
     locations: string[];
     mapLocation: boolean;

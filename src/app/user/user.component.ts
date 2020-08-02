@@ -1,4 +1,5 @@
-import { firebaseImageUrl } from './../configs/config';
+import { AlertService } from './../services/alert.service';
+import { firebaseImageUrl, staticImages } from './../configs/config';
 import { LocationService } from './../services/location.service';
 import { SelectionService } from './../services/selection.service';
 import { Category } from './../types/category.model';
@@ -8,6 +9,8 @@ import { ArticleService } from './../services/article.service';
 import { Article, LocationData } from './../types/article.model';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
 
 
 @Component({
@@ -22,6 +25,7 @@ export class UserComponent implements OnInit {
   ownerArticles: Article[];
 
   firebaseImageUrl: string = firebaseImageUrl;
+  placeholderPortrait: string = staticImages.placeholderPortrait;
   imgURL: any;
   imgFile: File;
   errorPictureMessage: string;
@@ -35,10 +39,12 @@ export class UserComponent implements OnInit {
 
   constructor(
     private articleService: ArticleService,
+    private alertService: AlertService,
     public authService: AuthServiceMail,
     private selectionService: SelectionService,
     private locationService: LocationService,
-    private ref: ChangeDetectorRef) { }
+    private ref: ChangeDetectorRef,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     this.articleService.getBookmarkedArticles().subscribe(bookmarkedArticles => {
@@ -93,13 +99,28 @@ export class UserComponent implements OnInit {
   }
 
   categoryChange(category: Category) {
-    this.seller.category = category;
+    this.seller.category = category.id;
+    this.seller.categoryInfo = category;
     this.seller.categoryId = category.id;
     this.authService.seller = this.seller;
   }
 
   saveSeller() {
-    console.log(this.sellerForm);
+    this.authService.loadingUpdateSeller = true;
     this.authService.updateSeller(this.imgFile);
+  }
+
+  deleteUser() {
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      width: '500px',
+      height: '200px',
+      data: {text: 'Dein Nutzer und alle Anzeigen werden hiermit gelöscht.', action: 'Löschen'}
+    });
+
+    dialogRef.afterClosed().subscribe(resetCall => {
+      if (resetCall) {
+        this.authService.deleteUser();
+      }
+    });
   }
 }

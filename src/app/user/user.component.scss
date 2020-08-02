@@ -80,21 +80,42 @@ input {
   }
 }
 
-
-.save-button {
-  margin-top: 30px;
-  max-width: 145px;
-  color: white;
-  padding: 8px;
-  background-color: #3F51B5;
-  border: 2px solid black;
-  border-radius: 5px;
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  .save-container {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+  }
+  
+  .delete-container {
+    display: flex;
+    margin-top: 30px;
+  }
+  
+  .save-button {
+    max-width: 145px;
+    color: white;
+    padding: 8px;
+    background-color: #3F51B5;
+    border: 2px solid black;
+    border-radius: 5px;
+  }
+  
+  .save-button:disabled {
+    cursor: not-allowed;
+    background-color: #AADAFF;
+  }
+  
+  .spinner {
+    margin-left: 10px;
+  }
 }
 
-.save-button:disabled {
-  cursor: not-allowed;
-  background-color: #AADAFF;
-}
+
+
+
 
 @media only screen and (max-width: 700px)  {
   input {

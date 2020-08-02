@@ -9,20 +9,24 @@ import { auth } from 'firebase/app';
 import { AuthData } from '../types/auth-data.model';
 import { Router } from '@angular/router';
 import { AngularFireAuth} from 'angularfire2/auth';
-import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { of, Observable } from 'rxjs';
 import { firebaseImageUrl, staticImages } from './../configs/config';
+import { SelectionService } from './selection.service';
 
 
 @Injectable()
 export class AuthServiceMail {
     public isAuthenticated = false;
     authChange = new Subject<boolean>();
+    triggerLocalStorageLogin = false;
     sessionToken: string;
 
     user: User;
     seller: Seller;
+
+    loadingUpdateSeller = false;
 
     constructor(
         private router: Router,
@@ -30,27 +34,38 @@ export class AuthServiceMail {
         private ngZone: NgZone,
         private uploadService: UploadService,
         private alertService: AlertService,
+        private selectionService: SelectionService,
         private http: HttpClient) {
     }
 
-    setSellerCategory(currentSeller: Seller) {
-        const index = categories.findIndex(c => c.id === currentSeller.categoryId);
-        this.seller.category = categories[index];
+    getAuthStatus() {
+        return this.authChange.asObservable();
     }
 
     // Endpunkt der ein Update des Seller durchführt
     // Token wird benötigt
     updateSeller(imgFile: File) {
+        console.log(this.seller);
         if (imgFile) {
             this.uploadService.uploadImage(imgFile, this.user.id).subscribe(imgUrl => {
                 this.seller.profilePicture = imgUrl;
-                console.log('neuesImg:', imgUrl);
-                console.log('Endpunkt Update Seller: ', this.seller);
+                this.updateSellerHttp(this.seller);
             });
         } else {
-            console.log('altesImg:', this.seller.profilePicture);
-            console.log('Endpunkt Update Seller: ', this.seller);
+            this.updateSellerHttp(this.seller);
         }
+    }
+
+    updateSellerHttp(seller: Seller) {
+        this.http.put(baseUrl + '/seller', seller).pipe(
+            catchError(err => {
+              this.alertService.openAlert('Fehler');
+              return of(null);
+            })
+          ).subscribe(() => {
+            this.alertService.openAlert('Nutzer erfolgreich aktualisiert!');
+            this.loadingUpdateSeller = false;
+        });
     }
 
 
@@ -65,6 +80,28 @@ export class AuthServiceMail {
         });
     }
 
+    deleteUser() {
+        const options = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json'
+            }),
+            body: {
+              userId: this.user.id,
+            }
+          };
+        this.http.delete<void>(baseUrl + '/user', options).pipe(
+            catchError(err => {
+                this.alertService.openAlert('Fehler Löschen Nutzer');
+                return of('error');
+              })
+        ).subscribe(result => {
+            if (result !== 'error') {
+                this.logout();
+                this.alertService.openAlert('Nutzer erfolgreich gelöscht');
+            }
+        });
+    }
+
     getFirebaseUser(firebaseUser: any) {
         this.http.get<User>(baseUrl + '/firebaseuser', {params: {firebasetoken: firebaseUser.xa}}).pipe(
             catchError(err => {
@@ -73,10 +110,12 @@ export class AuthServiceMail {
               })
         ).subscribe(signedUser => {
             this.handleUser(signedUser);
+            this.router.navigate(['/articles']);
         });
     }
 
     checkLocalSessionToken() {
+        this.triggerLocalStorageLogin = true;
         const sessionToken = localStorage.getItem('sessionToken');
         if (sessionToken) {
             this.http.get<User>(baseUrl + '/sessionuser', {params: {sessiontoken: sessionToken}}).pipe(
@@ -109,19 +148,15 @@ export class AuthServiceMail {
                 return of(null);
               })
         ).subscribe(signedSeller => {
-            if (signedSeller.profilePicture) {
-                signedSeller.profilePicture = firebaseImageUrl + signedSeller.profilePicture;
-            } else {
-                signedSeller.profilePicture = firebaseImageUrl + staticImages.placeholderPortrait;
-            }
+            signedSeller.categoryInfo = this.selectionService.getCategory(signedSeller.category);
             this.seller = signedSeller;
             if (this.user && this.seller) {
+                this.triggerLocalStorageLogin = false;
                 this.isAuthenticated = true;
-                this.router.navigate(['/articles']);
+                this.authChange.next(true);
             }
         });
     }
-
 
     login(authData: AuthData) {
         this.afAuth.auth.signInWithEmailAndPassword(authData.email, authData.password)
@@ -169,9 +204,5 @@ export class AuthServiceMail {
         this.sessionToken = null;
         this.user = null;
         this.seller = null;
-    }
-
-    isAuth() {
-        return this.isAuthenticated;
     }
 }

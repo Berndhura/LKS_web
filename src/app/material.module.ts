@@ -14,6 +14,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import {MatDialogModule} from '@angular/material/dialog';
         MatCardModule,
         MatTooltipModule,
         MatAutocompleteModule,
-        MatDialogModule
+        MatDialogModule,
+        MatProgressSpinnerModule
     ],
     exports: [
         MatButtonModule,
@@ -43,7 +45,8 @@ import {MatDialogModule} from '@angular/material/dialog';
         MatTooltipModule,
         MatExpansionModule,
         MatAutocompleteModule,
-        MatDialogModule
+        MatDialogModule,
+        MatProgressSpinnerModule
     ]
 })
 

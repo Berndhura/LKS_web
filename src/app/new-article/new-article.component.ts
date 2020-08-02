@@ -71,7 +71,7 @@ export class NewArticleComponent implements OnInit, OnDestroy {
   }
 
   initForm() {
-    this.selectedCategory = this.seller.category;
+    this.selectedCategory = this.seller.categoryInfo;
     if (this.selectedCategory) {
       this.subcategories = subcategories.filter(sub => sub.category === this.selectedCategory.id);
     }
@@ -91,6 +91,7 @@ export class NewArticleComponent implements OnInit, OnDestroy {
         new FormControl(this.seller.location, [Validators.required])
       ]),
       mapLocation: new FormControl(true),
+      views: new FormControl(0),
       shipping: new FormControl(this.shippingList[0].label, Validators.required),
       sellerEmail: new FormControl(this.seller.email, [Validators.required, Validators.email]),
       sellerPhone: new FormControl(this.seller.phone),
@@ -129,6 +130,7 @@ export class NewArticleComponent implements OnInit, OnDestroy {
       priceStatus: article.priceStatus,
       locations: article.locations,
       mapLocation: article.mapLocation,
+      views: article.views,
       shipping: article.shipping,
       sellerEmail: article.sellerEmail,
       sellerPhone: article.sellerPhone,

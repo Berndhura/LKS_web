@@ -6,11 +6,12 @@ export interface User {
 }
 
 export class Seller {
-    id: string;
+    id: number;
     userId: string;
     name: string;
     profilePicture?: string;
-    category?: Category;
+    categoryInfo?: Category;
+    category?: string;
     categoryId?: string;
     location?: string;
     email: string;

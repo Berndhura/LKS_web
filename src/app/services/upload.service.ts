@@ -2,7 +2,7 @@ import { SelectionService } from './selection.service';
 import { Injectable } from '@angular/core';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
-import { last, concatMap } from 'rxjs/operators';
+import { last, concatMap, tap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +33,7 @@ export class UploadService {
 
     this.snapshot$ = this.task.snapshotChanges().pipe(
       last(),
-      concatMap(() => ref.getDownloadURL())
+      concatMap(() => ref.getDownloadURL()),
     );
 
     return this.snapshot$;

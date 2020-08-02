@@ -5,7 +5,7 @@
             <mat-icon class="bookmark-icon"  *ngIf="user && article.userId != user.id && seller?.bookmarks.indexOf(article.id) === -1" (click)="addBookmark(article.id)" matTooltip="Meiner Merkliste hinzufügen" matTooltipPosition="below">star_border</mat-icon>
             <mat-icon class="bookmark-icon"  *ngIf="user && article.userId != user.id && seller?.bookmarks.indexOf(article.id) != -1" (click)="deleteBookmark(article.id)" matTooltip="Von Merkliste entfernen" matTooltipPosition="below">star</mat-icon>
         </div>
-        <div class="col-2" class="img-container">
+        <div class="col-2 img-container">
             <img *ngIf="article.pictureUrls" [src]="article.pictureUrls[0]" />
             <img *ngIf="!article.pictureUrls" [src]="placeholderImage"/>
         </div>
@@ -13,23 +13,6 @@
             <img  class="mat-card-avatar" [src]="firebaseImageUrl + getProduct(article.category).src" [matTooltip]="getProduct(article.category).label">
             <img  class="mat-card-avatar" [src]="firebaseImageUrl + 'o/app%2Fplaceholder%2Fquestionmark.jpg?alt=media&token=6cd3f231-a085-4f67-a216-21b6886533cd'" [matTooltip]="'noch offen'">
         </div>
-        <!-- <div class="row col-7">
-            <div class="row col-md-5 title">
-                <mat-icon *ngIf="article.zustand === 'neu'" class="col-2" matTooltip="Neu">check_circle</mat-icon>
-                <mat-icon *ngIf="article.zustand === 'gebraucht'" class="col-2" matTooltip="Gebraucht">check_circle_outline</mat-icon>
-                <mat-icon *ngIf="article.zustand === 'ersatz'" class="col-2" matTooltip="Ersatzteil">remove_circle_outline</mat-icon>
-                <mat-icon *ngIf="article.zustand === 'defekt'" class="col-2" matTooltip="Defekt">remove_circle</mat-icon>
-                <mat-icon *ngIf="article.zustand === ''" class="col-2" matTooltip="Reise">flight</mat-icon>
-
-                <span class="col-10 title-header" routerLink="/{{article.id}}">{{ article.title }}</span>
-
-            </div>
-            <div class="row col-md-7 justify-content-around no-gutters info">
-                <span class="col-sm-4">{{getPrice(article)}}</span>
-                <span class="col-sm-4" [matTooltip]="getLocationTooltip(article.locations)" [matTooltipDisabled]="article.locations.length == 1">{{getLocation(article.locations)}}</span>
-                <span class="col-sm-4">{{ article.date | date:'dd.MM.yyyy' }}</span>
-            </div>
-        </div> -->
 
 
         <div class="col-6 info-container">
@@ -42,7 +25,45 @@
 
         <div class="col-1 actions">
             <mat-icon class="detail-icon" routerLink="/article/{{article.id}}" matTooltip="Details" matTooltipPosition="left">find_in_page</mat-icon>
-            <mat-icon *ngIf="user && article.userId == user.id" class="detail-icon" matTooltip="Bearbeiten" matTooltipPosition="left" (click)="editArticle(article.id)">create</mat-icon>
+            <mat-icon *ngIf="!overview && user && article.userId == user.id" class="detail-icon" matTooltip="Bearbeiten" matTooltipPosition="left" (click)="editArticle(article.id)">create</mat-icon>
+            <mat-icon *ngIf="!overview && user && article.userId == user.id" class="detail-icon" matTooltip="Löschen" matTooltipPosition="left" (click)="deleteArticle(article.id)">delete</mat-icon>
         </div>
     </div>
 </div>
+
+
+<!-- <div class="card" *ngFor="let article of filteredArticles">
+    <div class="row card-body">
+        <div class="col-3 row">
+            <div class="col-lg-4 bookmark">
+                <mat-icon style="cursor: default;" *ngIf="user && article.userId == user.id" matTooltip="Meine Anzeige" matTooltipPosition="below">person</mat-icon>
+                <mat-icon class="bookmark-icon"  *ngIf="user && article.userId != user.id && seller?.bookmarks.indexOf(article.id) === -1" (click)="addBookmark(article.id)" matTooltip="Meiner Merkliste hinzufügen" matTooltipPosition="below">star_border</mat-icon>
+                <mat-icon class="bookmark-icon"  *ngIf="user && article.userId != user.id && seller?.bookmarks.indexOf(article.id) != -1" (click)="deleteBookmark(article.id)" matTooltip="Von Merkliste entfernen" matTooltipPosition="below">star</mat-icon>
+            </div>
+            <div class="col-lg-8 img-container">
+                <img *ngIf="article.pictureUrls" [src]="article.pictureUrls[0]" />
+                <img *ngIf="!article.pictureUrls" [src]="placeholderImage"/>
+            </div>
+        </div>
+
+        <div class="col-2 product-container">
+            <img  class="mat-card-avatar" [src]="firebaseImageUrl + getProduct(article.category).src" [matTooltip]="getProduct(article.category).label">
+            <img  class="mat-card-avatar" [src]="firebaseImageUrl + 'o/app%2Fplaceholder%2Fquestionmark.jpg?alt=media&token=6cd3f231-a085-4f67-a216-21b6886533cd'" [matTooltip]="'noch offen'">
+        </div>
+
+
+        <div class="col-6 info-container">
+            <span class="title-header">{{ article.title }}</span>
+            <span>{{article.condition}}</span>
+            <span >{{getPrice(article)}}</span>
+            <span >{{getLocation(article.locations)}}</span>
+            <span >{{ article.createdAt | date:'dd.MM.yyyy' }}</span>
+        </div>
+
+        <div class="col-1 actions">
+            <mat-icon class="detail-icon" routerLink="/article/{{article.id}}" matTooltip="Details" matTooltipPosition="left">find_in_page</mat-icon>
+            <mat-icon *ngIf="!overview && user && article.userId == user.id" class="detail-icon" matTooltip="Bearbeiten" matTooltipPosition="left" (click)="editArticle(article.id)">create</mat-icon>
+            <mat-icon *ngIf="!overview && user && article.userId == user.id" class="detail-icon" matTooltip="Löschen" matTooltipPosition="left" (click)="deleteArticle(article.id)">delete</mat-icon>
+        </div>
+    </div>
+</div> -->
