@@ -1,5 +1,6 @@
 .card {
-    border: 1px solid rgba(0,0,0,.125);
+    border: 1px solid 	#989898;
+    // border: 1px solid rgba(0,0,0,.125);
     border-radius: 5px;
     margin-top: 5px;
 }
@@ -8,10 +9,13 @@
     padding: 5px;
 }
 
-
+.item-container {
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
 .img-container {
     display: flex;
-    margin: 0 auto;
+    justify-content: center;
     align-items: center;
 }
 
@@ -21,13 +25,19 @@
     justify-content: space-around;
 }
 
-.title {
-    display: flex;
-    align-items: center;
+.title-container {
+    border-bottom: 1px solid rgba(0,0,0,.125);
 }
 
 .title-header {
     font-weight: bold;
+    color: #3F51B5;
+    cursor: pointer;
+    border-bottom: solid 2px #FFFFFF;
+}
+
+.title-header:hover {
+    border-bottom: solid 2px #3F51B5;
 }
 
 .info {
@@ -35,8 +45,8 @@
 }
 
 img {
-    max-height: 130px;
-    max-width: 120px;
+    max-height: 160px;
+    max-width: 150px;
     border-radius: 15px;
 }
 
@@ -53,15 +63,39 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-right: 1px solid rgba(0,0,0,.125);
 }
 
 .bookmark-icon {
     cursor: pointer;
 }
 
+.info-title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    span {
+        font-weight: bold;
+    }
+}
+
 .info-container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    span {
+        font-weight: bold;
+    }
+}
+
+.info {
+    display: flex;
+}
+
+.icon-container {
+    width: 40px;
+    display: flex;
     justify-content: center;
 }
 
