@@ -10,4 +10,25 @@ html, body {
 
 body {
     margin: 0 auto;
+
+
+    .lks-button {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 8px;
+        
+        border: 2px solid black;
+        border-radius: 5px;
+    }
+
+    .lks-button:hover:enabled {
+        background-color: #3F51B5;
+        color: white;
+    }
+
+    .lks-button:disabled {
+        cursor: not-allowed;
+    }
+
 }

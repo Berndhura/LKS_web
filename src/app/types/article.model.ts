@@ -3,6 +3,7 @@ export class Article {
     id: string;
     inactive: boolean;
     validTo: Date;
+    extended: number;
     category: string;
     categoryInfo: Category;
     subcategory: string;

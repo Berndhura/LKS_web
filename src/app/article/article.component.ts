@@ -1,3 +1,4 @@
+import { AlertService } from './../services/alert.service';
 import { Observable } from 'rxjs';
 import { LocationData } from './../types/article.model';
 import { AuthServiceMail } from './../services/auth.service';
@@ -43,6 +44,7 @@ export class ArticleComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private alertService: AlertService,
     private authServiceMail: AuthServiceMail,
     private articleService: ArticleService,
     private selectionService: SelectionService,
@@ -119,7 +121,33 @@ export class ArticleComponent implements OnInit {
     this.articleService.deleteBookmarkArticle(articleId);
   }
 
-  deleteArticle() {
+
+  editArticle(articleId: string) {
+    this.articleService.getArticle(articleId).subscribe(article => {
+      this.selectionService.currentArticle = article;
+      this.router.navigate(['/create']);
+    });
+  }
+
+  extendArticle(articleId: string) {
+    this.articleService.extendArticle(articleId).subscribe(result => {
+      if (result !== 'error') {
+        this.alertService.openAlert('Erfolg Verlängerung Article');
+        this.initArticle();
+      }
+    });
+  }
+
+  activateArticle(articleId: string) {
+    this.articleService.activateArticle(articleId).subscribe(result => {
+      if (result !== 'error') {
+        this.alertService.openAlert('Erfolg Aktivierung Article');
+        this.initArticle();
+      }
+    });
+  }
+
+  deleteArticle(articleId: string) {
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
       width: '500px',
       height: '200px',
@@ -128,7 +156,12 @@ export class ArticleComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(resetCall => {
       if (resetCall) {
-        this.articleService.deleteArticle(this.article.id);
+        this.articleService.deleteArticle(articleId).subscribe(result => {
+          if (result !== 'error') {
+            this.alertService.openAlert('Artikel erfolgreich gelöscht');
+            // this.filteredArticles = this.filteredArticles.filter(article => article.id !== articleId);
+          }
+        });
       }
     });
   }

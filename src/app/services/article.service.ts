@@ -86,13 +86,13 @@ export class ArticleService {
 
   // Dieser Endpunkt liefert einen Artikel
   // Views und Bookmarks nur mit gültigem Token mitliefern
-  getArticle(articleId: number): Observable<Article> {
+  getArticle(articleId: string): Observable<Article> {
     return this.http.get<Article>(baseUrl + '/article', {params: {id: articleId.toString()}}).pipe(
       map(article => {
         article.categoryInfo = this.selectionService.getCategory(article.category);
         article.subcategoryInfo = this.selectionService.getSubCategory(article);
         // article.locationsGeodata = this.locationService.getGeodata(article.locations);
-        console.log(article)
+        console.log(article);
         return article;
       }),
       catchError(err => {
@@ -110,8 +110,26 @@ export class ArticleService {
       })
     ).subscribe(() => {
       this.alertService.openAlert('Erfolg Upsert Article');
-      this.router.navigate(['user']);
+      this.router.navigate(['article/' + article.id]);
     });
+  }
+
+  extendArticle(articleId: string): Observable<string> {
+    return this.http.post<string>(baseUrl + '/article/extend', {id: articleId}).pipe(
+      catchError(err => {
+        this.alertService.openAlert('Fehler beim Extend');
+        return of('error');
+      })
+    );
+  }
+
+  activateArticle(articleId: string): Observable<string> {
+    return this.http.post<string>(baseUrl + '/article/activate', {id: articleId}).pipe(
+      catchError(err => {
+        this.alertService.openAlert('Fehler beim Extend');
+        return of('error');
+      })
+    );
   }
 
   // Dieser Endpunkt lösche einen bestimmten Artikel

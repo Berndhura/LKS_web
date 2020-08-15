@@ -115,9 +115,9 @@ export class AuthServiceMail {
     }
 
     checkLocalSessionToken() {
-        this.triggerLocalStorageLogin = true;
         const sessionToken = localStorage.getItem('sessionToken');
         if (sessionToken) {
+            this.triggerLocalStorageLogin = true;
             this.http.get<User>(baseUrl + '/sessionuser', {params: {sessiontoken: sessionToken}}).pipe(
                 catchError(err => {
                     this.alertService.openAlert('Fehler Anmeldung');

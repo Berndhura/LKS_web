@@ -24,7 +24,6 @@ export class ArticleListComponent implements OnInit {
   @Input() filteredArticles: Article[];
   @Input() user: User;
   @Input() seller: Seller;
-  @Input() overview: boolean;
 
   placeholderImage = placeholderImage;
 
@@ -88,31 +87,4 @@ export class ArticleListComponent implements OnInit {
   deleteBookmark(articleId: number) {
     this.articleService.deleteBookmarkArticle(articleId);
   }
-
-  editArticle(articleId: number) {
-    this.articleService.getArticle(articleId).subscribe(article => {
-      this.selectionService.currentArticle = article;
-      this.router.navigate(['/create']);
-    });
-  }
-
-  deleteArticle(articleId: string) {
-    const dialogRef = this.dialog.open(DialogConfirmComponent, {
-      width: '500px',
-      height: '200px',
-      data: {text: 'Dieser Artikel wird hiermit vollständig gelöscht.', action: 'Löschen'}
-    });
-
-    dialogRef.afterClosed().subscribe(resetCall => {
-      if (resetCall) {
-        this.articleService.deleteArticle(articleId).subscribe(result => {
-          if (result !== 'error') {
-            this.alertService.openAlert('Artikel erfolgreich gelöscht');
-            this.filteredArticles = this.filteredArticles.filter(article => article.id !== articleId);
-          }
-        });
-      }
-    });
-  }
-
 }

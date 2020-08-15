@@ -2,12 +2,25 @@
 <div class="row article-container" *ngIf="article">
   <div class="col-lg-6 article-left">
     <div class="article-title">
-      <span>{{article.title}}</span>
+      <span *ngIf="!article.inactive">{{article.title}}</span>
+      <span *ngIf="article.inactive"><del>{{article.title}}</del></span>
       <mat-icon class="bookmark-toggle" *ngIf="user && article.userId != user?.id && seller?.bookmarks.indexOf(article.id) === -1" (click)="addBookmark(article.id)" matTooltip="Meiner Merkliste hinzufügen" matTooltipPosition="right">star_border</mat-icon>
       <mat-icon class="bookmark-toggle" *ngIf="user && article.userId != user?.id && seller?.bookmarks.indexOf(article.id) != -1" (click)="deleteBookmark(article.id)" matTooltip="Von Merkliste entfernen" matTooltipPosition="right">star</mat-icon>
     </div>
-    <span>{{article.createdAt | date:'dd.MM.yyyy'}}</span>
+    <span>{{article.createdAt | date:'dd.MM.yyyy'}} (Läuft bis zum {{article.validTo | date:'dd.MM.yyyy'}} | {{article.extended}}/2)</span>
     <span *ngIf="user && article.userId == user.id" class="article-info">Beliebtheit deiner Anzeige: {{article.views}} <mat-icon matTooltip="Aufrufe" matTooltipPosition="right">visibility</mat-icon> {{article.bookmarks}} <mat-icon  matTooltip="Gemerkt" matTooltipPosition="right">star</mat-icon></span>
+    
+    <div *ngIf="user && article.userId == user.id" class="actions-container">
+      <h6 class="actions-heading">Aktionen:</h6>
+      <div class="actions" >
+        <button class="lks-button button-custom" (click)="editArticle(article.id)"><mat-icon >create</mat-icon><span>Bearbeiten</span></button>
+        <button class="lks-button button-custom" (click)="extendArticle(article.id)" [disabled]="article.extended >= 2"><mat-icon >more_time</mat-icon><span>Verlängern</span></button>
+        <button *ngIf="!article.inactive" class="lks-button button-custom" (click)="activateArticle(article.id)"><mat-icon >pause_circle_outline</mat-icon><span>Inaktivieren</span></button>
+        <button *ngIf="article.inactive" class="lks-button button-custom" (click)="activateArticle(article.id)"><mat-icon >play_circle_outline</mat-icon><span>Aktivieren</span></button>
+        <button class="lks-button button-custom" (click)="deleteArticle(article.id)"><mat-icon >delete</mat-icon><span>Löschen</span></button>
+    </div>
+    </div>
+
     
     <div class="category-info">
       <span><img class="mat-card-avatar" mat-card-avatar [src]="firebaseImageUrl + article.categoryInfo.src"> {{article.categoryInfo.label}}</span>
@@ -30,7 +43,7 @@
       <div class="contact-info">
         <img mat-card-avatar [src]="article.sellerProfilePictureUrl">
         <span>{{article.sellerName}}</span>
-        <span *ngIf="article.sellerPhone">Tel.: {{article.sellerPhone}}</span>
+        <span *ngIf="article.sellerPhone && !article.inactive">Tel.: {{article.sellerPhone}}</span>
       </div>
       <form class="form-group" [formGroup]="mailForm">
         <label for="exampleFormControlTextarea1">Schreibe {{article.sellerName}} eine Mail:</label>
@@ -39,7 +52,7 @@
           <label for="sellerMail">Deine Mail Adresse:</label>
           <input type="email" class="form-control" id="sellerMail" formControlName="sender">
         </div>
-        <button type="button" class="send-button invalid" [disabled]="mailForm.invalid" (click)="onSubmit()"><mat-icon>email</mat-icon>Senden</button>
+        <button type="button" class="send-button invalid" [disabled]="mailForm.invalid || article.inactive" (click)="onSubmit()"><mat-icon>email</mat-icon>Senden</button>
       </form>
     </div>
   </div>

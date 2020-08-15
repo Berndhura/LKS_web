@@ -79,6 +79,9 @@ export class NewArticleComponent implements OnInit, OnDestroy {
 
     this.newArticle = new FormGroup({
       id: new FormControl(''),
+      inactive: new FormControl(false, Validators.required),
+      validTo: new FormControl(new Date(new Date().setMonth(new Date().getMonth() + 3)), Validators.required),
+      extended: new FormControl(0, Validators.required),
       userId: new FormControl(this.seller.userId, Validators.required),
       category: new FormControl(this.seller.categoryId, Validators.required),
       subcategory: new FormControl('', Validators.required),

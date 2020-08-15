@@ -8,6 +8,29 @@
 .article-left {
     border: 1px solid #D8D8D8	;
     border-radius: 10px;
+
+    .actions-container {
+        margin-top: 10px;
+        .actions-heading {
+            font-weight: bold;
+        }
+        .actions {
+            display: flex;
+        }
+    
+        .button-custom {
+            width: 130px;
+            height: 40px;
+            margin-right: 5px;
+            font-size: medium;
+    
+            mat-icon {
+                margin-right: 5px;
+                transform: scale(1);
+            }
+        }
+    }
+
     .article-title {
         display: flex;
         margin-top: 10px;
@@ -28,6 +51,7 @@
         display: flex;
         align-items: center;
         font-style: italic;
+        margin-top: 5px;
 
         mat-icon {
             margin-left: 5px;

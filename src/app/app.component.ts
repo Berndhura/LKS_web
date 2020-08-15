@@ -8,29 +8,11 @@ import { User, Seller } from './types/user.model';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy{
+export class AppComponent implements OnInit {
 
-  isAuth = false;
-  authSubscription: Subscription;
-
-  constructor(public authService: AuthServiceMail) {
-
-  }
+  constructor(public authService: AuthServiceMail) {}
 
   ngOnInit() {
-    this.authSubscription = this.authService.authChange.subscribe(authStatus => {
-      this.isAuth = authStatus;
-    });
-
     this.authService.checkLocalSessionToken();
-  }
-
-  ngOnDestroy() {
-    this.authSubscription.unsubscribe();
-  }
-
-  logout() {
-    this.isAuth = false;
-    this.authService.logout();
   }
 }

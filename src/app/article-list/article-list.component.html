@@ -42,7 +42,8 @@
 
         <div class="col-11">
             <div class="title-container">
-                <span routerLink="/article/{{article.id}}" class="title-header">{{ article.title }}</span>
+                <span *ngIf="!article.inactive" routerLink="/article/{{article.id}}" class="title-header">{{ article.title }}</span>
+                <span *ngIf="article.inactive" routerLink="/article/{{article.id}}" class="title-header"><del>{{ article.title }}</del> (reserviert)</span>
             </div>
 
             <div class="row item-container">
@@ -91,12 +92,6 @@
                     
                     
                 </div>
-        
-                <!-- <div class="col-1 actions">
-                    <mat-icon class="detail-icon" routerLink="/article/{{article.id}}" matTooltip="Details" matTooltipPosition="left">find_in_page</mat-icon>
-                    <mat-icon *ngIf="!overview && user && article.userId == user.id" class="detail-icon" matTooltip="Bearbeiten" matTooltipPosition="left" (click)="editArticle(article.id)">create</mat-icon>
-                    <mat-icon *ngIf="!overview && user && article.userId == user.id" class="detail-icon" matTooltip="Löschen" matTooltipPosition="left" (click)="deleteArticle(article.id)">delete</mat-icon>
-                </div> -->
             </div>
         </div>
     </div>
