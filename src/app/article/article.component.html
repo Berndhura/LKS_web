@@ -34,9 +34,8 @@
       <textarea class="form-control" rows="5" id="comment" disabled>{{article.description}}</textarea>
     </div>
     <p><b>Ort:</b>{{article.locations?.toString()}}</p>
-    <p><b>Distanz vom Homespot:</b> xxx km</p>
 
-    <app-location-map [locations]="article.locations"></app-location-map>
+    <app-location-map *ngIf="article.mapLocation" [locations]="article.locations"></app-location-map>
 
     <div class="contact">
       <h5><b>Kontakt:</b></h5>

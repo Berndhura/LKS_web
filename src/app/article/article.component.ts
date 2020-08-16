@@ -74,7 +74,7 @@ export class ArticleComponent implements OnInit {
     this.route.params.subscribe(params => {
       const key = params.key;
       this.articleService.getArticle(key).subscribe(article => {
-        if (article === undefined) {
+        if (article == null) {
           this.router.navigateByUrl('404');
           return;
         }
@@ -90,7 +90,7 @@ export class ArticleComponent implements OnInit {
 
 
   onSubmit() {
-    this.articleService.sendMessage(this.article.sellerEmail, this.mailForm.value.sender, this.mailForm.value.message);
+    this.articleService.sendMessage(this.article.id, this.mailForm.value.sender, this.mailForm.value.message);
   }
 
   getLocations(locations: LocationData[]): string {
@@ -159,6 +159,7 @@ export class ArticleComponent implements OnInit {
         this.articleService.deleteArticle(articleId).subscribe(result => {
           if (result !== 'error') {
             this.alertService.openAlert('Artikel erfolgreich gelöscht');
+            this.router.navigate(['articles']);
             // this.filteredArticles = this.filteredArticles.filter(article => article.id !== articleId);
           }
         });

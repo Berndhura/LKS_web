@@ -72,6 +72,35 @@
   cursor: pointer;
 }
 
+.lks-button-custom {
+  height: 30px;
+  i {
+    margin-right: 5px;
+  }
+}
+
+.map-location-container {
+  display: flex;
+  margin-top: 20px;
+}
+
+.map-location {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 10px;
+  mat-checkbox {
+    margin-left: 10px;
+  }
+}
+
+.info-text {
+  i {
+    margin-right: 5px;
+  }
+}
+
+
 .image-upload-container {
   display: flex;
   flex-wrap: wrap;

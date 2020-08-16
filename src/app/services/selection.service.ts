@@ -33,8 +33,8 @@ export class SelectionService {
     }
   }
 
-  getCategory(categoryId: string): Category {
-    const index = categories.findIndex(c => c.id === categoryId);
+  getCategory(category: string): Category {
+    const index = categories.findIndex(c => c.id === category);
     return categories[index];
   }
 

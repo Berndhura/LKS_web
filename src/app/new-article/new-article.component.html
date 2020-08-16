@@ -38,7 +38,7 @@
       <p>Wo ist dein Standort?</p>
       <div  formArrayName="locations">
         <div class="location" *ngFor="let item of newArticle.get('locations')['controls']; let i = index">
-          <input class="inputLocation" placeholder="Stadt" formControlName="{{i}}">
+          <input class="inputLocation" placeholder="Stadt" formControlName="{{i}}" maxlength="20">
           <mat-icon *ngIf="i === 0" class="iconLocation"  matTooltip="Bestimme meine Position automatisch" matTooltipPosition="right" (click)="getLocation()">gps_fixed</mat-icon>
           <mat-icon *ngIf="i > 0" class="iconLocation" matTooltip="Lösche diesen Standort" matTooltipPosition="right" (click)="onDeleteLocation(i)">delete</mat-icon>
         </div>
@@ -48,8 +48,14 @@
         </div>
       </div>
   
-  
-      <!-- <app-location-map></app-location-map> -->
+      <div class="map-location-container">
+        <button class="lks-button lks-button-custom" (click)="showMap()"><i class="fa fa-map" aria-hidden="true"></i>Prüfe Karte</button>
+        <div class="map-location">
+          <span>Karte anzeigen?</span>
+          <mat-checkbox formControlName="mapLocation" [color]="'primary'"></mat-checkbox>
+        </div>
+      </div>
+
   
       <p>Ist Versand möglich?</p>
       <select formControlName="shipping">
@@ -77,10 +83,15 @@
       </div>
   
       <p>Kontaktiert wirst du über deine Mail</p>
+
       <input placeholder="Mail-Adresse" formControlName="sellerEmail" type="email">
+      <div class="info-text">
+        <i class="fa fa-info-circle" aria-hidden="true"></i>
+        <span>Deine Mail wird niemals öffentlich angezeigt!</span>
+      </div>
   
-      <p>Zusätzlich auch deine Telefonnummer zeigen?</p>
-      <input placeholder="Handynummer" formControlName="sellerPhone">
+      <p>Zusätzlich deine Telefonnummer zeigen?</p>
+      <input placeholder="Handynummer (optional)" formControlName="sellerPhone" maxlength="20">
   
       <div class="form-button-container">
         <button (click)="resetArticle()" class="form-button">Verwerfen</button>

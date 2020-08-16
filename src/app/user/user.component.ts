@@ -29,13 +29,11 @@ export class UserComponent implements OnInit {
   imgURL: any;
   imgFile: File;
   errorPictureMessage: string;
+  loadingUpdateSeller = false;
 
   seller: Seller;
+  sellerForm: FormGroup;
 
-  sellerForm = new FormGroup({
-    name: new FormControl('', Validators.required),
-    mail: new FormControl('', [Validators.required, Validators.email]),
-  });
 
   constructor(
     private articleService: ArticleService,
@@ -47,6 +45,7 @@ export class UserComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.initSellerForm();
     this.articleService.getBookmarkedArticles().subscribe(bookmarkedArticles => {
       this.bookmarkedArticles = bookmarkedArticles;
 
@@ -55,12 +54,23 @@ export class UserComponent implements OnInit {
         this.setInitStep();
       });
     });
+  }
 
-    this.seller = this.authService.seller;
+  initSellerForm() {
+    this.seller = JSON.parse(JSON.stringify(this.authService.seller));
+    this.sellerForm = new FormGroup({
+      name: new FormControl(this.seller.name, Validators.required),
+      email: new FormControl({value: this.seller.email, disabled: true}, [Validators.required, Validators.email]),
+      category: new FormControl(this.seller.category),
+      phone: new FormControl(this.seller.phone),
+      location: new FormControl(this.seller.location),
+    });
   }
 
   setInitStep() {
-    if (this.ownerArticles.length > 0) {
+    if (!this.seller.name || !this.seller.profilePicture) {
+      this.step = 0;
+    } else if (this.ownerArticles.length > 0) {
       this.step = 2;
     } else if (this.bookmarkedArticles.length > 0) {
       this.step = 1;
@@ -71,10 +81,6 @@ export class UserComponent implements OnInit {
 
   setStep(index: number) {
     this.step = index;
-  }
-
-  onProfileChange() {
-    this.authService.seller = this.seller;
   }
 
   handleFileInput(files) {
@@ -99,15 +105,32 @@ export class UserComponent implements OnInit {
   }
 
   categoryChange(category: Category) {
-    this.seller.category = category.id;
+    this.sellerForm.controls.category.setValue(category.id);
     this.seller.categoryInfo = category;
-    this.seller.categoryId = category.id;
-    this.authService.seller = this.seller;
   }
 
   saveSeller() {
-    this.authService.loadingUpdateSeller = true;
-    this.authService.updateSeller(this.imgFile);
+    this.loadingUpdateSeller = true;
+    this.authService.updateSeller(this.imgFile, this.sellerForm.value).then(result => {
+      this.loadingUpdateSeller = false;
+      if (result !== 'error') {
+        this.alertService.openAlert('Nutzer erfolgreich aktualisiert!');
+        this.mapSellerForm(this.sellerForm.value);
+        this.initSellerForm();
+      }
+});
+  }
+
+  mapSellerForm(sellerFormValues) {
+    const keys: string[] = Object.keys(sellerFormValues);
+    const values: string[] = Object.values(sellerFormValues);
+
+    keys.forEach((key, index) => {
+      this.authService.seller[key] = values[index];
+      if (key === 'category') {
+        this.authService.seller.categoryInfo = this.selectionService.getCategory(values[index]);
+      }
+    });
   }
 
   deleteUser() {

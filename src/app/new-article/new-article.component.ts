@@ -18,6 +18,7 @@ import { map, startWith } from 'rxjs/operators';
 import * as uuid from 'uuid';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
+import { DialogMapComponent } from '../dialog-map/dialog-map.component';
 
 @Component({
   selector: 'app-new-article',
@@ -42,7 +43,6 @@ export class NewArticleComponent implements OnInit, OnDestroy {
   currentIndex: number;
   articleImages: ArticlesImages[] = [];
   deletedArticleImages: string[] = [];
-
 
   newArticle: FormGroup;
   locations: FormArray;
@@ -83,7 +83,7 @@ export class NewArticleComponent implements OnInit, OnDestroy {
       validTo: new FormControl(new Date(new Date().setMonth(new Date().getMonth() + 3)), Validators.required),
       extended: new FormControl(0, Validators.required),
       userId: new FormControl(this.seller.userId, Validators.required),
-      category: new FormControl(this.seller.categoryId, Validators.required),
+      category: new FormControl(this.seller.category, Validators.required),
       subcategory: new FormControl('', Validators.required),
       title: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
@@ -97,8 +97,7 @@ export class NewArticleComponent implements OnInit, OnDestroy {
       views: new FormControl(0),
       shipping: new FormControl(this.shippingList[0].label, Validators.required),
       sellerEmail: new FormControl(this.seller.email, [Validators.required, Validators.email]),
-      sellerPhone: new FormControl(this.seller.phone),
-      showPhone: new FormControl(true)
+      sellerPhone: new FormControl(this.seller.phone)
     });
   }
 
@@ -136,8 +135,7 @@ export class NewArticleComponent implements OnInit, OnDestroy {
       views: article.views,
       shipping: article.shipping,
       sellerEmail: article.sellerEmail,
-      sellerPhone: article.sellerPhone,
-      showPhone: article.showPhone
+      sellerPhone: article.sellerPhone
     });
 
     article.pictureUrls.forEach((imageUrl, index) => {
@@ -170,6 +168,14 @@ export class NewArticleComponent implements OnInit, OnDestroy {
 
   onDeleteLocation(index: number) {
     this.locations.removeAt(index);
+  }
+
+  showMap() {
+    const dialogRef = this.dialog.open(DialogMapComponent, {
+      width: '400px',
+      height: '510px',
+      data: {locations: this.newArticle.value.locations}
+    });
   }
 
   saveIndex(index: number) {

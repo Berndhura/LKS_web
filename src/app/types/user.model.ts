@@ -12,7 +12,6 @@ export class Seller {
     profilePicture?: string;
     categoryInfo?: Category;
     category?: string;
-    categoryId?: string;
     location?: string;
     email: string;
     phone?: string;

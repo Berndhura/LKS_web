@@ -16,7 +16,7 @@
         <div style="width: 1rem;"></div>
         <div class="navs" *ngIf="!authService.isAuthenticated"><mat-icon>person</mat-icon><span routerLink="/login">Anmelden</span></div>
         <div style="width: 1rem;" *ngIf="!authService.isAuthenticated"></div>
-        <div class="navs" *ngIf="authService.isAuthenticated"><mat-icon>monetization_on</mat-icon><span routerLink="/create">Verkaufen</span></div>
+        <div class="navs" *ngIf="authService.isAuthenticated"><mat-icon>monetization_on</mat-icon><span (click)="openCreateArticle()">Verkaufen</span></div>
         <div style="width: 1rem;" *ngIf="authService.isAuthenticated"></div>
         <img *ngIf="authService.isAuthenticated && currentSeller?.profilePicture" class="mat-card-avatar profile" [src]="currentSeller.profilePicture" width="50" height="50" routerLink="/user">
         <img *ngIf="authService.isAuthenticated && !currentSeller?.profilePicture" class="mat-card-avatar profile" [src]="portraitPlaceholder" width="50" height="50" routerLink="/user">

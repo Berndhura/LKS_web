@@ -16,7 +16,7 @@
             <p>Meine Surfkollegen nennen mich:</p>
             <span class="errorPictureMessage">{{errorPictureMessage}}</span>
             <div class="personal">
-              <input class="form-control" [(ngModel)]="seller.name" (ngModelChange)="onProfileChange()" placeholder="Name" formControlName="name">
+              <input class="form-control" placeholder="Name" formControlName="name">
   
               <div class="image-upload">
                 <label for="file-input">
@@ -34,20 +34,20 @@
   
             <p>Mein Homespot liegt bei:</p>
             <div class="location">
-              <input [(ngModel)]="seller.location" [ngModelOptions]="{standalone: true}" (ngModelChange)="onProfileChange()" placeholder="Stadt">
+              <input formControlName="location" placeholder="Stadt">
             </div>
   
             <p>Kontak über Mail: <i class="fas fa-info-circle fa-lg" matTooltip="Deine Mail-Adresse wird niemals veröffentlicht!" matTooltipPosition="right"></i></p>
-            <input disabled class="form-control" [(ngModel)]="seller.email"  (ngModelChange)="onProfileChange()" placeholder="Mail-Adresse" formControlName="mail">
+            <input class="form-control" placeholder="Mail-Adresse" formControlName="email">
   
             <p>Kontakt über Handy: <i class="fas fa-info-circle fa-lg" matTooltip="Handynummer Anzeigen kann optional beim Erstellen einer Anzeige gewählt werden" matTooltipPosition="right"></i></p>
-            <input [(ngModel)]="seller.phone" [ngModelOptions]="{standalone: true}" (ngModelChange)="onProfileChange()" placeholder="Handynummer">
+            <input formControlName="phone" placeholder="Handynummer">
 
             <br>
             <div class="button-container">
               <div class="save-container">
                 <button (click)="saveSeller()" class="save-button" [disabled]="sellerForm.invalid">Speichern</button>
-                <mat-spinner *ngIf="authService.loadingUpdateSeller" [diameter]="30" class="spinner"></mat-spinner>
+                <mat-spinner *ngIf="loadingUpdateSeller" [diameter]="30" class="spinner"></mat-spinner>
               </div>
               <div class="delete-container">
                 <button (click)="deleteUser()" class="save-button">Nutzer löschen</button>

@@ -26,8 +26,6 @@ export class AuthServiceMail {
     user: User;
     seller: Seller;
 
-    loadingUpdateSeller = false;
-
     constructor(
         private router: Router,
         private afAuth: AngularFireAuth,
@@ -44,35 +42,38 @@ export class AuthServiceMail {
 
     // Endpunkt der ein Update des Seller durchführt
     // Token wird benötigt
-    updateSeller(imgFile: File) {
-        console.log(this.seller);
+    async updateSeller(imgFile: File, seller: Seller): Promise<void | string> {
         if (imgFile) {
-            this.uploadService.uploadImage(imgFile, this.user.id).subscribe(imgUrl => {
-                this.seller.profilePicture = imgUrl;
-                this.updateSellerHttp(this.seller);
+            await this.uploadProfileImage(imgFile).then(imgUrl => {
+                seller.profilePicture = imgUrl;
             });
+            return this.updateSellerHttp(seller);
         } else {
-            this.updateSellerHttp(this.seller);
+            return this.updateSellerHttp(seller);
         }
     }
 
-    updateSellerHttp(seller: Seller) {
-        this.http.put(baseUrl + '/seller', seller).pipe(
+    uploadProfileImage(imgFile: File): Promise<string> {
+        return new Promise((resolve, reject) => {
+            this.uploadService.uploadImage(imgFile, this.user.id).subscribe(imgUrl => {
+                resolve(imgUrl);
+            });
+        });
+    }
+
+    updateSellerHttp(seller: Seller): Promise<void | string> {
+        return this.http.put<void>(baseUrl + '/seller', seller).pipe(
             catchError(err => {
               this.alertService.openAlert('Fehler');
-              return of(null);
+              return of('error');
             })
-          ).subscribe(() => {
-            this.alertService.openAlert('Nutzer erfolgreich aktualisiert!');
-            this.loadingUpdateSeller = false;
-        });
+          ).toPromise();
     }
 
 
     registerUser(authData: AuthData) {
         this.afAuth.auth.createUserWithEmailAndPassword(authData.email, authData.password)
         .then(result => {
-            console.log(result);
             this.http.post<void>(baseUrl + '/user', {id: result.user.uid, email: result.user.email}).subscribe();
         })
         .catch(error => {

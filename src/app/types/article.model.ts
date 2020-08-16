@@ -15,7 +15,6 @@ export class Article {
     userId: string;
     price: number;
     priceStatus: string;
-    distance: number;
     createdAt: Date;
     views: number;
     locations: string[];
@@ -27,7 +26,6 @@ export class Article {
     sellerProfilePictureUrl?: string;
     sellerEmail?: string;
     sellerPhone?: string;
-    showPhone: boolean;
 }
 
 export class LocationData {

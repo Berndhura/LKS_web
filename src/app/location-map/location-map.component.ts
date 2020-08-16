@@ -27,6 +27,9 @@ export class LocationMapComponent implements OnInit, AfterViewInit {
   constructor(private locationService: LocationService) { }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.mapInitializer();
+    }, 300);
   }
 
   ngAfterViewInit() {
@@ -76,7 +79,6 @@ export class LocationMapComponent implements OnInit, AfterViewInit {
         });
       });
   }
-    this.mapInitializer();
 }
 
   mapInitializer() {
