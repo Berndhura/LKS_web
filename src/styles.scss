@@ -5,19 +5,19 @@
 
 html, body {
     height: 100%;
+    overflow-y: hidden;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
-    margin: 0 auto;
-
+ body {
+     margin: 0 auto;
 
     .lks-button {
         display: flex;
         justify-content: flex-start;
         align-items: center;
         padding: 8px;
-        
+        height: 35px;
         border: 2px solid black;
         border-radius: 5px;
     }
@@ -34,4 +34,65 @@ body {
     .mat-checkbox-layout {
         margin-bottom: 0.1rem;
       }
-}
+
+    .lks-input {
+        padding: 8px;
+        height: 35px;
+        color: white;
+        border: 2px solid black;
+        background-color: #3F51B5;
+        border-radius: 5px;
+    }
+
+    .lks-input::placeholder {
+        color: white;
+        font-style: italic;
+      }
+
+
+    // Alert Dialog Styles
+
+    app-alert {
+        width: 100%;
+    }
+
+     .alert-general {
+        position: absolute;
+        top: 100px;
+        right: 30px;
+        width: min-content;
+        min-width: 200px;
+        height: min-content;
+        padding: 15px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+     }
+
+    .success-modalbox {
+        mat-dialog-container {
+            @extend .alert-general;
+            background-color: #70db70;
+        }
+    }
+
+    .warning-modalbox {
+        mat-dialog-container {
+            @extend .alert-general;
+            background-color: #ffeb99;
+        }
+    }
+
+    .error-modalbox {
+        mat-dialog-container {
+            @extend .alert-general;
+            background-color: #ff8566;
+        }
+    }
+
+    .backdropBackground {
+        background-color: none;
+      }
+
+//     // Ende Alert Dialog Styles
+ }

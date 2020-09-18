@@ -36,6 +36,8 @@ import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.componen
 import { AlertComponent } from './alert/alert.component';
 import { TokenInterceptor } from './util/token.interceptor';
 import { DialogMapComponent } from './dialog-map/dialog-map.component';
+import { PaginationComponent } from './pagination/pagination.component';
+import { LoadingComponent } from './loading/loading.component';
 
 
 const config = new AuthServiceConfig([
@@ -74,7 +76,9 @@ export function provideConfig() {
       LocationMapComponent,
       DialogConfirmComponent,
       AlertComponent,
-      DialogMapComponent
+      DialogMapComponent,
+      PaginationComponent,
+      LoadingComponent
    ],
    entryComponents: [
       DialogConfirmComponent,

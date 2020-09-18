@@ -1,0 +1,22 @@
+.alert-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.alert-text-container {
+    display: flex;
+    margin-right: 40px;
+}
+
+
+.alert-text {
+    font-weight: bold;
+    color: white;
+    margin-right: 3px;
+}
+
+mat-icon {
+    color: 	#D3D3D3;
+}

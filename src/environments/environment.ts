@@ -16,7 +16,6 @@ export const environment = {
     messagingSenderId: '277003235994',
     appId: '1:277003235994:web:ecbd1ac9522bd81f166523',
     measurementId: 'G-SJZX32DSTC'
-
   }
   // Firebase Bernd
   // firebase: {

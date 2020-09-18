@@ -9,14 +9,14 @@ export class AlertService {
 
   constructor(public dialog: MatDialog) { }
 
-  openAlert(message) {
+  openAlert(message, status) {
+
+    const statusClass = status + '-modalbox';
     const dialogRef = this.dialog.open(AlertComponent, {
       width: '250px',
-      data: message
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      data: message,
+      panelClass: statusClass,
+      backdropClass: 'backdropBackground'
     });
   }
 }

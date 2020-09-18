@@ -1,5 +1,6 @@
 
-<div class="container">
+<app-loading *ngIf="firstLoading === 'loading'" [loadingMessage]="'Deine Daten werden geladen'"></app-loading>
+<div class="container" *ngIf="firstLoading === 'done'">
     <mat-accordion class="example-headers-align">
         <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
           <mat-expansion-panel-header>
@@ -45,12 +46,12 @@
 
             <br>
             <div class="button-container">
-              <div class="save-container">
-                <button (click)="saveSeller()" class="save-button" [disabled]="sellerForm.invalid">Speichern</button>
-                <mat-spinner *ngIf="loadingUpdateSeller" [diameter]="30" class="spinner"></mat-spinner>
-              </div>
               <div class="delete-container">
-                <button (click)="deleteUser()" class="save-button">Nutzer löschen</button>
+                <button (click)="deleteUser()" class="lks-button save-button-custom">Nutzer löschen</button>
+              </div>
+              <div class="save-container">
+                <mat-spinner *ngIf="loadingUpdateSeller" [diameter]="30" class="spinner"></mat-spinner>
+                <button (click)="saveSeller()" class="lks-button save-button-custom" [disabled]="sellerForm.invalid">Speichern</button>
               </div>
             </div>
           </div>
@@ -69,9 +70,14 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
 
-          <app-article-list *ngIf="bookmarkedArticles?.length > 0" [filteredArticles] = "bookmarkedArticles" [user]="authService.user" [seller]="authService.seller"></app-article-list>
-          <h5 *ngIf="bookmarkedArticles?.length == 0">Du hast momentan keine Favoriten</h5>
-          
+          <app-loading *ngIf="selectionService.loading" [loadingMessage]="'Artikel werden geladen'"></app-loading>
+          <div *ngIf="!selectionService.loading">
+            <app-pagination *ngIf="articles?.length > 0" [position]="1" [count]="count" [sites]="sites" [currentSite]="selectionService.currentSiteUserArticleList" (pageChange)="pageChange($event)"></app-pagination>
+            <app-article-list *ngIf="articles?.length > 0" [filteredArticles] = "articles" [user]="authService.user" [seller]="authService.seller" (deleteBookmarkOutput)="deleteBookmark($event)"></app-article-list>
+            <h5 *ngIf="count == 0">Du hast momentan keine Favoriten</h5>
+            <app-pagination *ngIf="articles?.length > 5" [position]="2" [count]="count" [sites]="sites" [currentSite]="selectionService.currentSiteUserArticleList" (pageChange)="pageChange($event)"></app-pagination>  
+          </div>
+
         </mat-expansion-panel>
 
 
@@ -86,8 +92,13 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
 
-          <app-article-list *ngIf="ownerArticles?.length > 0" [filteredArticles] = "ownerArticles" [user]="authService.user" [seller]="authService.seller"></app-article-list>
-          <h5 *ngIf="ownerArticles?.length == 0">Keine Anzeigen von dir online</h5>
+          <app-loading *ngIf="selectionService.loading" [loadingMessage]="'Artikel werden geladen'"></app-loading>
+          <div *ngIf="!selectionService.loading">
+            <app-pagination *ngIf="articles?.length > 0" [position]="1" [count]="count" [sites]="sites" [currentSite]="selectionService.currentSiteUserArticleList" (pageChange)="pageChange($event)"></app-pagination>
+            <app-article-list *ngIf="articles?.length > 0" [filteredArticles] = "articles" [user]="authService.user" [seller]="authService.seller"></app-article-list>
+            <h5 *ngIf="count == 0">Keine Anzeigen von dir online</h5>
+            <app-pagination *ngIf="articles?.length > 5" [position]="2" [count]="count" [sites]="sites" [currentSite]="selectionService.currentSiteUserArticleList" (pageChange)="pageChange($event)"></app-pagination>  
+          </div>
 
         </mat-expansion-panel>
       

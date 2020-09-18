@@ -148,19 +148,9 @@
   align-items: center;
   margin-top: 20px;
 
-  .form-button {
-    margin-left: 10px;
+  .form-button-custom {
+    margin-right: 5px;
     max-width: 145px;
-    color: white;
-    padding: 8px;
-    background-color: #3F51B5;
-    border: 2px solid black;
-    border-radius: 5px;
-  }
-
-  .form-button:disabled {
-    background-color: #AADAFF;
-    cursor: not-allowed;
   }
 
   .form_button_span {

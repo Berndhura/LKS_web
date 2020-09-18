@@ -17,28 +17,16 @@
     margin-bottom: 5px;
 }
 
-.search {
-    padding: 8px;
-    color: white;
-    border: 2px solid black;
-    background-color: #3F51B5;
-    border-radius: 5px;
-}
-
-.search::placeholder {
-    color: white;
-    font-style: italic;
-  }
-
 .order-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+
+    .order-button-custom {
+        margin-right: 5px;
+    }
 
     select {
         width: 145px;
-        height: 44px;
-        padding: 8px;
+        height: 35px;
         text-align-last: center;
         color: white;
         border: 2px solid black;
@@ -57,26 +45,23 @@
         display: none;
     }
 
-    div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 44px;
-        width: 44px;
-        margin-right: 5px;
-        border: 2px solid black;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
     .active-order {
         color: white;
         background-color: #3F51B5;
     }
 }
 
+.search-container {
+    display: flex;
+
+    .search-button-custom {
+        margin-left: 5px;
+    }
+}
+
 .subcat-filter {
     max-width: 145px;
+    height: 35px;
     color: white;
     display: flex;
     justify-content: flex-start;

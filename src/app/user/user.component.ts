@@ -1,16 +1,18 @@
 import { AlertService } from './../services/alert.service';
-import { firebaseImageUrl, staticImages } from './../configs/config';
+import { staticImages } from './../configs/data-config';
 import { LocationService } from './../services/location.service';
 import { SelectionService } from './../services/selection.service';
 import { Category } from './../types/category.model';
 import { AuthServiceMail } from './../services/auth.service';
 import { Seller } from './../types/user.model';
 import { ArticleService } from './../services/article.service';
-import { Article, LocationData } from './../types/article.model';
+import { Article, LocationData, ArticleObject } from './../types/article.model';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
+import { Subscription } from 'rxjs';
+import { loadingTimer } from './../configs/data-config';
 
 
 @Component({
@@ -21,10 +23,15 @@ import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.compone
 export class UserComponent implements OnInit {
 
   step: number;
-  bookmarkedArticles: Article[];
-  ownerArticles: Article[];
+  articles: Article[];
+  articlesSubscription: Subscription;
+  count: number;
+  sites: number;
+  currentSite: number;
+  firstLoading = 'init';
+  firstLoadingTimer: any;
+  firstOpen = true;
 
-  firebaseImageUrl: string = firebaseImageUrl;
   placeholderPortrait: string = staticImages.placeholderPortrait;
   imgURL: any;
   imgFile: File;
@@ -39,20 +46,30 @@ export class UserComponent implements OnInit {
     private articleService: ArticleService,
     private alertService: AlertService,
     public authService: AuthServiceMail,
-    private selectionService: SelectionService,
+    public selectionService: SelectionService,
     private locationService: LocationService,
     private ref: ChangeDetectorRef,
     public dialog: MatDialog) { }
 
   ngOnInit() {
     this.initSellerForm();
-    this.articleService.getBookmarkedArticles().subscribe(bookmarkedArticles => {
-      this.bookmarkedArticles = bookmarkedArticles;
-
-      this.articleService.getOwnerArticles().subscribe(ownerArticles => {
-        this.ownerArticles = ownerArticles;
-        this.setInitStep();
-      });
+    this.firstLoadingTimer = setTimeout(() => {
+      this.firstLoading = 'loading';
+    }, loadingTimer);
+    this.articleService.getBookmarkedArticles().subscribe(bookmarkedArticlesObject => {
+      if (bookmarkedArticlesObject.articles.length > 0) {
+        this.setArticleObject(bookmarkedArticlesObject);
+        this.setInitStep(1);
+      } else {
+        this.articleService.getOwnerArticles().subscribe(ownerArticlesObject => {
+          if (ownerArticlesObject.articles.length > 0) {
+            this.setArticleObject(ownerArticlesObject);
+            this.setInitStep(2);
+          } else {
+            this.setInitStep();
+          }
+        });
+      }
     });
   }
 
@@ -67,25 +84,64 @@ export class UserComponent implements OnInit {
     });
   }
 
-  setInitStep() {
+  setInitStep(step?: number) {
+    this.selectionService.currentSiteUserArticleList = 1;
     if (!this.seller.name || !this.seller.profilePicture) {
       this.step = 0;
-    } else if (this.ownerArticles.length > 0) {
-      this.step = 2;
-    } else if (this.bookmarkedArticles.length > 0) {
-      this.step = 1;
-    } else {
+    } else if (this.articles.length > 0) {
+      this.step = step;
+    }  else {
       this.step = 0;
     }
+    clearTimeout(this.firstLoadingTimer);
+    this.firstLoading = 'done';
+  }
+
+  setArticleObject(articleObject: ArticleObject) {
+    this.articles = articleObject.articles;
+    this.count = articleObject.count;
+    this.sites = articleObject.sites;
+    this.selectionService.setLoading(false);
   }
 
   setStep(index: number) {
+    this.selectionService.currentSiteUserArticleList = 1;
+    if (!this.firstOpen && (index === 1 || index === 2)) {
+      this.getArticles(index);
+      this.articles = [];
+      this.selectionService.setLoading(true);
+    }
+    if (this.firstOpen) {
+      this.firstOpen = false;
+    }
     this.step = index;
+  }
+
+  getArticles(index: number) {
+    if (this.articlesSubscription) {
+      this.articlesSubscription.unsubscribe();
+    }
+    if (index === 1) {
+      this.articlesSubscription = this.articleService.getBookmarkedArticles().subscribe(articleObject => {
+        this.setArticleObject(articleObject);
+      });
+    }
+
+    if (index === 2) {
+      this.articlesSubscription = this.articleService.getOwnerArticles().subscribe(articleObject => {
+        this.setArticleObject(articleObject);
+      });
+    }
+  }
+
+  pageChange(currentSite: number) {
+    this.selectionService.currentSiteUserArticleList = currentSite;
+    this.getArticles(this.step);
+    this.selectionService.pageChangeSubject.next(true);
   }
 
   handleFileInput(files) {
     this.errorPictureMessage = null;
-    // this.uploadService.uploadImage(file);
     if (files.length === 0) {
       return;
     }
@@ -105,8 +161,13 @@ export class UserComponent implements OnInit {
   }
 
   categoryChange(category: Category) {
-    this.sellerForm.controls.category.setValue(category.id);
-    this.seller.categoryInfo = category;
+    if (category) {
+      this.sellerForm.controls.category.setValue(category.id);
+      this.seller.categoryInfo = category;
+    } else {
+      this.sellerForm.controls.category.setValue(null);
+      this.seller.categoryInfo = null;
+    }
   }
 
   saveSeller() {
@@ -114,11 +175,12 @@ export class UserComponent implements OnInit {
     this.authService.updateSeller(this.imgFile, this.sellerForm.value).then(result => {
       this.loadingUpdateSeller = false;
       if (result !== 'error') {
-        this.alertService.openAlert('Nutzer erfolgreich aktualisiert!');
+        this.alertService.openAlert('Nutzer erfolgreich aktualisiert', 'success');
+        this.imgFile = null;
         this.mapSellerForm(this.sellerForm.value);
         this.initSellerForm();
       }
-});
+    });
   }
 
   mapSellerForm(sellerFormValues) {
@@ -131,6 +193,12 @@ export class UserComponent implements OnInit {
         this.authService.seller.categoryInfo = this.selectionService.getCategory(values[index]);
       }
     });
+  }
+
+  deleteBookmark(articleId: string) {
+    const index = this.articles.findIndex(article => article.id === articleId);
+    this.articles.splice(index, 1);
+    this.count = this.count - 1;
   }
 
   deleteUser() {

@@ -1,8 +1,10 @@
-<app-header [currentSeller] = "authService.seller"></app-header>
 
-<main>
-    <router-outlet></router-outlet>
-</main>
+    <app-header [currentSeller] = "authService.seller"></app-header>
 
-<hr>
-<app-footer></app-footer>
+    <main #mainDiv [style.height.px]="mainHeight">
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+        <app-footer class="{{selectionService.isOverflowing ? '' : ''}}"></app-footer>
+    </main>
+    

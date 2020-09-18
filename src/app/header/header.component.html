@@ -2,7 +2,7 @@
             
     <div class="header-left">
         <h3>Luftkraftsport</h3>
-        <img *ngIf="true" [src]="firebaseImageUrl + 'o/app%2Flogo%2FLogo.png?alt=media&token=d76b35a5-f3c5-4d45-9554-28c0909ce5e7'" width="70" height="70" routerLink="/about">
+        <img *ngIf="true" [src]="iconLuftkraftsport" width="70" height="70" routerLink="/about">
         <div>
             <h6 class="about-us" routerLink="/about">Über uns</h6>
         </div>
@@ -12,7 +12,7 @@
     
     
     <div class="header-right">
-        <div class="navs"><mat-icon>list</mat-icon><span routerLink="/articles">Übersicht</span></div>
+        <div class="navs"><mat-icon>list</mat-icon><span routerLink="/articles">Anzeigen</span></div>
         <div style="width: 1rem;"></div>
         <div class="navs" *ngIf="!authService.isAuthenticated"><mat-icon>person</mat-icon><span routerLink="/login">Anmelden</span></div>
         <div style="width: 1rem;" *ngIf="!authService.isAuthenticated"></div>

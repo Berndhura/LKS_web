@@ -1,96 +1,59 @@
-<!-- <div class="card" *ngFor="let article of filteredArticles">
-    <div class="card-body row">
-        <div class="col-1 bookmark">
-            <mat-icon style="cursor: default;" *ngIf="user && article.userId == user.id" matTooltip="Meine Anzeige" matTooltipPosition="below">person</mat-icon>
-            <mat-icon class="bookmark-icon"  *ngIf="user && article.userId != user.id && seller?.bookmarks.indexOf(article.id) === -1" (click)="addBookmark(article.id)" matTooltip="Meiner Merkliste hinzufügen" matTooltipPosition="below">star_border</mat-icon>
-            <mat-icon class="bookmark-icon"  *ngIf="user && article.userId != user.id && seller?.bookmarks.indexOf(article.id) != -1" (click)="deleteBookmark(article.id)" matTooltip="Von Merkliste entfernen" matTooltipPosition="below">star</mat-icon>
-        </div>
-        <div class="col-2 img-container">
-            <img *ngIf="article.pictureUrls" [src]="article.pictureUrls[0]" />
-            <img *ngIf="!article.pictureUrls" [src]="placeholderImage"/>
-        </div>
-        <div class="col-2 product-container">
-            <img  class="mat-card-avatar" [src]="firebaseImageUrl + getProduct(article.category).src" [matTooltip]="getProduct(article.category).label">
-            <img  class="mat-card-avatar" [src]="firebaseImageUrl + 'o/app%2Fplaceholder%2Fquestionmark.jpg?alt=media&token=6cd3f231-a085-4f67-a216-21b6886533cd'" [matTooltip]="'noch offen'">
-        </div>
+<app-loading *ngIf="loading" [loadingMessage]="'Artikel werden geladen'"></app-loading>
 
-
-        <div class="col-6 info-container">
-            <span class="title-header">{{ article.title }}</span>
-            <span>{{article.condition}}</span>
-            <span >{{getPrice(article)}}</span>
-            <span >{{getLocation(article.locations)}}</span>
-            <span >{{ article.createdAt | date:'dd.MM.yyyy' }}</span>
-        </div>
-
-        <div class="col-1 actions">
-            <mat-icon class="detail-icon" routerLink="/article/{{article.id}}" matTooltip="Details" matTooltipPosition="left">find_in_page</mat-icon>
-            <mat-icon *ngIf="!overview && user && article.userId == user.id" class="detail-icon" matTooltip="Bearbeiten" matTooltipPosition="left" (click)="editArticle(article.id)">create</mat-icon>
-            <mat-icon *ngIf="!overview && user && article.userId == user.id" class="detail-icon" matTooltip="Löschen" matTooltipPosition="left" (click)="deleteArticle(article.id)">delete</mat-icon>
-        </div>
-    </div>
-</div> -->
-
-
-<div class="card" *ngFor="let article of filteredArticles">
-    <div class="card-body row">
-        <div class="col-1 bookmark">
-            <mat-icon style="cursor: default;" *ngIf="user && article.userId == user.id" matTooltip="Meine Anzeige" matTooltipPosition="below">person</mat-icon>
-            <mat-icon class="bookmark-icon"  *ngIf="user && article.userId != user.id && seller?.bookmarks.indexOf(article.id) === -1" (click)="addBookmark(article.id)" matTooltip="Meiner Merkliste hinzufügen" matTooltipPosition="below">star_border</mat-icon>
-            <mat-icon class="bookmark-icon"  *ngIf="user && article.userId != user.id && seller?.bookmarks.indexOf(article.id) != -1" (click)="deleteBookmark(article.id)" matTooltip="Von Merkliste entfernen" matTooltipPosition="below">star</mat-icon>
-        </div>
-
-        <div class="col-11">
-            <div class="title-container">
-                <span *ngIf="!article.inactive" routerLink="/article/{{article.id}}" class="title-header">{{ article.title }}</span>
-                <span *ngIf="article.inactive" routerLink="/article/{{article.id}}" class="title-header"><del>{{ article.title }}</del> (reserviert)</span>
+<div *ngIf="!loading">
+    <div class="card" *ngFor="let article of filteredArticles">
+        <div class="card-body row">
+            <div class="col-1 bookmark" *ngIf="user">
+                <mat-icon style="cursor: default;" *ngIf="user && article.userId == user.id" matTooltip="Meine Anzeige" matTooltipPosition="below">person</mat-icon>
+                <mat-icon class="bookmark-icon"  *ngIf="user && article.userId != user.id && seller?.bookmarks.indexOf(article.id) === -1" (click)="addBookmark(article.id)" matTooltip="Meiner Merkliste hinzufügen" matTooltipPosition="below">star_border</mat-icon>
+                <mat-icon class="bookmark-icon"  *ngIf="user && article.userId != user.id && seller?.bookmarks.indexOf(article.id) != -1" (click)="deleteBookmark(article.id)" matTooltip="Von Merkliste entfernen" matTooltipPosition="below">star</mat-icon>
             </div>
-
-            <div class="row item-container">
-                <div class="col-4 img-container">
-                    <img *ngIf="article.pictureUrls" [src]="article.pictureUrls[0]" />
-                    <img *ngIf="!article.pictureUrls" [src]="placeholderImage"/>
+    
+            <div class="col-11">
+                <div class="title-container">
+                    <span *ngIf="!article.inactive" routerLink="/article/{{article.id}}" class="title-header">{{ article.title }}</span>
+                    <span *ngIf="article.inactive" routerLink="/article/{{article.id}}" class="title-header"><del>{{ article.title }}</del> (reserviert)</span>
                 </div>
-                <div class="col-2 product-container">
-                    <img  class="mat-card-avatar" [src]="firebaseImageUrl + getProduct(article.category).src" [matTooltip]="getProduct(article.category).label">
-                    <img  class="mat-card-avatar" [src]="firebaseImageUrl + 'o/app%2Fplaceholder%2Fquestionmark.jpg?alt=media&token=6cd3f231-a085-4f67-a216-21b6886533cd'" [matTooltip]="'noch offen'">
-                </div>
-        
-                <!-- <div class="col-1 info-title-container">
-                    <span><i class="fas fa-shield-alt"></i></span>
-                    <span><i class="fas fa-money-bill-wave"></i></span>
-                    <span><i class="fas fa-map-marker-alt"></i></span>
-                    <span><i class="fas fa-hourglass-start"></i></span>
-                </div> -->
-        
-                <div class="col-6 info-container">
-                    <div class="info">
-                        <div class="icon-container">
-                            <i class="fas fa-shield-alt"></i>
+    
+                <div class="row item-container">
+                    <div class="col-4 img-container">
+                        <img *ngIf="article.pictureUrls" [src]="article.pictureUrls[0]" />
+                        <img *ngIf="!article.pictureUrls" [src]="placeholderImage"/>
+                    </div>
+                    <div class="col-2 product-container">
+                        <img  class="mat-card-avatar" [src]="article.categoryInfo.src" [matTooltip]="article.categoryInfo.label">
+                        <img  class="mat-card-avatar" [src]="article.subcategoryInfo.src" [matTooltip]="article.subcategoryInfo.label">
+                    </div>
+            
+                    <div class="col-6 info-container">
+                        <div class="info">
+                            <div class="icon-container">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            
+                            <span>{{article.condition}}</span>
+                        </div>
+                        <div class="info">
+                            <div class="icon-container">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <span>{{article.priceInfo}}</span>
+                        </div>
+                        <div class="info">
+                            <div class="icon-container">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <span >{{article.locationInfo}}</span>
+                        </div>
+                        <div class="info">
+                            <div class="icon-container">
+                                <i class="fas fa-hourglass-start"></i>
+                            </div>
+                            <span >{{ article.createdAt | date:'dd.MM.yyyy' }}</span>
                         </div>
                         
-                        <span>{{article.condition}}</span>
+                        
                     </div>
-                    <div class="info">
-                        <div class="icon-container">
-                            <i class="fas fa-money-bill-wave"></i>
-                        </div>
-                        <span>{{getPrice(article)}}</span>
-                    </div>
-                    <div class="info">
-                        <div class="icon-container">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <span >{{getLocation(article.locations)}}</span>
-                    </div>
-                    <div class="info">
-                        <div class="icon-container">
-                            <i class="fas fa-hourglass-start"></i>
-                        </div>
-                        <span >{{ article.createdAt | date:'dd.MM.yyyy' }}</span>
-                    </div>
-                    
-                    
                 </div>
             </div>
         </div>

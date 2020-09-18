@@ -15,5 +15,5 @@ export class Seller {
     location?: string;
     email: string;
     phone?: string;
-    bookmarks?: number[];
+    bookmarks?: string[];
 }

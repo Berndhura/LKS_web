@@ -5,13 +5,12 @@ import { AuthServiceMail } from './../services/auth.service';
 import { SelectionService } from './../services/selection.service';
 import { Category, Subcategory } from './../types/category.model';
 import { categories, subcategories, placeholderImage } from './../configs/data-config';
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Article } from '../types/article.model';
 import { Seller, User } from '../types/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from '../services/article.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {firebaseImageUrl} from '../configs/config';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
 
@@ -29,8 +28,6 @@ export class ArticleComponent implements OnInit {
   seller: Seller;
   currentPictureUrl: string;
   currentPictureId: string;
-
-  firebaseImageUrl = firebaseImageUrl;
   placeholderImage = placeholderImage;
 
 
@@ -91,33 +88,19 @@ export class ArticleComponent implements OnInit {
 
   onSubmit() {
     this.articleService.sendMessage(this.article.id, this.mailForm.value.sender, this.mailForm.value.message);
-  }
-
-  getLocations(locations: LocationData[]): string {
-      let location = '';
-      locations.forEach((loc, index) => {
-        if (index === locations.length - 1) {
-          location = location + loc.name;
-         } else {
-          location = location + loc.name + ', ';
-         }
-      });
-      return location;
-  }
-
-  getPrice(article: Article): string {
-    return this.selectionService.getPrice(article);
+    this.mailForm.controls['message'].setValue('');
+    this.mailForm.controls['message'].markAsUntouched();
   }
 
   changeCurrentPicture(pictureUrl: string) {
     this.currentPictureUrl = pictureUrl;
   }
 
-  addBookmark(articleId: number) {
+  addBookmark(articleId: string) {
     this.articleService.addBookmarkArticle(articleId);
   }
 
-  deleteBookmark(articleId: number) {
+  deleteBookmark(articleId: string) {
     this.articleService.deleteBookmarkArticle(articleId);
   }
 
@@ -132,7 +115,7 @@ export class ArticleComponent implements OnInit {
   extendArticle(articleId: string) {
     this.articleService.extendArticle(articleId).subscribe(result => {
       if (result !== 'error') {
-        this.alertService.openAlert('Erfolg Verlängerung Article');
+        this.alertService.openAlert('Anzeige verlängert', 'success');
         this.initArticle();
       }
     });
@@ -141,7 +124,6 @@ export class ArticleComponent implements OnInit {
   activateArticle(articleId: string) {
     this.articleService.activateArticle(articleId).subscribe(result => {
       if (result !== 'error') {
-        this.alertService.openAlert('Erfolg Aktivierung Article');
         this.initArticle();
       }
     });
@@ -158,7 +140,7 @@ export class ArticleComponent implements OnInit {
       if (resetCall) {
         this.articleService.deleteArticle(articleId).subscribe(result => {
           if (result !== 'error') {
-            this.alertService.openAlert('Artikel erfolgreich gelöscht');
+            this.alertService.openAlert('Anzeige gelöscht', 'success');
             this.router.navigate(['articles']);
             // this.filteredArticles = this.filteredArticles.filter(article => article.id !== articleId);
           }

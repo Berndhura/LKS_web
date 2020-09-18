@@ -11,8 +11,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth} from 'angularfire2/auth';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { of, Observable } from 'rxjs';
-import { firebaseImageUrl, staticImages } from './../configs/config';
+import { of } from 'rxjs';
 import { SelectionService } from './selection.service';
 
 
@@ -49,6 +48,7 @@ export class AuthServiceMail {
             });
             return this.updateSellerHttp(seller);
         } else {
+            console.log(seller);
             return this.updateSellerHttp(seller);
         }
     }
@@ -64,7 +64,7 @@ export class AuthServiceMail {
     updateSellerHttp(seller: Seller): Promise<void | string> {
         return this.http.put<void>(baseUrl + '/seller', seller).pipe(
             catchError(err => {
-              this.alertService.openAlert('Fehler');
+              this.alertService.openAlert('Fehler beim Aktualisieren', 'error');
               return of('error');
             })
           ).toPromise();
@@ -92,13 +92,13 @@ export class AuthServiceMail {
           };
         this.http.delete<void>(baseUrl + '/user', options).pipe(
             catchError(err => {
-                this.alertService.openAlert('Fehler Löschen Nutzer');
+                this.alertService.openAlert('Fehler beim Löschen', 'error');
                 return of('error');
               })
         ).subscribe(result => {
             if (result !== 'error') {
                 this.logout();
-                this.alertService.openAlert('Nutzer erfolgreich gelöscht');
+                this.alertService.openAlert('Nutzer erfolgreich gelöscht', 'success');
             }
         });
     }
@@ -106,7 +106,7 @@ export class AuthServiceMail {
     getFirebaseUser(firebaseUser: any) {
         this.http.get<User>(baseUrl + '/firebaseuser', {params: {firebasetoken: firebaseUser.xa}}).pipe(
             catchError(err => {
-                this.alertService.openAlert('Fehler Anmeldung');
+                this.alertService.openAlert('Fehler bei der Anmeldung', 'error');
                 return of(null);
               })
         ).subscribe(signedUser => {
@@ -121,7 +121,7 @@ export class AuthServiceMail {
             this.triggerLocalStorageLogin = true;
             this.http.get<User>(baseUrl + '/sessionuser', {params: {sessiontoken: sessionToken}}).pipe(
                 catchError(err => {
-                    this.alertService.openAlert('Fehler Anmeldung');
+                    this.alertService.openAlert('Fehler bei der Anmeldung', 'error');
                     return of(null);
                   })
             ).subscribe(signedUser => {
@@ -145,7 +145,7 @@ export class AuthServiceMail {
     getSeller() {
         this.http.get<Seller>(baseUrl + '/seller').pipe(
             catchError(err => {
-                this.alertService.openAlert('Fehler Anmeldung');
+                this.alertService.openAlert('Fehler bei der Anmeldung', 'error');
                 return of(null);
               })
         ).subscribe(signedSeller => {

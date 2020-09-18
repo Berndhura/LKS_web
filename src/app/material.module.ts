@@ -14,7 +14,8 @@ import {
     MatAutocompleteModule,
     MatDialogModule,
     MatProgressSpinnerModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDatepickerModule
 } from '@angular/material';
 
 @NgModule({
@@ -22,17 +23,19 @@ import {
         MatButtonModule,
         MatMenuModule,
         MatToolbarModule,
+        MatTooltipModule,
         MatFormFieldModule,
         MatInputModule,
         MatSidenavModule,
         MatIconModule,
         MatListModule,
         MatCardModule,
-        MatTooltipModule,
+        MatExpansionModule,
         MatAutocompleteModule,
         MatDialogModule,
         MatProgressSpinnerModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatDatepickerModule
     ],
     exports: [
         MatButtonModule,
@@ -49,7 +52,8 @@ import {
         MatAutocompleteModule,
         MatDialogModule,
         MatProgressSpinnerModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatDatepickerModule
     ]
 })
 

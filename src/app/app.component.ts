@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { SelectionService } from './services/selection.service';
+import { Component, OnInit, DoCheck, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { AuthServiceMail } from './services/auth.service';
-import { Subscription } from 'rxjs/Subscription';
-import { User, Seller } from './types/user.model';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +9,34 @@ import { User, Seller } from './types/user.model';
 })
 export class AppComponent implements OnInit {
 
-  constructor(public authService: AuthServiceMail) {}
+  @ViewChild('mainDiv', {static: false}) mainDiv: ElementRef;
+
+  mainHeight: any;
+  mainContainer: any;
+
+  constructor(
+    public authService: AuthServiceMail,
+    public selectionService: SelectionService) {}
 
   ngOnInit() {
     this.authService.checkLocalSessionToken();
+    this.onResize();
+    this.selectionService.pageChangeSubject.subscribe(() => {
+      this.scrollToTop();
+    });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.mainHeight = window.innerHeight - 80;
+  }
+
+  scrollToTop(): void {
+
+    this.mainContainer = this.mainDiv.nativeElement;
+    this.mainContainer.scroll({
+      top: 0,
+      behavior: 'smooth'
+    });
   }
 }

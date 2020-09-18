@@ -1,1 +1,6 @@
-<h2>{{data}}</h2>
+<div class="alert-container">
+    <div class="alert-text-container">
+        <span class="alert-text" *ngFor="let dataElement of dataArray">{{dataElement}}</span>
+    </div>
+    <mat-icon [mat-dialog-close]="true">close</mat-icon>
+</div>

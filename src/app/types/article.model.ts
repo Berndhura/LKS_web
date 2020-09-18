@@ -1,8 +1,18 @@
 import { Category, Subcategory } from './category.model';
+import { NumberSymbol } from '@angular/common';
+
+export class ArticleObject {
+  count: number;
+  sites: number;
+  articles: Article[];
+}
+
 export class Article {
     id: string;
     inactive: boolean;
     validTo: Date;
+    journeyFrom?: Date;
+    journeyTo?: Date;
     extended: number;
     category: string;
     categoryInfo: Category;
@@ -15,9 +25,11 @@ export class Article {
     userId: string;
     price: number;
     priceStatus: string;
+    priceInfo: string;
     createdAt: Date;
     views: number;
     locations: string[];
+    locationInfo: string;
     mapLocation: boolean;
     locationsGeodata: LocationData[];
     bookmarks: number;

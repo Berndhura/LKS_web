@@ -7,29 +7,39 @@
 <div class="article-list-container">
     <hr>
     <div class="overview-input">
-        <div class="mb">
-            <input class="search" [(ngModel)]="filterSearch" (ngModelChange)="onSearchChange($event)" placeholder="Suche">
-        </div>
+
+
+
         <div class="order-container mb">
-            <div class="{{descOrder == 'desc' ? 'active-order' : ''}}" (click)="setDesc()">
+
+            <button class="lks-button order-button-custom {{descOrder == 'desc' ? 'active-order' : ''}}" (click)="setDesc()">
                 <i class="fas fa-sort-amount-down fa-lg"></i>
-            </div>
-            <div class="{{descOrder == 'desc' ? '' : 'active-order'}}" (click)="setAsc()">
+            </button>
+
+            <button class="lks-button order-button-custom {{descOrder == 'desc' ? '' : 'active-order'}}" (click)="setAsc()">
                 <i class="fas fa-sort-amount-down-alt fa-lg"></i>
-            </div>
+            </button>
+
             <select [(ngModel)]="orderValue" (ngModelChange)="orderValueChange($event)">
                 <option ngValue="date">Datum</option>
                 <option ngValue="price">Preis</option>
             </select>
         </div>
+
+        <div class="mb search-container">
+            <input class="lks-input" [(ngModel)]="filterSearch" placeholder="Suche">
+            <button class="lks-button search-button-custom" (click)="onSearch()"><i class="fas fa-search fa-lg"></i></button>
+        </div>
+
         <button class="subcat-filter mb" (click)="toggleSubcat()"><mat-icon *ngIf="subcatVisible">keyboard_arrow_down</mat-icon><mat-icon *ngIf="!subcatVisible">keyboard_arrow_right</mat-icon><span *ngIf="selectedSubcategory">{{selectedSubcategory.label}}</span><span *ngIf="!selectedSubcategory">Weiterer Filter</span></button>
     </div>
 
     <hr>
     <app-subcat-select *ngIf="subcatVisible" [subcategories]="subcategories" [selectedSubcategory]="selectedSubcategory" (selectedSubcategoryChange)="selectedSubcategoryChange($event)"></app-subcat-select>
-      <div *ngIf="filteredArticles.length == 0">
-          <hr>
+      <div *ngIf="count == 0 && !selectionService.loading">
           <span class="no-articles">Leider gibt es für deine Auswahl momentan keine Anzeigen!</span>
       </div>
-      <app-article-list [filteredArticles]="filteredArticles" [user]="authService.user" [seller]="authService.seller"></app-article-list>
+      <app-pagination *ngIf="!selectionService.loading || selectionService.pageChange" [position]="1" [count]="count" [sites]="sites" [currentSite]="selectionService.currentSiteArticleList" (pageChange)="pageChange($event)"></app-pagination>
+      <app-article-list [loading]="selectionService.loading" [filteredArticles]="articles" [user]="authService.user" [seller]="authService.seller"></app-article-list>
+      <app-pagination *ngIf="articles?.length > 5 && !selectionService.loading " [position]="2" [count]="count" [sites]="sites" [currentSite]="selectionService.currentSiteArticleList" (pageChange)="pageChange($event)"></app-pagination>
 </div>

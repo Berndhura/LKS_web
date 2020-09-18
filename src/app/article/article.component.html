@@ -23,11 +23,11 @@
 
     
     <div class="category-info">
-      <span><img class="mat-card-avatar" mat-card-avatar [src]="firebaseImageUrl + article.categoryInfo.src"> {{article.categoryInfo.label}}</span>
-      <span><img mat-card-avatar [src]="firebaseImageUrl + 'o/app%2Fplaceholder%2Fquestionmark.jpg?alt=media&token=6cd3f231-a085-4f67-a216-21b6886533cd'"> {{'noch offen'}}</span>
+      <span><img class="mat-card-avatar" mat-card-avatar [src]="article.categoryInfo.src"> {{article.categoryInfo.label}}</span>
+      <span><img mat-card-avatar [src]="article.subcategoryInfo.src"> {{article.subcategoryInfo.label}}</span>
     </div>
     <p><b>Zustand:</b> {{article.condition}}</p>
-    <p><b>Preis:</b> {{getPrice(article)}}</p>
+    <p><b>Preis:</b> {{article.priceInfo}}</p>
 
     <div class="form-group">
       <label for="comment"><b>Beschreibung:</b></label>
@@ -51,7 +51,7 @@
           <label for="sellerMail">Deine Mail Adresse:</label>
           <input type="email" class="form-control" id="sellerMail" formControlName="sender">
         </div>
-        <button type="button" class="send-button invalid" [disabled]="mailForm.invalid || article.inactive" (click)="onSubmit()"><mat-icon>email</mat-icon>Senden</button>
+        <button type="button" class="lks-button" [disabled]="mailForm.invalid || article.inactive" (click)="onSubmit()"><mat-icon>email</mat-icon>Senden</button>
       </form>
     </div>
   </div>

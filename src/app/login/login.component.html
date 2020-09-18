@@ -1,13 +1,14 @@
 <section class="signup-form">
   <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px" #f="ngForm" (ngSubmit)="onSubmit(f)">
-    <mat-form-field>
-      <input 
-      type="email" 
-      matInput 
-      placeholder="Email" 
-      ngModel name="email"
-      required>
-    </mat-form-field>
+      <mat-form-field>
+        <input 
+        type="email" 
+        matInput 
+        placeholder="Email" 
+        ngModel name="email"
+        required>
+      </mat-form-field>
+
     <mat-form-field>
       <input 
       type="password" 
@@ -23,10 +24,12 @@
       Hast du noch keinen Account?
       <a routerLink="/signup" class="signup">Registrieren</a>
     </div>
-    <div class="devider" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="25px">oder</div>
+
+
+    <!-- <div class="devider" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="25px">oder</div>
   </form>
   <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">		
     <button class="fbbutton" (click)="onSubmitFacebook()" mat-raised-button color="primary">Mit Facebook anmelden</button>		
     <button class="gobutton" (click)="onSubmitGoogle()" mat-raised-button color="primary">Mit Google anmelden</button>		
   </div>
-</section>
+</section> -->

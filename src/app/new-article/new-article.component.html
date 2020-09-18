@@ -4,12 +4,12 @@
 
   <hr>
 
-  <p>Wähle eine Unterkategorie?</p>
-  <app-subcat-select [subcategories]="subcategories" [selectedSubcategory]="selectedSubcategory" (selectedSubcategoryChange)="selectedSubcategoryChange($event)"></app-subcat-select>
+  <div *ngIf="selectedCategory">
+    <p>Wähle eine Unterkategorie?</p>
+    <app-subcat-select [subcategories]="subcategories" [selectedSubcategory]="selectedSubcategory" (selectedSubcategoryChange)="selectedSubcategoryChange($event)"></app-subcat-select>
+  </div>
 
-  <hr>
-
-  <div class="text-container">
+  <div *ngIf="selectedSubcategory" class="text-container">
 
     <div>
       <p>Titel der Anzeige:</p>
@@ -20,31 +20,45 @@
       
     
       <p>Beschreibung</p>
-      <textarea formControlName="description" rows="3" placeholder="Schreibe hier Einzelheiten zu deinem Artikel"></textarea>
+      <textarea formControlName="description" rows="3" [placeholder]="placeholderDescription"></textarea>
   
-      <p>Wie ist der Zustand?</p>
-      <select formControlName="condition">
-        <option *ngFor="let condition of conditionList" [value]="condition">{{condition}}</option>
-      </select>
-  
-      <p>Wieviel soll es kosten?</p>
-      <div class="price">
-        <input formControlName="price" placeholder="Preis in Euro (optional bei VB)" maxlength="5">
-        <select formControlName="priceStatus">
-          <option *ngFor="let priceStatus of priceStatusList" [value]="priceStatus.long">{{priceStatus.long}}</option>
+      <div *ngIf="!jounreySelected">
+        <p>Wie ist der Zustand?</p>
+        <select formControlName="condition">
+          <option *ngFor="let condition of conditionList" [value]="condition">{{condition}}</option>
         </select>
       </div>
+
+      <div *ngIf="!jounreySelected">
+        <p>Wieviel soll es kosten?</p>
+        <div class="price">
+          <input formControlName="price" placeholder="Preis in Euro (optional bei VB)" maxlength="5">
+          <select formControlName="priceStatus">
+            <option *ngFor="let priceStatus of priceStatusList" [value]="priceStatus.long">{{priceStatus.long}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div *ngIf="jounreySelected">
+        <p>Welche Kosten sollten eingeplant werden?</p>
+        <input formControlName="price" placeholder="Kosten in Euro" maxlength="5">
+      </div>
+
+
+
   
-      <p>Wo ist dein Standort?</p>
+      <p *ngIf="!jounreySelected">Wo ist dein Standort?</p>
+      <p *ngIf="jounreySelected">Wohin geht die Reise?</p>
       <div  formArrayName="locations">
         <div class="location" *ngFor="let item of newArticle.get('locations')['controls']; let i = index">
           <input class="inputLocation" placeholder="Stadt" formControlName="{{i}}" maxlength="20">
-          <mat-icon *ngIf="i === 0" class="iconLocation"  matTooltip="Bestimme meine Position automatisch" matTooltipPosition="right" (click)="getLocation()">gps_fixed</mat-icon>
+          <!-- <mat-icon *ngIf="i === 0" class="iconLocation"  matTooltip="Bestimme meine Position automatisch" matTooltipPosition="right" (click)="getLocation()">gps_fixed</mat-icon> -->
           <mat-icon *ngIf="i > 0" class="iconLocation" matTooltip="Lösche diesen Standort" matTooltipPosition="right" (click)="onDeleteLocation(i)">delete</mat-icon>
         </div>
         <div *ngIf="newArticle.get('locations')['controls'].length < 4" class="location-add">
           <mat-icon class="iconLocation iconAddLocation" (click)="onAddLocation()">add_circle</mat-icon>
-          <span class="spanAddLocation">Weiterer Standort</span>
+          <span *ngIf="!jounreySelected" class="spanAddLocation">Weiterer Standort</span>
+          <span *ngIf="jounreySelected" class="spanAddLocation">Weitere Reiseziele</span>
         </div>
       </div>
   
@@ -56,11 +70,25 @@
         </div>
       </div>
 
-  
-      <p>Ist Versand möglich?</p>
-      <select formControlName="shipping">
-        <option *ngFor="let shipping of shippingList" [value]="shipping.label">{{shipping.label}}</option>
-      </select>
+      <div>
+        <!-- <mat-form-field appearance="fill">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Start date">
+            <input matEndDate placeholder="End date">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field> -->
+      </div>
+
+
+      <div *ngIf="!jounreySelected">
+        <p>Ist Versand möglich?</p>
+        <select formControlName="shipping">
+          <option *ngFor="let shipping of shippingList" [value]="shipping.label">{{shipping.label}}</option>
+        </select>
+      </div>
     </div>
     
     <div>
@@ -77,7 +105,6 @@
               <span>{{articleImage.label}}</span>
               <mat-icon *ngIf="articleImage.imgUrl" (click)="onDeleteImage(i)">delete</mat-icon>
             </div>
-
           </div>
         </div>
       </div>
@@ -94,8 +121,9 @@
       <input placeholder="Handynummer (optional)" formControlName="sellerPhone" maxlength="20">
   
       <div class="form-button-container">
-        <button (click)="resetArticle()" class="form-button">Verwerfen</button>
-        <button (click)="saveArticle()" class="form-button" [disabled]="newArticle.invalid || !articleImages[0].imgUrl">Speichern</button>
+        <button (click)="resetArticle()" class="lks-button form-button-custom">Verwerfen</button>
+        <button (click)="saveArticle()" class="lks-button form-button-custom" [disabled]="newArticle.invalid || !articleImages[0].imgUrl">Speichern</button>
+        <mat-spinner *ngIf="loadingUpload" [diameter]="30" class="spinner"></mat-spinner>
         <span *ngIf="newArticle.invalid || !articleImages[0].imgUrl" class="form_button_span">Bitte fülle alle Pflichtfelder aus!</span>
       </div>
       

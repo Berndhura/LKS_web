@@ -20,7 +20,6 @@
     
         .button-custom {
             width: 130px;
-            height: 40px;
             margin-right: 5px;
             font-size: medium;
     
@@ -87,23 +86,6 @@
 
     .mail-info {
         margin-top: 10px;
-    }
-
-    .send-button {
-        background-color: #3F51B5;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        border: none;
-        border-radius: 5px;
-        color: white;
-        width: 120px;
-        padding: 10px;
-        cursor: pointer;
-    }
-    .send-button:disabled {
-        background-color: #AADAFF;
-        cursor: not-allowed;
     }
 }
 

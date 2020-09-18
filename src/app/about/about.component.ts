@@ -1,4 +1,3 @@
-import { firebaseImageUrl } from './../configs/config';
 import { aboutUs } from './../configs/data-config';
 import { Component, OnInit } from '@angular/core';
 import { AboutUs } from '../types/about.model';
@@ -11,9 +10,9 @@ import { AboutUs } from '../types/about.model';
 export class AboutComponent implements OnInit {
 
   aboutUs: AboutUs[] = aboutUs;
-  firebaseImageUrl: string = firebaseImageUrl;
 
-  constructor() { }
+  constructor(
+  ) { }
 
   ngOnInit() {
   }
