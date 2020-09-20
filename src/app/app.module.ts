@@ -15,7 +15,7 @@ import { ArticleComponent } from './article/article.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
-import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider} from 'ng4-social-login';
+// import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider} from 'ng4-social-login';
 import { NewArticleComponent } from './new-article/new-article.component';
 import { MaterialModule } from './material.module';
 import { AngularFirestoreModule, AngularFirestore } from 'angularfire2/firestore';
@@ -39,21 +39,21 @@ import { DialogMapComponent } from './dialog-map/dialog-map.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { LoadingComponent } from './loading/loading.component';
 
+// ng4-social-login macht Probleme beim Update von Angular 8 auf 10 und wird daher erstmal rausgenommen
+// const config = new AuthServiceConfig([
+// {
+//    id: FacebookLoginProvider.PROVIDER_ID,
+//    provider: new FacebookLoginProvider('535532649933816')
+// },
+// {
+//    id: GoogleLoginProvider.PROVIDER_ID,
+//    provider: new GoogleLoginProvider('225684928245-21lot3bitst9q7te84fq0kcc1bel3pl7.apps.googleusercontent.com')
+// }
+// ], false);
 
-const config = new AuthServiceConfig([
-{
-   id: FacebookLoginProvider.PROVIDER_ID,
-   provider: new FacebookLoginProvider('535532649933816')
-},
-{
-   id: GoogleLoginProvider.PROVIDER_ID,
-   provider: new GoogleLoginProvider('225684928245-21lot3bitst9q7te84fq0kcc1bel3pl7.apps.googleusercontent.com')
-}
-], false);
-
-export function provideConfig() {
-   return config;
-}
+// export function provideConfig() {
+//    return config;
+// }
 
 @NgModule({
    declarations: [
@@ -89,7 +89,7 @@ export function provideConfig() {
       BrowserModule,
       AppRoutingModule,
       HttpClientModule,
-      SocialLoginModule,
+      // SocialLoginModule,
       BrowserAnimationsModule,
       MaterialModule,
       FlexLayoutModule,
@@ -100,10 +100,10 @@ export function provideConfig() {
       ReactiveFormsModule
    ],
    providers: [
-      {
-         provide: AuthServiceConfig,
-         useFactory: provideConfig
-      },
+      // {
+      //    provide: AuthServiceConfig,
+      //    useFactory: provideConfig
+      // },
       AuthServiceMail,
       AngularFireStorage,
       {
