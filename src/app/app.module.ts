@@ -2,7 +2,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
+// import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -92,7 +92,7 @@ import { LoadingComponent } from './loading/loading.component';
       // SocialLoginModule,
       BrowserAnimationsModule,
       MaterialModule,
-      FlexLayoutModule,
+      // FlexLayoutModule,
       FormsModule,
       AngularFireModule.initializeApp(environment.firebase),
       AngularFirestoreModule,
