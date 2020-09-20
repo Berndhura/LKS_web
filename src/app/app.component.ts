@@ -9,7 +9,7 @@ import { AuthServiceMail } from './services/auth.service';
 })
 export class AppComponent implements OnInit {
 
-  @ViewChild('mainDiv', {static: false}) mainDiv: ElementRef;
+  @ViewChild('mainDiv') mainDiv: ElementRef;
 
   mainHeight: any;
   mainContainer: any;

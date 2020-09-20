@@ -11,7 +11,7 @@ export class LocationMapComponent implements OnInit, AfterViewInit {
 
   @Input() locations: string[];
 
-  @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
+  @ViewChild('mapContainer') gmap: ElementRef;
   map: google.maps.Map;
 
   mapOptions: any;
