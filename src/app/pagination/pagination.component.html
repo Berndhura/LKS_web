@@ -16,7 +16,7 @@
             <i class="fas fa-arrow-left"></i>
         </button>
 
-        <input class="lks-input custom-input" [(ngModel)]="currentSite" (ngModelChange)="changeSite($event)" (keypress)="numberOnly($event)" [attr.maxLength]="sites.toString().length">
+        <input class="lks-input custom-input" [(ngModel)]="currentSite" (ngModelChange)="changeSite()" (keypress)="numberOnly($event)" [attr.maxLength]="sites.toString().length">
 
         
         <span><b>/{{sites}}</b></span>

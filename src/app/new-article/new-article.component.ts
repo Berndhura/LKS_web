@@ -200,7 +200,7 @@ export class NewArticleComponent implements OnInit, OnDestroy {
     this.currentIndex = index;
   }
 
-  handleFileInput(files: File[], index: number) {
+  handleFileInput(files: File[]) {
     this.errorPictureMessage = null;
     // this.uploadService.uploadImage(file);
     if (files.length === 0) {
